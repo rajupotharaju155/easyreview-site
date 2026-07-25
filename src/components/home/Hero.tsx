@@ -1,19 +1,15 @@
 import { Button } from 'antd'
 import { QrCode, Star } from 'lucide-react'
-import {
-  ACTIVE_HERO_HEADLINE,
-  EARLY_BIRD_SPOTS_LEFT,
-  HERO_HEADLINES,
-} from '../../data/content'
+import { EARLY_BIRD_SPOTS_LEFT, HERO_HEADLINES } from '../../data/content'
 import { PageContainer } from '../layout/PageContainer'
 
 export function Hero() {
   return (
     <section className="hero-atmosphere relative overflow-hidden" aria-labelledby="hero-heading">
-      <PageContainer className="grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
-        <div className="animate-fade-up">
+      <PageContainer className="grid items-center gap-12 pt-14 pb-16 lg:grid-cols-2 lg:gap-16 lg:pt-16 lg:pb-24">
+        <div className="animate-fade-up min-w-0">
           <span className="inline-flex items-center rounded-full border border-brand-200 bg-white px-3 py-1 text-xs font-semibold text-brand-700 shadow-sm">
-            Rank higher on Google Maps
+            Rank your business #1 on Google
           </span>
 
           {/*
@@ -25,15 +21,16 @@ export function Hero() {
           */}
           <h1
             id="hero-heading"
-            className="mt-5 font-display text-4xl font-extrabold tracking-tight text-ink sm:text-5xl lg:text-[3.25rem] lg:leading-[1.1]"
+            className="mt-5 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-5xl lg:text-[3.25rem] lg:leading-[1.1]"
           >
-            {ACTIVE_HERO_HEADLINE}
+            Turn Every Happy Customer Into a{' '}
+            <span className="hero-gradient-text sm:whitespace-nowrap">5-Star Google Review</span>
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-            Customers scan a QR at your counter, rate their visit, and — if they loved it — get an
-            AI-written 5-star draft for Google. Lower ratings go to a private form so you can fix
-            issues before they go public.
+            People judge your business on Google before they ever walk in.{' '}
+            <span className="font-semibold text-brand-600">EasyReview</span> turns satisfied visits
+            into 5-star reviews, and catches the unhappy ones privately — before they go public.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
