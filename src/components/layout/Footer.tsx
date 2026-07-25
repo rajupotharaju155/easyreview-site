@@ -15,8 +15,8 @@ const companyLinks = [
 ]
 
 const legalLinks = [
-  { label: 'Privacy Policy', to: '#' },
-  { label: 'Terms of Service', to: '#' },
+  { label: 'Privacy Policy', to: '/privacy' },
+  { label: 'Terms of Service', to: '/terms' },
 ]
 
 export function Footer() {

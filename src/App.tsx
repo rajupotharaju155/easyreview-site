@@ -1,9 +1,12 @@
 import { ConfigProvider } from 'antd'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { MainLayout } from './components/layout/MainLayout'
+import { ScrollToTop } from './components/layout/ScrollToTop'
 import { FAQ } from './pages/FAQ'
 import { Home } from './pages/Home'
 import { Pricing } from './pages/Pricing'
+import { PrivacyPolicy } from './pages/PrivacyPolicy'
+import { TermsOfService } from './pages/TermsOfService'
 
 const theme = {
   token: {
@@ -20,11 +23,14 @@ export default function App() {
   return (
     <ConfigProvider theme={theme}>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="faq" element={<FAQ />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<TermsOfService />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
