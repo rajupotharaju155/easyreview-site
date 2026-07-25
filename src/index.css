@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --color-brand-50: #f3eaff;
+  --color-brand-100: #e4d4ff;
+  --color-brand-200: #c9a9ff;
+  --color-brand-500: #7c3aed;
+  --color-brand-600: #6b2fd5;
+  --color-brand-700: #5a24b8;
+  --color-brand-800: #471c94;
+  --color-ink: #0f172a;
+  --color-muted: #64748b;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-white font-sans text-ink antialiased;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Hero atmosphere — soft blue mesh, not flat white */
+.hero-atmosphere {
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(107, 47, 213, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(124, 58, 237, 0.1), transparent 50%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 55%, #ffffff 100%);
+}
+
+.cta-band {
+  background:
+    radial-gradient(ellipse 70% 80% at 20% 50%, rgba(255, 255, 255, 0.12), transparent 55%),
+    linear-gradient(135deg, #471c94 0%, #6b2fd5 45%, #7c3aed 100%);
+}
+
+/* Subtle entrance motion */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out both;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fade-up 0.7s ease-out 0.1s both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fade-up 0.7s ease-out 0.2s both;
+}
+
+.animate-float {
+  animation: float-soft 5s ease-in-out infinite;
+}
+
+/* Ant Design overrides for brand alignment */
+.ant-btn-primary {
+  box-shadow: 0 1px 2px rgba(107, 47, 213, 0.25) !important;
+}
+
+.ant-collapse-borderless > .ant-collapse-item {
+  border-bottom: 1px solid var(--color-border) !important;
+}
