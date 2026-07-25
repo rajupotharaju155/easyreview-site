@@ -118,6 +118,32 @@
   animation: gradient-move 4s ease-in-out infinite;
 }
 
+.review-draft-carousel .slick-dots {
+  position: relative !important;
+  bottom: auto !important;
+  margin-top: 1rem;
+  inset-inline: 0 !important;
+}
+
+.review-draft-carousel .slick-dots li button {
+  background: #94a3b8 !important;
+  opacity: 1 !important;
+}
+
+.review-draft-carousel .slick-dots li button:hover {
+  background: #64748b !important;
+  opacity: 1 !important;
+}
+
+.review-draft-carousel .slick-dots li.slick-active button {
+  background: #6b2fd5 !important;
+  opacity: 1 !important;
+}
+
+.review-draft-carousel .slick-dots li.slick-active::after {
+  background: #6b2fd5 !important;
+}
+
 /* Ant Design overrides for brand alignment */
 .ant-btn-primary {
   box-shadow: 0 1px 2px rgba(107, 47, 213, 0.25) !important;

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 export interface SectionHeadingProps {
   eyebrow?: string
-  title: string
+  title: ReactNode
   subtitle?: string
   align?: 'left' | 'center'
   className?: string

@@ -1,12 +1,30 @@
-import { Col, Row } from 'antd'
+import { Carousel, Col, Row } from 'antd'
 import { Check } from 'lucide-react'
 import { PageContainer } from '../layout/PageContainer'
 import { SectionHeading } from '../shared/SectionHeading'
 
 const languages = ['English', 'Hindi', 'Telugu', 'Tamil', 'Spanish', 'Arabic']
 
-const sampleReview =
-  'Warm service and a spotless dining area. The team remembered our order and made dinner feel effortless — highly recommend for a quick, quality meal.'
+const sampleDrafts = [
+  {
+    language: 'English',
+    title: 'AI review for a Restaurant',
+    text: 'Warm service and a spotless dining area. The team remembered our order and made dinner feel effortless — highly recommend for a quick, quality meal.',
+    keywords: ['warm service', 'quality meal'],
+  },
+  {
+    language: 'Hindi',
+    title: 'AI review for a Salon',
+    text: 'Salon ka experience bahut accha tha. Staff ne baal cut aur styling carefully ki, aur jagah bilkul clean thi — next visit ke liye definitely recommend karunga.',
+    keywords: ['great haircut', 'clean salon', 'friendly staff'],
+  },
+  {
+    language: 'Telugu',
+    title: 'AI review for a Hotel',
+    text: 'Hotel stay chala comfortable ga undi. Room clean ga undi, staff kuda friendly ga undaru. Check-in smooth ga jarigindi — next time kuda ikkade stay cheyali anipistundi.',
+    keywords: ['clean rooms', 'smooth check-in'],
+  },
+]
 
 export function MultiLanguage() {
   return (
@@ -18,7 +36,11 @@ export function MultiLanguage() {
               id="lang-heading"
               align="left"
               eyebrow="New"
-              title="AI Reviews in Your Customers' Language"
+              title={
+                <>
+                  <span className="hero-gradient-text">Multi-language</span> AI review generation
+                </>
+              }
               subtitle="Choose which languages AI drafts should use, and add custom keywords you want naturally featured — like “friendly staff” or “clean environment.”"
             />
             <ul className="mt-8 space-y-3">
@@ -60,31 +82,41 @@ export function MultiLanguage() {
                 ))}
               </div>
 
-              <div className="mt-6 rounded-2xl border border-border bg-white p-5 shadow-sm">
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="text-sm font-semibold text-ink">Sample AI draft</p>
-                  <span className="rounded-lg bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
-                    English
-                  </span>
-                </div>
-                <div className="mb-3 flex gap-0.5" aria-label="5 star rating">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className="text-amber-400">
-                      ★
-                    </span>
+              <div className="review-draft-carousel mt-6">
+                <Carousel autoplay autoplaySpeed={4200} dots draggable>
+                  {sampleDrafts.map((draft) => (
+                    <div key={draft.language}>
+                      <div className="rounded-2xl border border-border bg-white p-5 shadow-sm">
+                        <div className="mb-3 flex items-center justify-between gap-3">
+                          <p className="text-sm font-semibold text-ink">{draft.title}</p>
+                          <span className="shrink-0 rounded-lg bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
+                            {draft.language}
+                          </span>
+                        </div>
+                        <div className="mb-3 flex gap-0.5" aria-label="5 star rating">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span key={i} className="text-amber-400">
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        <p className="min-h-[4.5rem] text-sm leading-relaxed text-slate-600">
+                          “{draft.text}”
+                        </p>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {draft.keywords.map((kw) => (
+                            <span
+                              key={kw}
+                              className="rounded-lg bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700"
+                            >
+                              {kw}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </div>
-                <p className="text-sm leading-relaxed text-slate-600">“{sampleReview}”</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {['friendly staff', 'clean environment'].map((kw) => (
-                    <span
-                      key={kw}
-                      className="rounded-lg bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700"
-                    >
-                      {kw}
-                    </span>
-                  ))}
-                </div>
+                </Carousel>
               </div>
             </div>
           </Col>
