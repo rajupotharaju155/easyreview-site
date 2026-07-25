@@ -1,6 +1,10 @@
 import { Button } from 'antd'
 import { QrCode, Star } from 'lucide-react'
-import { ACTIVE_HERO_HEADLINE, HERO_HEADLINES } from '../../data/content'
+import {
+  ACTIVE_HERO_HEADLINE,
+  EARLY_BIRD_SPOTS_LEFT,
+  HERO_HEADLINES,
+} from '../../data/content'
 import { PageContainer } from '../layout/PageContainer'
 
 export function Hero() {
@@ -39,8 +43,8 @@ export function Hero() {
           </div>
 
           <p className="mt-4 text-sm text-muted">
-            <span className="font-semibold text-ink">22</span> spots left — free for first 50
-            businesses
+            <span className="font-semibold text-ink">{EARLY_BIRD_SPOTS_LEFT}</span> spots left —
+            free for first 50 businesses
           </p>
           <p className="mt-1.5 text-sm text-muted">
             No credit card required · Free QR standees · Setup in 2 minutes

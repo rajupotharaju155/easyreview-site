@@ -56,6 +56,7 @@ export interface PricingTier {
   ctaLabel: string
   highlighted?: boolean
   badge?: string
+  spotsLeft?: number
 }
 
 export interface PricingCardProps {

@@ -15,7 +15,11 @@ export function PricingCard({ tier }: PricingCardProps) {
       }`}
     >
       {badge ? (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-lg bg-brand-600 px-3 py-1 text-xs font-semibold text-white">
+        <span
+          className={`absolute -top-3 left-1/2 -translate-x-1/2 rounded-lg px-3 py-1 text-xs font-semibold text-white ${
+            tier.spotsLeft != null ? 'bg-amber-500' : 'bg-brand-600'
+          }`}
+        >
           {badge}
         </span>
       ) : null}

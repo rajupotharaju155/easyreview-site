@@ -62,39 +62,42 @@ export const howItWorksSteps: HowItWorksStep[] = [
   },
 ]
 
+/** Shared with hero scarcity copy — update in one place */
+export const EARLY_BIRD_SPOTS_LEFT = 22
+
 export const pricingTiers: PricingTier[] = [
   {
-    id: 'free',
-    name: 'Free',
+    id: 'early-bird',
+    name: 'Early Bird',
     price: '₹0',
-    priceNote: 'forever',
-    description: 'Perfect for getting your first location live and collecting reviews.',
+    description: 'Free for first 2 months',
     features: [
       '1 business location',
-      'Limited scans per month',
+      'Unlimited QR scans & review requests',
+      'Real-time scan & review analytics',
       'AI review drafts',
       'Private feedback gate',
-      'Basic analytics',
     ],
-    ctaLabel: 'Start Free',
+    ctaLabel: 'Claim Early Bird',
+    spotsLeft: EARLY_BIRD_SPOTS_LEFT,
+    badge: `${EARLY_BIRD_SPOTS_LEFT} spots left`,
+    highlighted: true,
   },
   {
     id: 'growth',
     name: 'Growth',
-    price: '₹999',
+    price: '₹299',
     priceNote: '/mo per business',
     description: 'For busy shops ready to scale reviews across more foot traffic.',
     features: [
-      'Unlimited scans',
-      'Advanced analytics',
+      'Unlimited QR scans & review requests',
+      'Real-time scan & review analytics',
       'Multi-location support',
       'Keyword targeting',
       'Multi-language AI drafts',
       'Priority email support',
     ],
     ctaLabel: 'Choose Growth',
-    highlighted: true,
-    badge: 'Most popular',
   },
   {
     id: 'enterprise',
@@ -131,9 +134,9 @@ export const addOns: AddOnItem[] = [
 export const pricingFaqs: FAQItem[] = [
   {
     id: 'p1',
-    question: 'Can I start on the Free plan and upgrade later?',
+    question: 'Can I start on Early Bird and upgrade later?',
     answer:
-      'Yes. Create your business on Free, then upgrade to Growth whenever you need unlimited scans or multi-location tools. Your QR links and settings stay intact.',
+      'Yes. Claim an Early Bird spot for your first two months free, then upgrade to Growth whenever you need unlimited scans or multi-location tools. Your QR links and settings stay intact.',
   },
   {
     id: 'p2',
@@ -145,13 +148,13 @@ export const pricingFaqs: FAQItem[] = [
     id: 'p3',
     question: 'Do printed QR materials require a paid plan?',
     answer:
-      'No. Digital QR downloads are available on Free. Physical stickers and standees are optional add-ons you can order separately when you want branded print pieces.',
+      'No. Digital QR downloads are available on Early Bird. Physical stickers and standees are optional add-ons you can order separately when you want branded print pieces.',
   },
   {
     id: 'p4',
     question: 'Can I cancel or change plans anytime?',
     answer:
-      'You can change or cancel your paid plan at any time. Access continues through the end of your current billing period, and Free features remain available after downgrade.',
+      'You can change or cancel your paid plan at any time. Access continues through the end of your current billing period.',
   },
 ]
 
@@ -182,7 +185,7 @@ export const faqCategories: FAQCategory[] = [
         id: 'g4',
         question: 'Is there a free plan?',
         answer:
-          'Yes. The Free plan includes one business location, AI drafts, the private feedback gate, and basic analytics so you can prove value before upgrading.',
+          'Yes. Early Bird is free for your first two months while spots last. It includes one business location, AI drafts, the private feedback gate, and basic analytics.',
       },
     ],
   },
@@ -218,7 +221,7 @@ export const faqCategories: FAQCategory[] = [
         id: 'b1',
         question: 'Do I need a credit card to start?',
         answer:
-          'No credit card is required for the Free plan. You can create a business, download your QR materials, and start collecting reviews without entering payment details.',
+          'No credit card is required for Early Bird. You can create a business, download your QR materials, and start collecting reviews without entering payment details.',
       },
       {
         id: 'b2',
