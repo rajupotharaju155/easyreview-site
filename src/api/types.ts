@@ -1,4 +1,5 @@
 export interface PublicLocation {
+  id: string
   name: string
   placeId: string
   slug: string
@@ -9,6 +10,7 @@ export interface PublicLocation {
 }
 
 export interface SuggestReviewsPayload {
+  locationId: string
   starRating: number
   name: string
   city?: string

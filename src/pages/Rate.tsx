@@ -5,7 +5,7 @@ import { Trefoil } from 'ldrs/react'
 import 'ldrs/react/Trefoil.css'
 import { ArrowLeft, ArrowUpRight, Sparkles, Star } from 'lucide-react'
 import { ApiError } from '../api/client'
-import { getLocationBySlug } from '../api/locations'
+import { getLocationBySlug, recordRedirectToGoogle } from '../api/locations'
 import { suggestReviews } from '../api/reviews'
 import type { PublicLocation, ReviewSuggestion } from '../api/types'
 import { Logo } from '../components/shared/Logo'
@@ -106,6 +106,7 @@ export function Rate() {
 
     try {
       const response = await suggestReviews({
+        locationId: loc.id,
         starRating,
         name: loc.name,
         city: loc.city ?? undefined,
@@ -138,6 +139,9 @@ export function Rate() {
     } catch {
       // Still open Google even if clipboard is blocked.
     }
+    void recordRedirectToGoogle(location.id).catch(() => {
+      // Metrics should not block opening Google.
+    })
     window.open(googleWriteReviewUrl(location.placeId), '_blank', 'noopener,noreferrer')
   }
 
