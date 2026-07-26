@@ -88,6 +88,29 @@
   animation: float-soft 5s ease-in-out infinite;
 }
 
+@keyframes fade-message {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  14% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.animate-fade-message {
+  animation: fade-message 2.8s ease-in-out both;
+}
+
 @keyframes gradient-move {
   0% {
     background-position: 0% 50%;

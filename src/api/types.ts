@@ -8,6 +8,25 @@ export interface PublicLocation {
   languages: string[] | null
 }
 
+export interface SuggestReviewsPayload {
+  starRating: number
+  name: string
+  city?: string
+  state?: string
+  keywords: string[]
+  languages: string[]
+}
+
+export interface ReviewSuggestion {
+  text: string
+  language: string
+  targetWordCount: number
+}
+
+export interface ReviewSuggestionsResponse {
+  suggestions: ReviewSuggestion[]
+}
+
 export interface ApiErrorBody {
   message?: string | string[]
   statusCode?: number
