@@ -6,6 +6,7 @@ import { FAQ } from './pages/FAQ'
 import { Home } from './pages/Home'
 import { Pricing } from './pages/Pricing'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
+import { Rate } from './pages/Rate'
 import { TermsOfService } from './pages/TermsOfService'
 
 const theme = {
@@ -25,6 +26,7 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
+          <Route path="rate/:slug" element={<Rate />} />
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="pricing" element={<Pricing />} />
