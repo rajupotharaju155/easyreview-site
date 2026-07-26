@@ -8,7 +8,7 @@ import type { PublicLocation } from '../api/types'
 import { Logo } from '../components/shared/Logo'
 
 const RATING_OPTIONS: Record<number, { label: string; emoji: string }> = {
-  1: { label: 'Sad', emoji: '😢' },
+  1: { label: 'Terrible', emoji: '😢' },
   2: { label: 'Okay', emoji: '😐' },
   3: { label: 'Happy', emoji: '😊' },
   4: { label: 'Very Good', emoji: '😄' },
@@ -75,7 +75,7 @@ export function Rate() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(107, 47, 213, 0.16), transparent 55%), radial-gradient(ellipse 50% 40% at 100% 80%, rgba(124, 58, 237, 0.08), transparent 50%), linear-gradient(180deg, #f8fafc 0%, #ffffff 60%)',
+            'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(107, 47, 213, 0.22), transparent 55%), radial-gradient(ellipse 50% 40% at 100% 80%, rgba(124, 58, 237, 0.12), transparent 50%), linear-gradient(180deg, #f8fafc 0%, #ffffff 60%)',
         }}
       />
 
@@ -112,11 +112,7 @@ export function Rate() {
               />
             </Helmet>
 
-            <p className="text-sm font-medium uppercase tracking-[0.14em] text-brand-600">
-              Leave a review
-            </p>
-
-            <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            <h1 className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl">
               {location.name}
             </h1>
 
@@ -126,9 +122,8 @@ export function Rate() {
               </p>
             )}
 
-            <p className="mt-8 text-lg text-ink/80 sm:text-xl">
-              How was your experience at{' '}
-              <span className="font-semibold text-ink">{location.name}</span>?
+            <p className="mt-4 text-base text-ink/80 sm:text-lg">
+              How was your experience with us today?
             </p>
 
             <div
@@ -147,7 +142,7 @@ export function Rate() {
                     role="radio"
                     aria-checked={selected === value}
                     aria-label={`${value} star${value === 1 ? '' : 's'} — ${option.label}`}
-                    className="rounded-xl border-0 bg-transparent p-1.5 transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                    className="cursor-pointer rounded-xl border-0 bg-transparent p-1.5 transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
                     onMouseEnter={() => setHovered(value)}
                     onFocus={() => setHovered(value)}
                     onBlur={() => setHovered(0)}
@@ -167,8 +162,8 @@ export function Rate() {
             </div>
 
             <p
-              className={`mt-5 flex min-h-8 items-center justify-center gap-2 text-base font-medium transition-opacity ${
-                hoverOption ? 'text-brand-700 opacity-100' : 'opacity-0'
+              className={`mt-5 flex min-h-8 items-center justify-center gap-2 text-base transition-colors ${
+                hoverOption ? 'font-medium text-brand-700' : 'text-muted'
               }`}
               aria-live="polite"
             >
@@ -180,12 +175,23 @@ export function Rate() {
                   <span>{hoverOption.label}</span>
                 </>
               ) : (
-                <span>&nbsp;</span>
+                <span>Tap a star to rate us</span>
               )}
             </p>
           </div>
         ) : null}
       </main>
+
+      <footer className="relative z-10 flex items-center justify-center gap-2 border-t border-slate-100 px-4 py-4 text-sm text-muted">
+        <span className="text-xs font-medium tracking-wide">POWERED BY</span>
+        <Link to="/" aria-label="EasyReview home" className="inline-flex no-underline">
+          <img
+            src="/logo-name.png"
+            alt="EasyReview"
+            className="h-8 w-auto object-contain"
+          />
+        </Link>
+      </footer>
     </div>
   )
 }
