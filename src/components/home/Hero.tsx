@@ -34,7 +34,14 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button type="primary" size="large" className="!h-12 !px-6 !text-base">
+            <Button
+              type="primary"
+              size="large"
+              className="!h-12 !px-6 !text-base"
+              href="https://app.easyreview.co.in"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Set Up Your Business Free
             </Button>
           </div>

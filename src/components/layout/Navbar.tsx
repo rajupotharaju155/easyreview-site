@@ -7,7 +7,13 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border/80 bg-white/90 backdrop-blur-md">
       <PageContainer className="flex h-16 items-center justify-between">
         <Logo />
-        <Button type="primary" className="!h-10 !px-4">
+        <Button
+          type="primary"
+          className="!h-10 !px-4"
+          href="https://app.easyreview.co.in"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Get Started Free
         </Button>
       </PageContainer>

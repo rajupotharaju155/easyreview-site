@@ -19,6 +19,9 @@ export function CTASection() {
           <Button
             size="large"
             className="!h-12 !border-0 !bg-white !px-8 !text-base !font-semibold !text-brand-700 hover:!bg-white/90"
+            href="https://app.easyreview.co.in"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Get Started Free
           </Button>
