@@ -29,6 +29,21 @@ export interface ReviewSuggestionsResponse {
   suggestions: ReviewSuggestion[]
 }
 
+export interface CreatePrivateFeedbackPayload {
+  locationId: string
+  rating: number
+  feedback: string
+}
+
+export interface PrivateFeedback {
+  id: string
+  locationId: string
+  rating: number
+  feedback: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface ApiErrorBody {
   message?: string | string[]
   statusCode?: number
