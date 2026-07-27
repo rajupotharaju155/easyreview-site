@@ -259,10 +259,6 @@ export function Rate() {
     : selected
       ? RATING_OPTIONS[selected]
       : null
-  const showBack =
-    step === 'generating' ||
-    step === 'suggestions' ||
-    step === 'private-feedback'
 
   return (
     <div className="relative flex min-h-dvh flex-col bg-white sm:bg-transparent">
