@@ -141,37 +141,36 @@ export function LeadMagnet() {
         />
       </Helmet>
 
-      <section className="hero-atmosphere border-b border-border py-12 sm:py-16">
+      <section className="hero-atmosphere overflow-x-clip border-b border-border py-10 sm:py-16">
         <PageContainer>
           <SectionHeading
             eyebrow="Free competitive snapshot"
             title="See Where You Stand on Google"
             subtitle="Add your business, then find competitors by name — or discover them with a simple search like “salons in Mumbai”."
+            className="px-0"
           />
         </PageContainer>
       </section>
 
-      <section className="bg-white py-10 sm:py-14">
+      <section className="overflow-x-clip bg-white py-8 sm:py-14">
         <PageContainer className="max-w-7xl">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <div>
+          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-3">
+            <div className="min-w-0">
               <h2 className="font-display text-xl font-bold text-ink sm:text-2xl">
                 Choose 3 businesses
               </h2>
               <p className="mt-1 text-sm text-muted">
-                Column 1 is always the prospect. Columns 2 and 3 are competitors.
+                First card is your business. Next two are competitors.
               </p>
             </div>
-            <p className="text-sm font-medium text-muted">
-              {filledCount}/3 selected
-            </p>
+            <p className="text-sm font-medium text-muted">{filledCount}/3 selected</p>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             {slots.map((slot, index) => (
               <div
                 key={slot.id}
-                className="animate-fade-up"
+                className="min-w-0 w-full animate-fade-up"
                 style={{ animationDelay: `${index * 0.08}s` }}
               >
                 <CompetitorColumn
@@ -194,24 +193,26 @@ export function LeadMagnet() {
           <ComparisonTable slots={slots} />
 
           {filledCount >= 2 ? (
-            <div className="cta-band mt-12 rounded-2xl px-6 py-8 text-center text-white sm:px-10">
-              <h3 className="font-display text-2xl font-bold tracking-tight">
+            <div className="cta-band mt-10 rounded-2xl px-4 py-8 text-center text-white sm:mt-12 sm:px-10">
+              <h3 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
                 Ready to close the gap?
               </h3>
               <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">
                 EasyReview helps you turn happy customers into Google reviews — so your listing
                 can catch up (or stay ahead) of the competition.
               </p>
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  to="/"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-sm font-semibold text-white no-underline transition-colors hover:bg-white/10"
+              <div className="mt-5 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <a
+                  href="https://app.easyreview.co.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 no-underline transition-opacity hover:opacity-90"
                 >
-                  Learn how it works
-                </Link>
+                  Get started for free
+                </a>
                 <Link
                   to="/pricing"
-                  className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 no-underline transition-opacity hover:opacity-90"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-sm font-semibold text-white no-underline transition-colors hover:bg-white/10"
                 >
                   View pricing
                 </Link>

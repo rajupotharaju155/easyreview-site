@@ -1,6 +1,5 @@
 import { Button } from 'antd'
 import { Check } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import type { PricingCardProps } from '../../types'
 
 export function PricingCard({ tier }: PricingCardProps) {
@@ -42,11 +41,17 @@ export function PricingCard({ tier }: PricingCardProps) {
         ))}
       </ul>
 
-      <Link to="/" className="block">
-        <Button type={highlighted ? 'primary' : 'default'} size="large" block className="!h-11">
-          {ctaLabel}
-        </Button>
-      </Link>
+      <Button
+        type={highlighted ? 'primary' : 'default'}
+        size="large"
+        block
+        className="!h-11"
+        href="https://app.easyreview.co.in"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {ctaLabel}
+      </Button>
     </article>
   )
 }

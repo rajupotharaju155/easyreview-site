@@ -93,16 +93,16 @@ export function CompetitorColumn({
 
   return (
     <div
-      className={`flex min-h-[280px] flex-col rounded-2xl border bg-white ${
+      className={`flex w-full min-w-0 flex-col overflow-hidden rounded-2xl border bg-white ${
         isProspect ? 'border-brand-200 ring-1 ring-brand-100' : 'border-border'
       }`}
     >
       <div
-        className={`flex items-center justify-between gap-2 border-b px-4 py-3 ${
+        className={`flex items-center justify-between gap-2 border-b px-3 py-3 sm:px-4 ${
           isProspect ? 'border-brand-100 bg-brand-50/60' : 'border-border bg-surface/80'
         }`}
       >
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
             {slot.label}
           </p>
@@ -140,7 +140,7 @@ export function CompetitorColumn({
         ) : null}
       </div>
 
-      <div className="relative flex flex-1 flex-col p-4">
+      <div className="relative flex min-w-0 flex-1 flex-col p-3 sm:p-4">
         {slot.loading ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 py-10">
             <Spin size="large" />
@@ -152,7 +152,7 @@ export function CompetitorColumn({
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
-            className="group flex flex-1 cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-border bg-surface/40 px-4 py-10 text-center transition-colors hover:border-brand-300 hover:bg-brand-50/40"
+            className="group flex min-h-[200px] flex-1 cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-border bg-surface/40 px-4 py-8 text-center transition-colors hover:border-brand-300 hover:bg-brand-50/40 sm:py-10"
           >
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand-600 shadow-sm ring-1 ring-border transition-transform group-hover:scale-105">
               <Plus className="h-6 w-6" strokeWidth={2.25} />
@@ -176,7 +176,15 @@ export function CompetitorColumn({
         footer={null}
         destroyOnHidden
         centered
-        width={isProspect ? 520 : 560}
+        width="100%"
+        className="lead-magnet-search-modal"
+        styles={{
+          container: {
+            maxWidth: isProspect ? 520 : 560,
+            margin: '0 auto',
+            padding: 0,
+          },
+        }}
       >
         {isProspect ? (
           <>
@@ -227,10 +235,10 @@ function PlaceSummary({ place }: { place: PlaceDetails }) {
       </div>
 
       <dl className="space-y-3 text-sm">
-        <SummaryRow label="Total reviews">
+        <SummaryRow label="Total reviews" className="hidden sm:grid">
           {place.userRatingCount != null ? place.userRatingCount.toLocaleString() : '—'}
         </SummaryRow>
-        <SummaryRow label="Sample avg">
+        <SummaryRow label="Sample avg" className="hidden sm:grid">
           {sampleAvg != null ? (
             <span>
               {sampleAvg.toFixed(1)}★{' '}
@@ -241,7 +249,7 @@ function PlaceSummary({ place }: { place: PlaceDetails }) {
           )}
         </SummaryRow>
         <SummaryRow label="Category">{getCategoryLabel(place)}</SummaryRow>
-        <SummaryRow label="Related tags">
+        <SummaryRow label="Related tags" className="hidden sm:grid">
           {relatedTags.length > 0 ? (
             <div className="flex flex-wrap gap-1.5">
               {relatedTags.map((tag) => (
@@ -257,7 +265,9 @@ function PlaceSummary({ place }: { place: PlaceDetails }) {
             '—'
           )}
         </SummaryRow>
-        <SummaryRow label="Status">{formatBusinessStatus(place.businessStatus)}</SummaryRow>
+        <SummaryRow label="Status" className="hidden sm:grid">
+          {formatBusinessStatus(place.businessStatus)}
+        </SummaryRow>
         <SummaryRow label="Phone">
           {place.phoneNumber ? (
             place.phoneNumber
@@ -275,7 +285,7 @@ function PlaceSummary({ place }: { place: PlaceDetails }) {
         <SummaryRow label="Address">
           <span className="leading-snug">{place.formattedAddress || '—'}</span>
         </SummaryRow>
-        <SummaryRow label="Maps">
+        <SummaryRow label="Maps" className="hidden sm:grid">
           {place.googleMapsURI ? (
             <ExternalLink href={place.googleMapsURI}>Open listing</ExternalLink>
           ) : (
@@ -284,7 +294,7 @@ function PlaceSummary({ place }: { place: PlaceDetails }) {
         </SummaryRow>
       </dl>
 
-      <div className="border-t border-border pt-3">
+      <div className="hidden border-t border-border pt-3 sm:block">
         <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
           Recent star mix
         </p>
@@ -313,10 +323,20 @@ function PlaceSummary({ place }: { place: PlaceDetails }) {
   )
 }
 
-function SummaryRow({ label, children }: { label: string; children: ReactNode }) {
+function SummaryRow({
+  label,
+  children,
+  className = '',
+}: {
+  label: string
+  children: ReactNode
+  className?: string
+}) {
   return (
-    <div className="grid grid-cols-[5.5rem_1fr] gap-2 sm:grid-cols-[6.25rem_1fr]">
-      <dt className="text-muted">{label}</dt>
+    <div
+      className={`grid grid-cols-1 gap-0.5 sm:grid-cols-[6.25rem_1fr] sm:gap-2 ${className}`}
+    >
+      <dt className="text-xs text-muted sm:text-sm">{label}</dt>
       <dd className="min-w-0 break-words text-ink">{children}</dd>
     </div>
   )

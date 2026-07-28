@@ -131,174 +131,185 @@ export function ComparisonTable({ slots }: ComparisonTableProps) {
   const insights = buildInsights(slots)
 
   return (
-    <section className="mt-10 space-y-6 animate-fade-up">
-      <div>
-        <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+    <section className="mt-8 space-y-5 animate-fade-up sm:mt-10 sm:space-y-6">
+      <div className="min-w-0">
+        <h2 className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl">
           Side-by-side scorecard
         </h2>
         <p className="mt-1 text-sm text-muted sm:text-base">
-          Green cells mark the strongest score for that metric among the businesses you selected.
+          Green cells mark the strongest score. Summary pointers compare you against this peer set
+          and highlight where EasyReview can help you pull ahead.
         </p>
       </div>
 
       {insights.length > 0 ? (
-        <ul className="space-y-2 rounded-2xl border border-brand-100 bg-brand-50/50 px-4 py-4 sm:px-5">
+        <ul className="space-y-2 rounded-2xl border border-brand-100 bg-brand-50/50 px-3 py-4 sm:px-5">
           {insights.map((insight) => (
             <li key={insight} className="flex gap-2 text-sm leading-relaxed text-ink">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
-              <span>{insight}</span>
+              <span className="min-w-0 break-words">{insight}</span>
             </li>
           ))}
         </ul>
       ) : null}
 
-      <div className="overflow-x-auto rounded-2xl border border-border bg-white">
-        <table className="w-full min-w-[640px] border-collapse text-left text-sm">
-          <thead>
-            <tr className="border-b border-border bg-surface/80">
-              <th className="sticky left-0 z-10 bg-surface/95 px-4 py-3 font-semibold text-muted">
-                Metric
-              </th>
-              {filled.map((slot) => (
-                <th key={slot.id} className="px-4 py-3 font-semibold text-ink">
-                  <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted">
-                    {slot.label}
-                  </span>
-                  <span className="mt-0.5 block max-w-[12rem] truncate">{slot.place?.name}</span>
+      <div className="min-w-0">
+        <p className="mb-2 text-xs font-medium text-muted sm:hidden">Swipe sideways to compare →</p>
+        <div className="-mx-4 overflow-x-auto overscroll-x-contain border-y border-border bg-white sm:mx-0 sm:rounded-2xl sm:border">
+          <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+            <thead>
+              <tr className="border-b border-border bg-surface/80">
+                <th className="sticky left-0 z-10 min-w-[7rem] bg-surface px-3 py-3 font-semibold text-muted sm:bg-surface/95 sm:px-4">
+                  Metric
                 </th>
+                {filled.map((slot) => (
+                  <th key={slot.id} className="min-w-[9rem] px-3 py-3 font-semibold text-ink sm:px-4">
+                    <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted">
+                      {slot.label}
+                    </span>
+                    <span className="mt-0.5 block max-w-[10rem] truncate sm:max-w-[12rem]">
+                      {slot.place?.name}
+                    </span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {METRICS.map((metric) => (
+                <tr key={metric.key} className="border-b border-border last:border-b-0">
+                  <th className="sticky left-0 z-10 bg-white px-3 py-3 font-medium text-muted sm:px-4">
+                    {metric.label}
+                  </th>
+                  {filled.map((slot) => {
+                    const place = slot.place as PlaceDetails
+                    const isBest =
+                      metric.higherIsBetter === true &&
+                      bestByMetric[metric.key]?.has(place.placeId) &&
+                      places.length > 1
+
+                    return (
+                      <td
+                        key={`${slot.id}-${metric.key}`}
+                        className={`px-3 py-3 align-top break-words text-ink sm:px-4 ${
+                          isBest ? 'bg-emerald-50 font-medium text-emerald-900' : ''
+                        } ${slot.role === 'prospect' && !isBest ? 'bg-brand-50/30' : ''}`}
+                      >
+                        {metric.render(place)}
+                      </td>
+                    )
+                  })}
+                </tr>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {METRICS.map((metric) => (
-              <tr key={metric.key} className="border-b border-border last:border-b-0">
-                <th className="sticky left-0 z-10 bg-white px-4 py-3 font-medium text-muted">
-                  {metric.label}
+
+              <tr className="border-b border-border">
+                <th className="sticky left-0 z-10 bg-white px-3 py-3 font-medium text-muted sm:px-4">
+                  Address
+                </th>
+                {filled.map((slot) => (
+                  <td
+                    key={`${slot.id}-address`}
+                    className="px-3 py-3 align-top break-words text-ink sm:px-4"
+                  >
+                    {slot.place?.formattedAddress || '—'}
+                  </td>
+                ))}
+              </tr>
+
+              <tr className="border-b border-border">
+                <th className="sticky left-0 z-10 bg-white px-3 py-3 font-medium text-muted sm:px-4">
+                  Maps
+                </th>
+                {filled.map((slot) => (
+                  <td key={`${slot.id}-maps`} className="px-3 py-3 align-top text-ink sm:px-4">
+                    {slot.place?.googleMapsURI ? (
+                      <ExternalLink href={slot.place.googleMapsURI}>Open listing</ExternalLink>
+                    ) : (
+                      '—'
+                    )}
+                  </td>
+                ))}
+              </tr>
+
+              <tr className="border-b border-border">
+                <th className="sticky left-0 z-10 bg-white px-3 py-3 font-medium text-muted sm:px-4">
+                  Recent star mix
                 </th>
                 {filled.map((slot) => {
                   const place = slot.place as PlaceDetails
-                  const isBest =
-                    metric.higherIsBetter === true &&
-                    bestByMetric[metric.key]?.has(place.placeId) &&
-                    places.length > 1
-
+                  const breakdown = reviewRatingBreakdown(place.reviews)
                   return (
-                    <td
-                      key={`${slot.id}-${metric.key}`}
-                      className={`px-4 py-3 align-top text-ink ${
-                        isBest ? 'bg-emerald-50 font-medium text-emerald-900' : ''
-                      } ${slot.role === 'prospect' && !isBest ? 'bg-brand-50/30' : ''}`}
-                    >
-                      {metric.render(place)}
+                    <td key={`${slot.id}-mix`} className="px-3 py-3 align-top text-ink sm:px-4">
+                      {place.reviews.length === 0 ? (
+                        '—'
+                      ) : (
+                        <div className="space-y-1 text-xs">
+                          {[5, 4, 3, 2, 1].map((star) => (
+                            <div key={star} className="flex items-center gap-2">
+                              <span className="w-6 shrink-0 text-muted">{star}★</span>
+                              <div className="h-1.5 min-w-[3rem] flex-1 overflow-hidden rounded-full bg-surface">
+                                <div
+                                  className="h-full rounded-full bg-amber-400"
+                                  style={{
+                                    width: `${(breakdown[star] / place.reviews.length) * 100}%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="w-4 shrink-0 text-right text-muted">
+                                {breakdown[star]}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </td>
                   )
                 })}
               </tr>
-            ))}
 
-            <tr className="border-b border-border">
-              <th className="sticky left-0 z-10 bg-white px-4 py-3 font-medium text-muted">
-                Address
-              </th>
-              {filled.map((slot) => (
-                <td key={`${slot.id}-address`} className="px-4 py-3 align-top text-ink">
-                  {slot.place?.formattedAddress || '—'}
-                </td>
-              ))}
-            </tr>
-
-            <tr className="border-b border-border">
-              <th className="sticky left-0 z-10 bg-white px-4 py-3 font-medium text-muted">
-                Maps
-              </th>
-              {filled.map((slot) => (
-                <td key={`${slot.id}-maps`} className="px-4 py-3 align-top text-ink">
-                  {slot.place?.googleMapsURI ? (
-                    <ExternalLink href={slot.place.googleMapsURI}>Open listing</ExternalLink>
-                  ) : (
-                    '—'
-                  )}
-                </td>
-              ))}
-            </tr>
-
-            <tr className="border-b border-border">
-              <th className="sticky left-0 z-10 bg-white px-4 py-3 font-medium text-muted">
-                Recent star mix
-              </th>
-              {filled.map((slot) => {
-                const place = slot.place as PlaceDetails
-                const breakdown = reviewRatingBreakdown(place.reviews)
-                return (
-                  <td key={`${slot.id}-mix`} className="px-4 py-3 align-top text-ink">
-                    {place.reviews.length === 0 ? (
-                      '—'
-                    ) : (
-                      <div className="space-y-1 text-xs">
-                        {[5, 4, 3, 2, 1].map((star) => (
-                          <div key={star} className="flex items-center gap-2">
-                            <span className="w-6 text-muted">{star}★</span>
-                            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface">
-                              <div
-                                className="h-full rounded-full bg-amber-400"
-                                style={{
-                                  width: `${(breakdown[star] / place.reviews.length) * 100}%`,
-                                }}
-                              />
-                            </div>
-                            <span className="w-4 text-right text-muted">{breakdown[star]}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </td>
-                )
-              })}
-            </tr>
-
-            <tr>
-              <th className="sticky left-0 z-10 bg-white px-4 py-3 font-medium text-muted">
-                Recent reviews
-              </th>
-              {filled.map((slot) => {
-                const place = slot.place as PlaceDetails
-                return (
-                  <td key={`${slot.id}-reviews`} className="px-4 py-3 align-top text-ink">
-                    {place.reviews.length === 0 ? (
-                      '—'
-                    ) : (
-                      <ul className="space-y-2.5">
-                        {place.reviews.slice(0, 3).map((review, index) => (
-                          <li
-                            key={`${review.authorName}-${review.publishTime}-${index}`}
-                            className="rounded-lg bg-surface/80 px-2.5 py-2"
-                          >
-                            <div className="flex items-center justify-between gap-2 text-xs text-muted">
-                              <span className="truncate font-medium text-ink">
-                                {review.authorName}
-                              </span>
-                              <span className="shrink-0">
-                                {review.rating != null ? `${review.rating.toFixed(0)}★` : '—'}
-                                {review.relativePublishTimeDescription
-                                  ? ` · ${review.relativePublishTimeDescription}`
-                                  : ''}
-                              </span>
-                            </div>
-                            {review.text ? (
-                              <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-muted">
-                                {review.text}
-                              </p>
-                            ) : null}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </td>
-                )
-              })}
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <th className="sticky left-0 z-10 bg-white px-3 py-3 font-medium text-muted sm:px-4">
+                  Recent reviews
+                </th>
+                {filled.map((slot) => {
+                  const place = slot.place as PlaceDetails
+                  return (
+                    <td key={`${slot.id}-reviews`} className="px-3 py-3 align-top text-ink sm:px-4">
+                      {place.reviews.length === 0 ? (
+                        '—'
+                      ) : (
+                        <ul className="space-y-2.5">
+                          {place.reviews.slice(0, 3).map((review, index) => (
+                            <li
+                              key={`${review.authorName}-${review.publishTime}-${index}`}
+                              className="rounded-lg bg-surface/80 px-2.5 py-2"
+                            >
+                              <div className="flex items-center justify-between gap-2 text-xs text-muted">
+                                <span className="min-w-0 truncate font-medium text-ink">
+                                  {review.authorName}
+                                </span>
+                                <span className="shrink-0">
+                                  {review.rating != null ? `${review.rating.toFixed(0)}★` : '—'}
+                                  {review.relativePublishTimeDescription
+                                    ? ` · ${review.relativePublishTimeDescription}`
+                                    : ''}
+                                </span>
+                              </div>
+                              {review.text ? (
+                                <p className="mt-1 line-clamp-3 break-words text-xs leading-relaxed text-muted">
+                                  {review.text}
+                                </p>
+                              ) : null}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </td>
+                  )
+                })}
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {prospect?.place ? (
@@ -312,6 +323,11 @@ export function ComparisonTable({ slots }: ComparisonTableProps) {
   )
 }
 
+function average(values: number[]): number | null {
+  if (values.length === 0) return null
+  return values.reduce((sum, value) => sum + value, 0) / values.length
+}
+
 function buildInsights(slots: CompetitorSlot[]): string[] {
   const prospect = slots.find((slot) => slot.role === 'prospect')?.place
   const competitors = slots
@@ -321,47 +337,91 @@ function buildInsights(slots: CompetitorSlot[]): string[] {
   if (!prospect || competitors.length === 0) return []
 
   const insights: string[] = []
+  const peerLabel =
+    competitors.length === 1 ? 'the competitor you selected' : 'the competitors you selected'
 
   const competitorRatings = competitors
     .map((place) => place.rating)
     .filter((rating): rating is number => rating != null)
   const maxCompetitorRating =
     competitorRatings.length > 0 ? Math.max(...competitorRatings) : null
+  const avgCompetitorRating = average(competitorRatings)
 
   if (prospect.rating != null && maxCompetitorRating != null) {
     if (prospect.rating < maxCompetitorRating) {
       const gap = (maxCompetitorRating - prospect.rating).toFixed(1)
+      const peerAvgText =
+        avgCompetitorRating != null
+          ? ` Peer listings here average ${avgCompetitorRating.toFixed(1)}★.`
+          : ''
       insights.push(
-        `${prospect.name} trails the top competitor by ${gap} stars on Google — closing that gap is often the fastest trust win.`,
+        `${prospect.name} is at ${prospect.rating.toFixed(1)}★ and trails the top competitor by ${gap} stars.${peerAvgText} Closing that gap is usually the fastest trust win.`,
       )
     } else if (prospect.rating > maxCompetitorRating) {
+      const lead = (prospect.rating - maxCompetitorRating).toFixed(1)
       insights.push(
-        `${prospect.name} leads on Google rating. Protect that edge by converting more happy customers into public reviews.`,
+        `${prospect.name} leads by ${lead} stars (${prospect.rating.toFixed(1)}★ vs ${maxCompetitorRating.toFixed(1)}★). That edge disappears quickly if competitors collect fresher reviews faster — keep converting happy customers into Google reviews.`,
       )
     } else {
       insights.push(
-        `${prospect.name} is tied with the strongest competitor on rating — review volume will decide who ranks higher.`,
+        `${prospect.name} is tied at ${prospect.rating.toFixed(1)}★ with the strongest competitor. When ratings are equal, review volume and recency decide who looks more trusted.`,
       )
     }
+  } else if (prospect.rating != null && avgCompetitorRating != null) {
+    insights.push(
+      `${prospect.name} sits at ${prospect.rating.toFixed(1)}★ while ${peerLabel} average ${avgCompetitorRating.toFixed(1)}★. A steady review flow is what moves you toward the top of this set.`,
+    )
   }
 
   const competitorCounts = competitors
     .map((place) => place.userRatingCount)
     .filter((count): count is number => count != null)
   const maxCompetitorCount = competitorCounts.length > 0 ? Math.max(...competitorCounts) : null
+  const avgCompetitorCount = average(competitorCounts)
 
   if (prospect.userRatingCount != null && maxCompetitorCount != null) {
     if (prospect.userRatingCount < maxCompetitorCount) {
       const deficit = maxCompetitorCount - prospect.userRatingCount
+      const peerAvgText =
+        avgCompetitorCount != null
+          ? ` Peer listings here average about ${Math.round(avgCompetitorCount).toLocaleString()} reviews.`
+          : ''
       insights.push(
-        `Competitors have up to ${deficit.toLocaleString()} more Google reviews. Consistent review collection can close this volume gap.`,
+        `${prospect.name} has ${prospect.userRatingCount.toLocaleString()} Google reviews — ${deficit.toLocaleString()} behind the top competitor.${peerAvgText} Consistent collection closes this proof gap.`,
       )
     } else if (prospect.userRatingCount > maxCompetitorCount) {
+      const lead = prospect.userRatingCount - maxCompetitorCount
       insights.push(
-        `${prospect.name} already has more Google reviews than the competitors selected — keep the cadence going.`,
+        `${prospect.name} leads with ${prospect.userRatingCount.toLocaleString()} reviews (${lead.toLocaleString()} more than the next competitor). Leaders still lose ground when review velocity slows — protect the lead with a weekly review habit.`,
+      )
+    } else if (avgCompetitorCount != null) {
+      insights.push(
+        `${prospect.name} matches the top competitor on review count (${prospect.userRatingCount.toLocaleString()}). Pulling ahead of the peer average (~${Math.round(avgCompetitorCount).toLocaleString()}) needs a more consistent review cadence.`,
       )
     }
   }
+
+  // Stretch goal even when the prospect looks strong on both headline metrics.
+  if (
+    prospect.rating != null &&
+    prospect.userRatingCount != null &&
+    maxCompetitorRating != null &&
+    maxCompetitorCount != null &&
+    prospect.rating >= maxCompetitorRating &&
+    prospect.userRatingCount >= maxCompetitorCount
+  ) {
+    const stretchRating = Math.min(5, Number((prospect.rating + 0.1).toFixed(1)))
+    const stretchReviews = Math.ceil(prospect.userRatingCount * 1.25)
+    if (stretchRating > prospect.rating || stretchReviews > prospect.userRatingCount) {
+      insights.push(
+        `Among this set you’re ahead — but local customers still compare listings. Moving from ${prospect.rating.toFixed(1)}★ / ${prospect.userRatingCount.toLocaleString()} reviews toward ${stretchRating.toFixed(1)}★ / ${stretchReviews.toLocaleString()}+ reviews is a realistic next target with steady review collection.`,
+      )
+    }
+  }
+
+  insights.push(
+    'Aim for at least 1 new Google review every day to keep momentum — consistency beats occasional review spikes.',
+  )
 
   const missingWebsite = !prospect.websiteURI
   const competitorHasWebsite = competitors.some((place) => Boolean(place.websiteURI))
@@ -369,14 +429,18 @@ function buildInsights(slots: CompetitorSlot[]): string[] {
     insights.push(
       `${prospect.name} is missing a website on Google while at least one competitor lists one — that hurts discovery and credibility.`,
     )
+  } else if (missingWebsite) {
+    insights.push(
+      `${prospect.name} has no website on the Google listing. Adding one makes the profile look more complete and trustworthy.`,
+    )
   }
 
   const missingPhone = !prospect.phoneNumber
   if (missingPhone) {
     insights.push(
-      `${prospect.name} has no phone number on the Google listing. Adding it removes a common friction point for local customers.`,
+      `${prospect.name} has no phone number on the Google listing. Adding it removes a common friction point for local customers ready to call.`,
     )
   }
 
-  return insights.slice(0, 4)
+  return insights.slice(0, 5)
 }

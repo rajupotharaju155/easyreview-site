@@ -167,6 +167,17 @@
   background: #6b2fd5 !important;
 }
 
+/* Lead magnet search modal — keep within mobile viewport */
+.lead-magnet-search-modal.ant-modal {
+  max-width: calc(100vw - 1.5rem) !important;
+  margin: 0 auto;
+}
+
+.lead-magnet-search-modal .ant-modal-content {
+  max-height: min(90dvh, 900px);
+  overflow: auto;
+}
+
 /* Ant Design overrides for brand alignment */
 .ant-btn-primary {
   box-shadow: 0 1px 2px rgba(107, 47, 213, 0.25) !important;
