@@ -4,6 +4,7 @@ import { MainLayout } from './components/layout/MainLayout'
 import { ScrollToTop } from './components/layout/ScrollToTop'
 import { FAQ } from './pages/FAQ'
 import { Home } from './pages/Home'
+import { LeadMagnet } from './pages/LeadMagnet'
 import { Pricing } from './pages/Pricing'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { Rate } from './pages/Rate'
@@ -30,6 +31,7 @@ export default function App() {
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="pricing" element={<Pricing />} />
+            <Route path="lead-magnet" element={<LeadMagnet />} />
             <Route path="faq" element={<FAQ />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsOfService />} />

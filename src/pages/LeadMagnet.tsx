@@ -1,0 +1,225 @@
+import { useMemo, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { Link } from 'react-router-dom'
+import { message } from 'antd'
+import { PageContainer } from '../components/layout/PageContainer'
+import {
+  CompetitorColumn,
+  type CompetitorSlot,
+} from '../components/lead-magnet/CompetitorColumn'
+import { ComparisonTable } from '../components/lead-magnet/ComparisonTable'
+import { SectionHeading } from '../components/shared/SectionHeading'
+import {
+  fetchPlaceDetails,
+  type PlaceDetails,
+  type TextSearchPlaceResult,
+} from '../lib/googlePlaces'
+
+const INITIAL_SLOTS: CompetitorSlot[] = [
+  {
+    id: 'prospect',
+    role: 'prospect',
+    label: 'Your business',
+    place: null,
+    loading: false,
+  },
+  {
+    id: 'competitor-1',
+    role: 'competitor',
+    label: 'Competitor 1',
+    place: null,
+    loading: false,
+  },
+  {
+    id: 'competitor-2',
+    role: 'competitor',
+    label: 'Competitor 2',
+    place: null,
+    loading: false,
+  },
+]
+
+export function LeadMagnet() {
+  const [slots, setSlots] = useState<CompetitorSlot[]>(INITIAL_SLOTS)
+
+  const updateSlot = (id: string, patch: Partial<CompetitorSlot>) => {
+    setSlots((current) =>
+      current.map((slot) => (slot.id === id ? { ...slot, ...patch } : slot)),
+    )
+  }
+
+  const handlePlaceLoaded = (id: string, place: PlaceDetails) => {
+    updateSlot(id, { place, loading: false })
+  }
+
+  const handleClear = (id: string) => {
+    updateSlot(id, { place: null, loading: false })
+  }
+
+  const handleCompetitorsSelected = async (
+    sourceSlotId: string,
+    places: TextSearchPlaceResult[],
+  ) => {
+    if (places.length === 0) return
+
+    const sourceSlot = slots.find((slot) => slot.id === sourceSlotId)
+    const isReplacing = sourceSlot?.place != null
+
+    const targetIds = isReplacing
+      ? [sourceSlotId]
+      : slots
+          .filter((slot) => slot.role === 'competitor' && slot.place == null && !slot.loading)
+          .map((slot) => slot.id)
+          .slice(0, places.length)
+
+    if (targetIds.length === 0) {
+      message.info('No empty competitor slots available.')
+      return
+    }
+
+    const assignments = places.slice(0, targetIds.length).map((place, index) => ({
+      slotId: targetIds[index],
+      placeId: place.placeId,
+    }))
+
+    for (const assignment of assignments) {
+      updateSlot(assignment.slotId, { loading: true })
+    }
+
+    const results = await Promise.allSettled(
+      assignments.map(async (assignment) => {
+        const details = await fetchPlaceDetails(assignment.placeId)
+        return { slotId: assignment.slotId, details }
+      }),
+    )
+
+    let successCount = 0
+    results.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        handlePlaceLoaded(result.value.slotId, result.value.details)
+        successCount += 1
+        return
+      }
+      updateSlot(assignments[index].slotId, { loading: false })
+    })
+
+    if (successCount === 0) {
+      message.error('Could not load the selected businesses. Please try again.')
+      return
+    }
+
+    if (successCount < assignments.length) {
+      message.warning(`Added ${successCount} of ${assignments.length} competitors.`)
+      return
+    }
+
+    message.success(
+      successCount === 1 ? 'Competitor added' : `${successCount} competitors added`,
+    )
+  }
+
+  const filledCount = slots.filter((slot) => slot.place != null).length
+  const selectedPlaceIds = useMemo(
+    () => slots.map((slot) => slot.place?.placeId).filter((id): id is string => Boolean(id)),
+    [slots],
+  )
+  const emptyCompetitorSlotIds = useMemo(
+    () =>
+      slots
+        .filter((slot) => slot.role === 'competitor' && slot.place == null && !slot.loading)
+        .map((slot) => slot.id),
+    [slots],
+  )
+
+  return (
+    <>
+      <Helmet>
+        <title>Competitor Analysis — EasyReview</title>
+        <meta
+          name="description"
+          content="Compare your Google Business profile against local competitors — ratings, reviews, website, and listing completeness side by side."
+        />
+      </Helmet>
+
+      <section className="hero-atmosphere border-b border-border py-12 sm:py-16">
+        <PageContainer>
+          <SectionHeading
+            eyebrow="Free competitive snapshot"
+            title="See Where You Stand on Google"
+            subtitle="Add your business, then find competitors by name — or discover them with a simple search like “salons in Mumbai”."
+          />
+        </PageContainer>
+      </section>
+
+      <section className="bg-white py-10 sm:py-14">
+        <PageContainer className="max-w-7xl">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="font-display text-xl font-bold text-ink sm:text-2xl">
+                Choose 3 businesses
+              </h2>
+              <p className="mt-1 text-sm text-muted">
+                Column 1 is always the prospect. Columns 2 and 3 are competitors.
+              </p>
+            </div>
+            <p className="text-sm font-medium text-muted">
+              {filledCount}/3 selected
+            </p>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            {slots.map((slot, index) => (
+              <div
+                key={slot.id}
+                className="animate-fade-up"
+                style={{ animationDelay: `${index * 0.08}s` }}
+              >
+                <CompetitorColumn
+                  slot={slot}
+                  excludePlaceIds={selectedPlaceIds}
+                  emptyCompetitorSlotIds={emptyCompetitorSlotIds}
+                  onPlaceLoaded={(place) => handlePlaceLoaded(slot.id, place)}
+                  onCompetitorsSelected={
+                    slot.role === 'competitor'
+                      ? (places) => handleCompetitorsSelected(slot.id, places)
+                      : undefined
+                  }
+                  onClear={() => handleClear(slot.id)}
+                  onLoadingChange={(loading) => updateSlot(slot.id, { loading })}
+                />
+              </div>
+            ))}
+          </div>
+
+          <ComparisonTable slots={slots} />
+
+          {filledCount >= 2 ? (
+            <div className="cta-band mt-12 rounded-2xl px-6 py-8 text-center text-white sm:px-10">
+              <h3 className="font-display text-2xl font-bold tracking-tight">
+                Ready to close the gap?
+              </h3>
+              <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">
+                EasyReview helps you turn happy customers into Google reviews — so your listing
+                can catch up (or stay ahead) of the competition.
+              </p>
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  to="/"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-sm font-semibold text-white no-underline transition-colors hover:bg-white/10"
+                >
+                  Learn how it works
+                </Link>
+                <Link
+                  to="/pricing"
+                  className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 no-underline transition-opacity hover:opacity-90"
+                >
+                  View pricing
+                </Link>
+              </div>
+            </div>
+          ) : null}
+        </PageContainer>
+      </section>
+    </>
+  )
+}
