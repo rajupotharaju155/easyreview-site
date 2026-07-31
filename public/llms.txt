@@ -1,0 +1,18 @@
+# EasyReview
+
+> EasyReview helps local businesses turn happy customers into 5-star Google reviews with QR codes, while routing unhappy feedback privately before it reaches Google.
+
+EasyReview is a review-growth product for local businesses in India and beyond. Customers scan a counter QR, rate their visit, get AI-drafted review text for 4–5★ experiences, or submit private feedback for 1–3★.
+
+## Pages
+
+- [Home](https://easyreview.co.in/): Product overview, how it works, and features
+- [Pricing](https://easyreview.co.in/pricing): Plans, early-bird offer, and add-ons
+- [Competitor analysis](https://easyreview.co.in/lead-magnet): Compare your Google presence against nearby competitors
+- [FAQ](https://easyreview.co.in/faq): Common questions about EasyReview
+
+## Optional
+
+- [Privacy Policy](https://easyreview.co.in/privacy): How customer and business data is handled
+- [Terms of Service](https://easyreview.co.in/terms): Legal terms for using EasyReview
+- [Sitemap](https://easyreview.co.in/sitemap.xml): Machine-readable list of public URLs
