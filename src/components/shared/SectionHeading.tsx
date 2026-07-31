@@ -7,8 +7,10 @@ export function SectionHeading({
   align = 'center',
   className = '',
   id,
+  as = 'h2',
 }: SectionHeadingProps) {
   const alignment = align === 'center' ? 'text-center mx-auto' : 'text-left'
+  const HeadingTag = as
 
   return (
     <div className={`max-w-2xl ${alignment} ${className}`}>
@@ -17,12 +19,12 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2
+      <HeadingTag
         id={id}
         className="font-display text-2xl font-bold tracking-tight text-ink sm:text-4xl"
       >
         {title}
-      </h2>
+      </HeadingTag>
       {subtitle ? (
         <p className="mt-3 text-sm leading-relaxed text-muted sm:mt-4 sm:text-lg">{subtitle}</p>
       ) : null}

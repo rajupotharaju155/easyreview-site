@@ -18,6 +18,7 @@ export function TermsOfService() {
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">
         <PageContainer>
           <SectionHeading
+            as="h1"
             title="Terms of Service"
             subtitle={`Last updated: ${TERMS_LAST_UPDATED}`}
           />

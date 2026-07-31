@@ -7,6 +7,8 @@ export interface SectionHeadingProps {
   align?: 'left' | 'center'
   className?: string
   id?: string
+  /** Page title heading. Defaults to h2 for in-page sections. */
+  as?: 'h1' | 'h2'
 }
 
 export type StatIconName = 'eye' | 'reply' | 'star'

@@ -17,6 +17,7 @@ export function FAQ() {
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">
         <PageContainer>
           <SectionHeading
+            as="h1"
             title="Frequently Asked Questions"
             subtitle="Everything you need to know about EasyReview"
           />

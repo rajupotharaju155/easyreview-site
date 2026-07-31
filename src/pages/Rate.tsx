@@ -262,6 +262,9 @@ export function Rate() {
 
   return (
     <div className="relative flex min-h-dvh flex-col bg-white sm:bg-transparent">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 hidden sm:block"

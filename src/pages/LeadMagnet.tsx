@@ -144,6 +144,7 @@ export function LeadMagnet() {
       <section className="hero-atmosphere overflow-x-clip border-b border-border py-10 sm:py-16">
         <PageContainer>
           <SectionHeading
+            as="h1"
             eyebrow="Free competitive snapshot"
             title="See Where You Stand on Google"
             subtitle="Add your business, then find competitors by name — or discover them with a simple search like “salons in Mumbai”."

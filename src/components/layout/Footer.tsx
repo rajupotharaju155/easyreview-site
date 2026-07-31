@@ -3,15 +3,10 @@ import { Logo } from '../shared/Logo'
 import { PageContainer } from './PageContainer'
 
 const productLinks = [
+  { label: 'Home', to: '/' },
   { label: 'Pricing', to: '/pricing' },
+  { label: 'Competitor Analysis', to: '/lead-magnet' },
   { label: 'FAQ', to: '/faq' },
-  { label: 'Login', to: '#' },
-  { label: 'Sign Up', to: '#' },
-]
-
-const companyLinks = [
-  { label: 'About', to: '#' },
-  { label: 'Contact', to: '#' },
 ]
 
 const legalLinks = [
@@ -23,7 +18,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
       <PageContainer className="py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           <div className="lg:col-span-1">
             <Logo />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
@@ -33,7 +28,6 @@ export function Footer() {
           </div>
 
           <FooterColumn title="Product" links={productLinks} />
-          <FooterColumn title="Company" links={companyLinks} />
           <FooterColumn title="Legal" links={legalLinks} />
         </div>
 
@@ -59,7 +53,7 @@ function FooterColumn({ title, links }: FooterColumnProps) {
           <li key={link.label}>
             <Link
               to={link.to}
-              className="text-sm text-muted transition-colors hover:text-brand-600"
+              className="text-sm text-muted no-underline transition-colors hover:text-brand-600"
             >
               {link.label}
             </Link>

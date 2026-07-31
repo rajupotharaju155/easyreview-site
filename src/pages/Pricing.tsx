@@ -19,6 +19,7 @@ export function Pricing() {
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">
         <PageContainer>
           <SectionHeading
+            as="h1"
             title="Plans Built for Growing Ratings"
             subtitle="Launch free, collect reviews from day one, and upgrade only when your business is ready to scale."
           />
