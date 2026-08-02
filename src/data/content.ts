@@ -70,7 +70,7 @@ export const pricingTiers: PricingTier[] = [
     id: 'early-bird',
     name: 'Early Bird',
     price: '₹0',
-    description: 'Free for first 2 months',
+    description: 'Free for 1 month',
     features: [
       '1 business location',
       'Unlimited QR scans & review requests',
@@ -136,7 +136,7 @@ export const pricingFaqs: FAQItem[] = [
     id: 'p1',
     question: 'Can I start on Early Bird and upgrade later?',
     answer:
-      'Yes. Claim an Early Bird spot for your first two months free, then upgrade to Growth whenever you need unlimited scans or multi-location tools. Your QR links and settings stay intact.',
+      'Yes. Claim an Early Bird spot for your first month free, then upgrade to Growth whenever you need unlimited scans or multi-location tools. Your QR links and settings stay intact.',
   },
   {
     id: 'p2',
@@ -185,7 +185,7 @@ export const faqCategories: FAQCategory[] = [
         id: 'g4',
         question: 'Is there a free plan?',
         answer:
-          'Yes. Early Bird is free for your first two months while spots last. It includes one business location, AI drafts, the private feedback gate, and basic analytics.',
+          'Yes. Early Bird is free for your first month while spots last. It includes one business location, AI drafts, the private feedback gate, and basic analytics.',
       },
     ],
   },
