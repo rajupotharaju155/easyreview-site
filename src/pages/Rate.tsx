@@ -44,13 +44,21 @@ function RateCard({
   children,
   onBack,
   showBack = false,
+  fill = false,
 }: {
   children: ReactNode
   onBack?: () => void
   showBack?: boolean
+  fill?: boolean
 }) {
   return (
-    <div className="flex min-h-dvh w-full flex-col bg-white sm:min-h-0 sm:max-w-[420px] sm:overflow-hidden sm:rounded-[28px] sm:border sm:border-white/80 sm:shadow-[0_20px_60px_rgba(15,23,42,0.1)]">
+    <div
+      className={`flex w-full flex-col bg-white sm:max-w-[420px] sm:overflow-hidden sm:rounded-[28px] sm:border sm:border-white/80 sm:shadow-[0_20px_60px_rgba(15,23,42,0.1)] ${
+        fill
+          ? 'h-dvh max-h-dvh overflow-hidden sm:h-auto sm:max-h-none sm:min-h-0'
+          : 'min-h-dvh sm:min-h-0'
+      }`}
+    >
       <div className="relative flex shrink-0 items-center justify-between gap-3 px-5 pb-2 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-6 sm:pt-6">
         <div className="flex min-w-0 items-center gap-1">
           {showBack && onBack ? (
@@ -70,8 +78,16 @@ function RateCard({
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col justify-center px-5 py-6 sm:px-6 sm:pb-7 sm:pt-4">
-        {children}
+      <div
+        className={`flex flex-1 flex-col px-5 py-6 sm:px-6 sm:pb-7 sm:pt-4 ${
+          fill ? 'min-h-0 justify-start' : 'justify-center'
+        }`}
+      >
+        {fill ? (
+          <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+        ) : (
+          children
+        )}
       </div>
 
       <div className="flex shrink-0 items-center justify-center gap-2 border-t border-slate-100 px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
@@ -461,12 +477,12 @@ export function Rate() {
             </RateCard>
           </div>
         ) : location && step === 'suggestions' ? (
-          <div className="animate-fade-up w-full sm:w-auto">
+          <div className="animate-fade-up flex h-dvh min-h-0 w-full flex-col sm:h-auto sm:w-auto">
             <Helmet>
               <title>Choose a review | EasyReview</title>
             </Helmet>
-            <RateCard showBack onBack={handleBackToStars}>
-              <p className="flex items-center justify-center gap-2 text-center text-sm font-bold text-ink">
+            <RateCard showBack onBack={handleBackToStars} fill>
+              <p className="flex shrink-0 items-center justify-center gap-2 text-center text-sm font-bold text-ink">
                 <Sparkles className="h-4 w-4 shrink-0 text-brand-600" aria-hidden />
                 Select a review to copy and post on Google
               </p>
@@ -487,8 +503,8 @@ export function Rate() {
                   </button>
                 </div>
               ) : (
-                <>
-                  <div className="mt-4 max-h-[40dvh] overflow-y-auto pt-2">
+                <div className="flex min-h-0 flex-1 flex-col">
+                  <div className="mt-4 min-h-0 flex-1 overflow-y-auto overscroll-contain pt-2 sm:max-h-[40dvh] sm:flex-none">
                     <div className="flex flex-col gap-3 pb-1">
                       {suggestions.map((suggestion, index) => {
                         const isSelected = index === selectedSuggestionIndex
@@ -515,7 +531,7 @@ export function Rate() {
                     </div>
                   </div>
 
-                  <div className="pt-4">
+                  <div className="shrink-0 pt-4">
                     <button
                       type="button"
                       onClick={() => void handleCopyAndOpenGoogle()}
@@ -534,7 +550,7 @@ export function Rate() {
                       <ArrowUpRight className="h-4 w-4" aria-hidden />
                     </button>
                   </div>
-                </>
+                </div>
               )}
             </RateCard>
           </div>
