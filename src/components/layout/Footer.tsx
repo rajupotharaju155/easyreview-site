@@ -6,6 +6,7 @@ const productLinks = [
   { label: 'Home', to: '/' },
   { label: 'Pricing', to: '/pricing' },
   { label: 'Competitor Analysis', to: '/lead-magnet' },
+  { label: 'Demo video', to: '/demo-video' },
   { label: 'FAQ', to: '/faq' },
 ]
 

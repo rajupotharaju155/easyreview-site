@@ -2,6 +2,7 @@ import { ConfigProvider } from 'antd'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MainLayout } from './components/layout/MainLayout'
 import { ScrollToTop } from './components/layout/ScrollToTop'
+import { DemoVideo } from './pages/DemoVideo'
 import { FAQ } from './pages/FAQ'
 import { Home } from './pages/Home'
 import { LeadMagnet } from './pages/LeadMagnet'
@@ -29,6 +30,7 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="rate/:slug" element={<Rate />} />
+          <Route path="demo-video" element={<DemoVideo />} />
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="pricing" element={<Pricing />} />

@@ -1,5 +1,6 @@
-import { Col, Row } from 'antd'
-import { ArrowRight } from 'lucide-react'
+import { Button, Col, Row } from 'antd'
+import { ArrowRight, Play } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { howItWorksSteps } from '../../data/content'
 import { PageContainer } from '../layout/PageContainer'
 import { SectionHeading } from '../shared/SectionHeading'
@@ -17,6 +18,19 @@ export function HowItWorks() {
         />
 
         <FlowDiagram />
+
+        <div className="mt-8 flex justify-center">
+          <Link to="/demo-video" className="no-underline">
+            <Button
+              type="primary"
+              size="large"
+              className="!h-11 !px-6 !text-sm sm:!h-12 sm:!px-7 sm:!text-base"
+              icon={<Play className="size-4 fill-current" aria-hidden />}
+            >
+              See Demo Video
+            </Button>
+          </Link>
+        </div>
 
         <Row gutter={[20, 20]} className="mt-10">
           {howItWorksSteps.map((step, index) => (
