@@ -9,6 +9,8 @@ EasyReview is a review-growth product for local businesses in India and beyond. 
 - [Home](https://easyreview.co.in/): Product overview, how it works, and features
 - [Pricing](https://easyreview.co.in/pricing): Plans, early-bird offer, and add-ons
 - [Competitor analysis](https://easyreview.co.in/competitor-analysis): Compare your Google presence against nearby competitors
+- [Guides](https://easyreview.co.in/guides): Practical Google review playbooks for local businesses
+- [Restaurant QR reviews guide](https://easyreview.co.in/guides/restaurant-qr-code-google-reviews): How restaurants use QR codes to get more 5-star Google reviews
 - [FAQ](https://easyreview.co.in/faq): Common questions about EasyReview
 
 ## Optional

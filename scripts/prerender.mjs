@@ -43,6 +43,8 @@ const PORT = 4173
 const routes = [
   '/pricing',
   '/competitor-analysis',
+  '/guides',
+  '/guides/restaurant-qr-code-google-reviews',
   '/demo-video',
   '/faq',
   '/privacy',

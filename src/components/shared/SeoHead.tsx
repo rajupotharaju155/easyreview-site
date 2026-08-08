@@ -14,6 +14,10 @@ type SeoHeadProps = {
   imageUrl?: string
   /** Alt text for og/twitter image */
   imageAlt?: string
+  imageWidth?: string
+  imageHeight?: string
+  /** Open Graph type — use `article` for guides/blog posts */
+  ogType?: 'website' | 'article'
   /** Search robots directive; omit for index,follow */
   robots?: string
 }
@@ -30,6 +34,9 @@ export function SeoHead({
   path,
   imageUrl = OG_IMAGE_URL,
   imageAlt = 'EasyReview — collecting reviews made easy',
+  imageWidth = OG_IMAGE_WIDTH,
+  imageHeight = OG_IMAGE_HEIGHT,
+  ogType = 'website',
   robots,
 }: SeoHeadProps) {
   const url = absoluteUrl(path)
@@ -41,14 +48,14 @@ export function SeoHead({
       {robots ? <meta name="robots" content={robots} /> : null}
       <link rel="canonical" href={url} />
 
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogType} />
       <meta property="og:site_name" content="EasyReview" />
       <meta property="og:url" content={url} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imageUrl} />
-      <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
-      <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+      <meta property="og:image:width" content={imageWidth} />
+      <meta property="og:image:height" content={imageHeight} />
       <meta property="og:image:alt" content={imageAlt} />
 
       <meta name="twitter:card" content="summary_large_image" />

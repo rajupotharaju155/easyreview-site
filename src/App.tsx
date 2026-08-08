@@ -2,15 +2,17 @@ import { ConfigProvider } from 'antd'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MainLayout } from './components/layout/MainLayout'
 import { ScrollToTop } from './components/layout/ScrollToTop'
+import { CompetitorAnalysis } from './pages/CompetitorAnalysis'
 import { DemoVideo } from './pages/DemoVideo'
 import { FAQ } from './pages/FAQ'
+import { Guides } from './pages/Guides'
 import { Home } from './pages/Home'
-import { CompetitorAnalysis } from './pages/CompetitorAnalysis'
 import { NotFound } from './pages/NotFound'
 import { Pricing } from './pages/Pricing'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { Rate } from './pages/Rate'
 import { TermsOfService } from './pages/TermsOfService'
+import { RestaurantGuide } from './pages/guides/RestaurantGuide'
 
 const theme = {
   token: {
@@ -35,6 +37,11 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="competitor-analysis" element={<CompetitorAnalysis />} />
+            <Route path="guides" element={<Guides />} />
+            <Route
+              path="guides/restaurant-qr-code-google-reviews"
+              element={<RestaurantGuide />}
+            />
             <Route path="faq" element={<FAQ />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsOfService />} />
