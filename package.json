@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@sparticuz/chromium": "^149.0.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/google.maps": "^3.65.3",
     "@types/node": "^24.13.2",
@@ -36,6 +37,7 @@
     "oxlint": "^1.71.0",
     "prettier": "^3.9.6",
     "puppeteer": "^25.5.0",
+    "puppeteer-core": "^25.5.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.65.0",
