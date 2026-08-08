@@ -177,25 +177,31 @@ export function CompetitorColumn({
         destroyOnHidden
         centered
         width="100%"
-        className="lead-magnet-search-modal"
+        className="competitor-analysis-search-modal"
         styles={{
           container: {
             maxWidth: isProspect ? 520 : 560,
             margin: '0 auto',
-            padding: 0,
+          },
+          header: {
+            padding: '16px 20px 4px',
+            marginBottom: 0,
+          },
+          body: {
+            padding: '4px 20px 16px',
           },
         }}
       >
         {isProspect ? (
           <>
-            <p className="mb-3 text-sm text-muted">
+            <p className="mb-3 text-sm leading-relaxed text-muted">
               Search by your business name on Google Places, then select the correct listing.
             </p>
             <GoogleBusinessSearch onPlaceSelected={handleAutocompleteSelected} />
           </>
         ) : (
           <>
-            <p className="mb-3 text-sm text-muted">
+            <p className="mb-3 text-sm leading-relaxed text-muted">
               Search with a category + area (e.g. “Restaurants in Hyderabad”) or a known business
               name
             </p>

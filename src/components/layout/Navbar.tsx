@@ -5,7 +5,7 @@ import { PageContainer } from './PageContainer'
 
 const navLinks = [
   { label: 'Pricing', to: '/pricing' },
-  { label: 'Compare', to: '/lead-magnet' },
+  { label: 'Compare', to: '/competitor-analysis' },
   { label: 'Demo video', to: '/demo-video' },
   { label: 'FAQ', to: '/faq' },
 ]

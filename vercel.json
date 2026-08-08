@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/lead-magnet",
+      "destination": "/competitor-analysis",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!robots\\.txt|sitemap\\.xml|llms\\.txt|demo-video\\.html).*)",

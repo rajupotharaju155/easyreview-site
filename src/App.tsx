@@ -5,7 +5,7 @@ import { ScrollToTop } from './components/layout/ScrollToTop'
 import { DemoVideo } from './pages/DemoVideo'
 import { FAQ } from './pages/FAQ'
 import { Home } from './pages/Home'
-import { LeadMagnet } from './pages/LeadMagnet'
+import { CompetitorAnalysis } from './pages/CompetitorAnalysis'
 import { NotFound } from './pages/NotFound'
 import { Pricing } from './pages/Pricing'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
@@ -34,7 +34,7 @@ export default function App() {
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="pricing" element={<Pricing />} />
-            <Route path="lead-magnet" element={<LeadMagnet />} />
+            <Route path="competitor-analysis" element={<CompetitorAnalysis />} />
             <Route path="faq" element={<FAQ />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsOfService />} />

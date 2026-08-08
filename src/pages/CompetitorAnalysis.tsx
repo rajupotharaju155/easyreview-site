@@ -6,8 +6,8 @@ import { SITE_URL, SeoHead } from '../components/shared/SeoHead'
 import {
   CompetitorColumn,
   type CompetitorSlot,
-} from '../components/lead-magnet/CompetitorColumn'
-import { ComparisonTable } from '../components/lead-magnet/ComparisonTable'
+} from '../components/competitor-analysis/CompetitorColumn'
+import { ComparisonTable } from '../components/competitor-analysis/ComparisonTable'
 import { SectionHeading } from '../components/shared/SectionHeading'
 import {
   fetchPlaceDetails,
@@ -39,7 +39,7 @@ const INITIAL_SLOTS: CompetitorSlot[] = [
   },
 ]
 
-export function LeadMagnet() {
+export function CompetitorAnalysis() {
   const [slots, setSlots] = useState<CompetitorSlot[]>(INITIAL_SLOTS)
 
   const updateSlot = (id: string, patch: Partial<CompetitorSlot>) => {
@@ -134,10 +134,10 @@ export function LeadMagnet() {
   return (
     <>
       <SeoHead
-        path="/lead-magnet"
+        path="/competitor-analysis"
         title="Competitor Analysis — EasyReview"
         description="Compare your Google Business profile against local competitors — ratings, reviews, website, and listing completeness side by side."
-        imageUrl={`${SITE_URL}/og-lead-magnet.jpg`}
+        imageUrl={`${SITE_URL}/og-competitor-analysis.jpg`}
         imageAlt="EasyReview competitor analysis — compare your business with competitors"
       />
 

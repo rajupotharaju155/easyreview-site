@@ -42,7 +42,7 @@ const PORT = 4173
 /** Public SEO pages only — skip dynamic /rate/:slug. `/` last so other routes can restore the Vite shell. */
 const routes = [
   '/pricing',
-  '/lead-magnet',
+  '/competitor-analysis',
   '/demo-video',
   '/faq',
   '/privacy',
