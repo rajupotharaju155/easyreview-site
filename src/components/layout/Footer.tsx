@@ -33,16 +33,20 @@ const guideLinks = [
     to: '/guides/dental-practices-5-star-google-reviews',
   },
   {
-    label: 'Mobile & Laptop Repair shop Google reviews',
-    to: '/guides/mobile-laptop-repair-google-reviews',
+    label: 'Real estate Google reviews',
+    to: '/guides/real-estate-5-star-google-reviews',
   },
   {
     label: 'Spa & Wellness Google reviews',
     to: '/guides/spa-wellness-google-reviews',
   },
   {
-    label: 'Real estate Google reviews',
-    to: '/guides/real-estate-5-star-google-reviews',
+    label: 'Photography Google reviews',
+    to: '/guides/photography-google-reviews',
+  },
+  {
+    label: 'Mobile & Laptop Repair shop Google reviews',
+    to: '/guides/mobile-laptop-repair-google-reviews',
   },
 ]
 

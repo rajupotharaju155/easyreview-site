@@ -15,9 +15,10 @@ EasyReview is a review-growth product for local businesses in India and beyond. 
 - [Gym Google reviews guide](https://easyreview.co.in/guides/turn-members-into-5-star-google-review): How gyms turn happy members into 5-star Google reviews
 - [Salon Google reviews guide](https://easyreview.co.in/guides/easiest-way-salons-collect-google-reviews): How salons collect Google reviews after every appointment
 - [Dental Google reviews guide](https://easyreview.co.in/guides/dental-practices-5-star-google-reviews): How dental practices get more 5-star Google reviews
-- [Repair shop Google reviews guide](https://easyreview.co.in/guides/mobile-laptop-repair-google-reviews): How mobile and laptop repair shops win more 5-star reviews
-- [Spa & wellness Google reviews guide](https://easyreview.co.in/guides/spa-wellness-google-reviews): A simple system for spas to get more 5-star ratings
 - [Real estate Google reviews guide](https://easyreview.co.in/guides/real-estate-5-star-google-reviews): How agents turn happy clients into 5-star Google reviews
+- [Spa & wellness Google reviews guide](https://easyreview.co.in/guides/spa-wellness-google-reviews): A simple system for spas to get more 5-star ratings
+- [Photography Google reviews guide](https://easyreview.co.in/guides/photography-google-reviews): How photographers collect Google reviews after every shoot
+- [Repair shop Google reviews guide](https://easyreview.co.in/guides/mobile-laptop-repair-google-reviews): How mobile and laptop repair shops win more 5-star reviews
 - [FAQ](https://easyreview.co.in/faq): Common questions about EasyReview
 
 ## Optional
