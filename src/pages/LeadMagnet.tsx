@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { message } from 'antd'
 import { PageContainer } from '../components/layout/PageContainer'
+import { SITE_URL, SeoHead } from '../components/shared/SeoHead'
 import {
   CompetitorColumn,
   type CompetitorSlot,
@@ -133,13 +133,13 @@ export function LeadMagnet() {
 
   return (
     <>
-      <Helmet>
-        <title>Competitor Analysis — EasyReview</title>
-        <meta
-          name="description"
-          content="Compare your Google Business profile against local competitors — ratings, reviews, website, and listing completeness side by side."
-        />
-      </Helmet>
+      <SeoHead
+        path="/lead-magnet"
+        title="Competitor Analysis — EasyReview"
+        description="Compare your Google Business profile against local competitors — ratings, reviews, website, and listing completeness side by side."
+        imageUrl={`${SITE_URL}/og-lead-magnet.jpg`}
+        imageAlt="EasyReview competitor analysis — compare your business with competitors"
+      />
 
       <section className="hero-atmosphere overflow-x-clip border-b border-border py-10 sm:py-16">
         <PageContainer>

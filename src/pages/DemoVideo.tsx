@@ -1,18 +1,16 @@
-import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { Logo } from '../components/shared/Logo'
+import { SeoHead } from '../components/shared/SeoHead'
 
 export function DemoVideo() {
   return (
     <>
-      <Helmet>
-        <title>Demo video — EasyReview</title>
-        <meta
-          name="description"
-          content="Watch how EasyReview helps customers leave five-star Google reviews in a few taps."
-        />
-      </Helmet>
+      <SeoHead
+        path="/demo-video"
+        title="Demo video — EasyReview"
+        description="Watch how EasyReview helps customers leave five-star Google reviews in a few taps."
+      />
       <div className="flex h-dvh min-h-0 flex-col bg-[#F4F1EA]">
         <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-black/5 bg-white/90 px-4 backdrop-blur-md sm:px-6">
           <Logo className="min-w-0 [&_span]:truncate" />
