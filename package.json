@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && npm run prerender",
+    "prerender": "node scripts/prerender.mjs",
     "lint": "eslint . && oxlint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -34,6 +35,7 @@
     "globals": "^17.7.0",
     "oxlint": "^1.71.0",
     "prettier": "^3.9.6",
+    "puppeteer": "^25.5.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.65.0",

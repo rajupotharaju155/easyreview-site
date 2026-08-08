@@ -1,0 +1,177 @@
+/**
+ * Post-build prerender for public marketing routes.
+ * Serves dist/ with SPA fallback (so /demo-video hits the React app, not
+ * demo-video.html), lets React + Helmet render, then writes static HTML.
+ */
+import { createServer } from 'node:http'
+import { createReadStream } from 'node:fs'
+import { access, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import puppeteer from 'puppeteer'
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const dist = path.join(root, 'dist')
+const PORT = 4173
+
+/** Public SEO pages only — skip dynamic /rate/:slug. `/` last so other routes can restore the Vite shell. */
+const routes = [
+  '/pricing',
+  '/lead-magnet',
+  '/demo-video',
+  '/faq',
+  '/privacy',
+  '/terms',
+  '/',
+]
+
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.json': 'application/json',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.ico': 'image/x-icon',
+  '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml',
+}
+
+function outputPathForRoute(route) {
+  if (route === '/') return path.join(dist, 'index.html')
+  return path.join(dist, route.replace(/^\//, ''), 'index.html')
+}
+
+async function fileExists(filePath) {
+  try {
+    await access(filePath)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/** Local static server matching Vercel: exact files first, else SPA index.html. */
+function startSpaServer() {
+  const server = createServer(async (req, res) => {
+    try {
+      const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`)
+      let pathname = decodeURIComponent(url.pathname)
+      if (pathname.includes('\0') || pathname.includes('..')) {
+        res.writeHead(400).end('Bad request')
+        return
+      }
+
+      let filePath = path.join(dist, pathname)
+      const exists = await fileExists(filePath)
+      if (exists) {
+        const st = await stat(filePath)
+        if (st.isDirectory()) {
+          filePath = path.join(filePath, 'index.html')
+        }
+      }
+
+      if (!(await fileExists(filePath)) || (await stat(filePath)).isDirectory()) {
+        filePath = path.join(dist, 'index.html')
+      }
+
+      const ext = path.extname(filePath).toLowerCase()
+      res.writeHead(200, { 'Content-Type': MIME[ext] ?? 'application/octet-stream' })
+      createReadStream(filePath).pipe(res)
+    } catch (err) {
+      res.writeHead(500).end(String(err))
+    }
+  })
+
+  return new Promise((resolve, reject) => {
+    server.listen(PORT, '127.0.0.1', () => resolve(server))
+    server.on('error', reject)
+  })
+}
+
+async function prerender() {
+  if (!(await fileExists(path.join(dist, 'index.html')))) {
+    throw new Error('dist/index.html missing — run vite build first')
+  }
+
+  // Always start from the Vite shell so we don't re-crawl already-prerendered HTML.
+  const shellHtml = await readFile(path.join(dist, 'index.html'), 'utf8')
+  await writeFile(path.join(dist, 'index.html'), shellHtml, 'utf8')
+  for (const route of routes) {
+    if (route === '/') continue
+    await rm(path.join(dist, route.replace(/^\//, '')), { recursive: true, force: true })
+  }
+
+  const server = await startSpaServer()
+  const baseUrl = `http://127.0.0.1:${PORT}`
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+  })
+
+  try {
+    for (const route of routes) {
+      // Non-home routes must boot from the empty Vite shell via SPA fallback.
+      await writeFile(path.join(dist, 'index.html'), shellHtml, 'utf8')
+
+      const page = await browser.newPage()
+      const url = new URL(route, baseUrl).href
+
+      // Avoid networkidle* — maps / long-polling can hang forever.
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 })
+      await page.waitForSelector('#root > *', { timeout: 30_000 })
+      await page.evaluate(
+        () =>
+          new Promise((resolve) => {
+            requestAnimationFrame(() => setTimeout(resolve, 400))
+          }),
+      )
+
+      // react-helmet-async can leave the Vite shell title/description alongside page tags.
+      await page.evaluate(() => {
+        const titles = [...document.querySelectorAll('head title')]
+        if (titles.length > 1) {
+          // First title is the page-specific Helmet value (matches document.title).
+          titles.slice(1).forEach((el) => el.remove())
+        }
+
+        const descriptions = [
+          ...document.querySelectorAll('head meta[name="description"]'),
+        ]
+        if (descriptions.length > 1) {
+          // Last description is the page-specific Helmet value.
+          descriptions.slice(0, -1).forEach((el) => el.remove())
+        }
+      })
+
+      let html = await page.content()
+      if (!/^<!doctype/i.test(html)) {
+        html = `<!DOCTYPE html>\n${html}`
+      }
+
+      const outFile = outputPathForRoute(route)
+      await mkdir(path.dirname(outFile), { recursive: true })
+      await writeFile(outFile, html, 'utf8')
+
+      const title = await page.title()
+      console.log(`✓ ${route} → ${path.relative(root, outFile)} (${title})`)
+      await page.close()
+    }
+  } finally {
+    await browser.close()
+    await new Promise((resolve, reject) => {
+      server.close((err) => (err ? reject(err) : resolve()))
+    })
+  }
+}
+
+prerender().catch((err) => {
+  console.error('Prerender failed:', err)
+  process.exit(1)
+})
