@@ -51,6 +51,7 @@ const routes = [
   '/guides/dental-practices-5-star-google-reviews',
   '/guides/mobile-laptop-repair-google-reviews',
   '/guides/spa-wellness-google-reviews',
+  '/guides/real-estate-5-star-google-reviews',
   '/demo-video',
   '/faq',
   '/privacy',

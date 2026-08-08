@@ -40,6 +40,10 @@ const guideLinks = [
     label: 'Spa & Wellness Google reviews',
     to: '/guides/spa-wellness-google-reviews',
   },
+  {
+    label: 'Real estate Google reviews',
+    to: '/guides/real-estate-5-star-google-reviews',
+  },
 ]
 
 const legalLinks = [

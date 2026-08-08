@@ -104,6 +104,19 @@ export const guides: GuideSummary[] = [
     coverImage: '/assets/blogs/spa-wellness/spa-lady-landscape.jpg',
     coverImageAlt: 'Spa guest during a wellness treatment',
   },
+  {
+    slug: 'real-estate-5-star-google-reviews',
+    path: '/guides/real-estate-5-star-google-reviews',
+    title: 'How to Turn Happy Clients Into 5-Star Google Reviews for Your Real Estate Business',
+    description:
+      'Deals close and clients move on without reviewing. Here’s a simple QR method real estate agents use to get more Google reviews — at handover, without awkward asks.',
+    category: 'Real estate',
+    readMinutes: 6,
+    publishedAt: '2026-08-08',
+    ogImage: '/assets/blogs/real-estate/easyreview-og-blog-real-estate-5star-reviews-1200x630.png',
+    coverImage: '/assets/blogs/real-estate/real-estate-agent-home-landscape.jpg',
+    coverImageAlt: 'Real estate agent showing a home to clients',
+  },
 ]
 
 export function getGuideBySlug(slug: string) {

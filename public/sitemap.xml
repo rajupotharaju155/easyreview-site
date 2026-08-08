@@ -56,6 +56,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://easyreview.co.in/guides/real-estate-5-star-google-reviews</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://easyreview.co.in/demo-video</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

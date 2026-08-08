@@ -18,6 +18,7 @@ import { HotelGuide } from './pages/guides/HotelGuide'
 import { RepairShopGuide } from './pages/guides/RepairShopGuide'
 import { RestaurantGuide } from './pages/guides/RestaurantGuide'
 import { SalonGuide } from './pages/guides/SalonGuide'
+import { RealEstateGuide } from './pages/guides/RealEstateGuide'
 import { SpaWellnessGuide } from './pages/guides/SpaWellnessGuide'
 
 const theme = {
@@ -68,6 +69,10 @@ export default function App() {
             <Route
               path="guides/spa-wellness-google-reviews"
               element={<SpaWellnessGuide />}
+            />
+            <Route
+              path="guides/real-estate-5-star-google-reviews"
+              element={<RealEstateGuide />}
             />
             <Route path="faq" element={<FAQ />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
