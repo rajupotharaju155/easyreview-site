@@ -1,18 +1,18 @@
-import { Helmet } from 'react-helmet-async'
 import { FAQAccordion } from '../components/faq/FAQAccordion'
 import { PageContainer } from '../components/layout/PageContainer'
 import { SectionHeading } from '../components/shared/SectionHeading'
+import { SITE_URL, SeoHead } from '../components/shared/SeoHead'
 
 export function FAQ() {
   return (
     <>
-      <Helmet>
-        <title>FAQ — EasyReview</title>
-        <meta
-          name="description"
-          content="Answers about EasyReview setup, Google reviews, private feedback, multi-location management, and billing."
-        />
-      </Helmet>
+      <SeoHead
+        path="/faq"
+        title="FAQ — EasyReview"
+        description="Answers about EasyReview setup, Google reviews, private feedback, multi-location management, and billing."
+        imageUrl={`${SITE_URL}/og-faq.jpg`}
+        imageAlt="EasyReview FAQ — got questions? We've got answers"
+      />
 
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">
         <PageContainer>

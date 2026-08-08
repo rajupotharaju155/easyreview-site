@@ -1,20 +1,20 @@
-import { Helmet } from 'react-helmet-async'
 import { PageContainer } from '../components/layout/PageContainer'
 import { AddOnsGrid } from '../components/pricing/AddOnsGrid'
 import { PricingCards } from '../components/pricing/PricingCards'
 import { PricingFAQ } from '../components/pricing/PricingFAQ'
 import { SectionHeading } from '../components/shared/SectionHeading'
+import { SITE_URL, SeoHead } from '../components/shared/SeoHead'
 
 export function Pricing() {
   return (
     <>
-      <Helmet>
-        <title>Pricing — EasyReview</title>
-        <meta
-          name="description"
-          content="Simple EasyReview pricing. Start free with one location, then grow with unlimited scans and multi-location analytics."
-        />
-      </Helmet>
+      <SeoHead
+        path="/pricing"
+        title="Pricing — EasyReview"
+        description="Simple EasyReview pricing. Start free with one location, then grow with unlimited scans and multi-location analytics."
+        imageUrl={`${SITE_URL}/og-pricing.jpg`}
+        imageAlt="EasyReview pricing — simple pricing, no surprises"
+      />
 
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">
         <PageContainer>
