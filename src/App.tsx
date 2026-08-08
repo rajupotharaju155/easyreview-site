@@ -12,7 +12,13 @@ import { Pricing } from './pages/Pricing'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { Rate } from './pages/Rate'
 import { TermsOfService } from './pages/TermsOfService'
+import { DentistGuide } from './pages/guides/DentistGuide'
+import { GymGuide } from './pages/guides/GymGuide'
+import { HotelGuide } from './pages/guides/HotelGuide'
+import { RepairShopGuide } from './pages/guides/RepairShopGuide'
 import { RestaurantGuide } from './pages/guides/RestaurantGuide'
+import { SalonGuide } from './pages/guides/SalonGuide'
+import { SpaWellnessGuide } from './pages/guides/SpaWellnessGuide'
 
 const theme = {
   token: {
@@ -41,6 +47,27 @@ export default function App() {
             <Route
               path="guides/restaurant-qr-code-google-reviews"
               element={<RestaurantGuide />}
+            />
+            <Route path="guides/how-hotels-can-win-google-reviews" element={<HotelGuide />} />
+            <Route
+              path="guides/turn-members-into-5-star-google-review"
+              element={<GymGuide />}
+            />
+            <Route
+              path="guides/easiest-way-salons-collect-google-reviews"
+              element={<SalonGuide />}
+            />
+            <Route
+              path="guides/dental-practices-5-star-google-reviews"
+              element={<DentistGuide />}
+            />
+            <Route
+              path="guides/mobile-laptop-repair-google-reviews"
+              element={<RepairShopGuide />}
+            />
+            <Route
+              path="guides/spa-wellness-google-reviews"
+              element={<SpaWellnessGuide />}
             />
             <Route path="faq" element={<FAQ />} />
             <Route path="privacy" element={<PrivacyPolicy />} />

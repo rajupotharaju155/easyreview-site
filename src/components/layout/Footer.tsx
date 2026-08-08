@@ -13,8 +13,32 @@ const productLinks = [
 const guideLinks = [
   { label: 'All guides', to: '/guides' },
   {
-    label: 'Restaurant QR reviews',
+    label: 'Restaurant Google reviews',
     to: '/guides/restaurant-qr-code-google-reviews',
+  },
+  {
+    label: 'Hotel Google reviews',
+    to: '/guides/how-hotels-can-win-google-reviews',
+  },
+  {
+    label: 'Gym Google reviews',
+    to: '/guides/turn-members-into-5-star-google-review',
+  },
+  {
+    label: 'Salon Google reviews',
+    to: '/guides/easiest-way-salons-collect-google-reviews',
+  },
+  {
+    label: 'Dental Google reviews',
+    to: '/guides/dental-practices-5-star-google-reviews',
+  },
+  {
+    label: 'Mobile & Laptop Repair shop Google reviews',
+    to: '/guides/mobile-laptop-repair-google-reviews',
+  },
+  {
+    label: 'Spa & Wellness Google reviews',
+    to: '/guides/spa-wellness-google-reviews',
   },
 ]
 
