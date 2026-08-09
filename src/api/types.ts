@@ -44,6 +44,12 @@ export interface PrivateFeedback {
   updatedAt: string
 }
 
+/** Public claimable QR resolve payload. */
+export interface PublicQrCode {
+  code: string
+  targetUrl: string | null
+}
+
 export interface ApiErrorBody {
   message?: string | string[]
   statusCode?: number

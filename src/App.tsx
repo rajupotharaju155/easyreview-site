@@ -2,6 +2,7 @@ import { ConfigProvider } from 'antd'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MainLayout } from './components/layout/MainLayout'
 import { ScrollToTop } from './components/layout/ScrollToTop'
+import { ClaimQr } from './pages/ClaimQr'
 import { CompetitorAnalysis } from './pages/CompetitorAnalysis'
 import { DemoVideo } from './pages/DemoVideo'
 import { FAQ } from './pages/FAQ'
@@ -40,6 +41,7 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="rate/:slug" element={<Rate />} />
+          <Route path="q/:code" element={<ClaimQr />} />
           <Route path="demo-video" element={<DemoVideo />} />
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
