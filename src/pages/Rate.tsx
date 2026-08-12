@@ -15,7 +15,7 @@ import { ApiError } from '../api/client'
 import { getLocationBySlug, recordRedirectToGoogle } from '../api/locations'
 import { createPrivateFeedback } from '../api/private-feedback'
 import { suggestReviews } from '../api/reviews'
-import type { PublicLocation, ReviewSuggestion } from '../api/types'
+import type { PublicLocation, ReviewAnswer, ReviewSuggestion } from '../api/types'
 import { Logo } from '../components/shared/Logo'
 
 const RATING_OPTIONS: Record<number, { label: string; emoji: string }> = {
@@ -36,6 +36,15 @@ const GENERATING_MESSAGES = [
 
 type Step = 'rating' | 'generating' | 'suggestions' | 'private-feedback' | 'thank-you'
 
+const EASE = 'ease-[cubic-bezier(0.22,1,0.36,1)]'
+
+/** Slide-up + fade used by each questionnaire row, staggered via inline transition delays. */
+function revealClasses(open: boolean): string {
+  return `transition-[opacity,transform] duration-500 ${EASE} motion-reduce:transition-none ${
+    open ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+  }`
+}
+
 function googleWriteReviewUrl(placeId: string): string {
   return `https://search.google.com/local/writereview?placeid=${encodeURIComponent(placeId)}`
 }
@@ -45,11 +54,14 @@ function RateCard({
   onBack,
   showBack = false,
   fill = false,
+  alignTop = false,
 }: {
   children: ReactNode
   onBack?: () => void
   showBack?: boolean
   fill?: boolean
+  /** Pin content to the top (e.g. after a high rating expands the questionnaire). */
+  alignTop?: boolean
 }) {
   return (
     <div
@@ -80,7 +92,7 @@ function RateCard({
 
       <div
         className={`flex flex-1 flex-col px-5 py-6 sm:px-6 sm:pb-7 sm:pt-4 ${
-          fill ? 'min-h-0 justify-start' : 'justify-center'
+          fill || alignTop ? 'min-h-0 justify-start' : 'justify-center'
         }`}
       >
         {fill ? (
@@ -121,6 +133,9 @@ export function Rate() {
   const [privateFeedbackText, setPrivateFeedbackText] = useState('')
   const [privateFeedbackError, setPrivateFeedbackError] = useState<string | null>(null)
   const [submittingFeedback, setSubmittingFeedback] = useState(false)
+  /** Chosen option keyed by question text. */
+  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [questionsOpen, setQuestionsOpen] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -175,11 +190,42 @@ export function Rate() {
     return () => window.clearInterval(id)
   }, [step])
 
+  const questions = location?.questions ?? []
+  const canShowQuestions = questions.length > 0 && selected >= 4
+
+  // Mount the questionnaire collapsed, then open it a frame later so the header
+  // shrink and the slide-in run as one transition instead of snapping into place.
+  useEffect(() => {
+    if (!canShowQuestions) {
+      setQuestionsOpen(false)
+      return
+    }
+
+    let inner = 0
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() => setQuestionsOpen(true))
+    })
+
+    return () => {
+      cancelAnimationFrame(outer)
+      cancelAnimationFrame(inner)
+    }
+  }, [canShowQuestions])
+
   async function generateSuggestions(starRating: number, loc: PublicLocation) {
     setStep('generating')
     setSuggestionsError(null)
     setSuggestions([])
     setSelectedSuggestionIndex(0)
+
+    const selectedAnswers = (loc.questions ?? []).reduce<ReviewAnswer[]>(
+      (collected, { question }) => {
+        const answer = answers[question]
+        if (answer) collected.push({ question, answer })
+        return collected
+      },
+      [],
+    )
 
     try {
       const response = await suggestReviews({
@@ -188,8 +234,10 @@ export function Rate() {
         name: loc.name,
         city: loc.city ?? undefined,
         state: loc.state ?? undefined,
+        primaryTypeDisplayName: loc.primaryTypeDisplayName ?? undefined,
         keywords: loc.keywords?.length ? loc.keywords : ['great service'],
         languages: loc.languages?.length ? loc.languages : ['English'],
+        answers: selectedAnswers.length ? selectedAnswers : undefined,
       })
       setSuggestions(response.suggestions)
       setSelectedSuggestionIndex(0)
@@ -211,7 +259,16 @@ export function Rate() {
       setStep('private-feedback')
       return
     }
+    // With a questionnaire configured, collect answers before generating.
+    if (location.questions?.length) return
     void generateSuggestions(value, location)
+  }
+
+  function handleSelectAnswer(question: string, option: string) {
+    setAnswers((current) => ({
+      ...current,
+      [question]: current[question] === option ? '' : option,
+    }))
   }
 
   async function handleSubmitPrivateFeedback(event: FormEvent<HTMLFormElement>) {
@@ -324,64 +381,185 @@ export function Rate() {
                 content={`Leave a review for ${location.name} on EasyReview.`}
               />
             </Helmet>
-            <RateCard>
-              <div className="text-center">
-                <h1 className="font-display text-[1.65rem] font-bold leading-tight tracking-tight text-ink sm:text-[1.85rem]">
-                  {location.name}
-                </h1>
-                <p className="mt-3 text-[15px] leading-relaxed text-slate-500">
-                  How was your experience with us today?
-                </p>
-
+            <RateCard alignTop>
+              <div className="flex w-full flex-1 flex-col">
+                {/* Top/bottom spacers center the rating; they collapse so content rises when questions open */}
                 <div
-                  className="mt-8 flex items-center justify-center gap-1.5 sm:gap-2"
-                  onMouseLeave={() => setHovered(0)}
-                  role="radiogroup"
-                  aria-label="Star rating"
-                >
-                  {[1, 2, 3, 4, 5].map((value) => {
-                    const filled = value <= activeRating
-                    const option = RATING_OPTIONS[value]
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        role="radio"
-                        aria-checked={selected === value}
-                        aria-label={`${value} star${value === 1 ? '' : 's'} — ${option.label}`}
-                        className="cursor-pointer rounded-xl border-0 bg-transparent p-1 transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-                        onMouseEnter={() => setHovered(value)}
-                        onFocus={() => setHovered(value)}
-                        onBlur={() => setHovered(0)}
-                        onClick={() => handleSelectRating(value)}
-                      >
-                        <Star
-                          className={`h-11 w-11 transition-all duration-150 sm:h-12 sm:w-12 ${
-                            filled
-                              ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.55)]'
-                              : 'fill-transparent text-slate-300'
-                          }`}
-                          strokeWidth={1.5}
-                        />
-                      </button>
-                    )
-                  })}
-                </div>
+                  aria-hidden
+                  className={`w-full transition-[flex-grow,min-height] duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                    questionsOpen ? 'min-h-0 grow-0' : 'min-h-4 grow'
+                  }`}
+                />
 
-                <div className="mt-5 flex min-h-9 items-center justify-center" aria-live="polite">
-                  {previewOption ? (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3.5 py-1.5 text-sm font-semibold text-amber-800">
-                      {previewOption.label}{' '}
-                      <span aria-hidden className="text-base leading-none">
-                        {previewOption.emoji}
+                <div className="shrink-0 text-center">
+                  <h1
+                    className={`font-display font-bold tracking-tight text-ink transition-[font-size,line-height] duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                      questionsOpen
+                        ? 'text-lg leading-snug sm:text-xl'
+                        : 'text-[1.65rem] leading-tight sm:text-[1.85rem]'
+                    }`}
+                  >
+                    {location.name}
+                  </h1>
+                  <p
+                    className={`overflow-hidden text-[15px] leading-relaxed text-slate-500 transition-all duration-500 ${EASE} motion-reduce:transition-none ${
+                      questionsOpen
+                        ? 'mt-0 max-h-0 opacity-0'
+                        : 'mt-3 max-h-12 opacity-100'
+                    }`}
+                  >
+                    How was your experience with us today?
+                  </p>
+
+                  <div
+                    className={`flex items-center justify-center transition-[margin,gap] duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                      questionsOpen ? 'mt-4 gap-1 sm:gap-1.5' : 'mt-8 gap-1.5 sm:gap-2'
+                    }`}
+                    onMouseLeave={() => setHovered(0)}
+                    role="radiogroup"
+                    aria-label="Star rating"
+                  >
+                    {[1, 2, 3, 4, 5].map((value) => {
+                      const filled = value <= activeRating
+                      const option = RATING_OPTIONS[value]
+                      return (
+                        <button
+                          key={value}
+                          type="button"
+                          role="radio"
+                          aria-checked={selected === value}
+                          aria-label={`${value} star${value === 1 ? '' : 's'} — ${option.label}`}
+                          className="cursor-pointer rounded-xl border-0 bg-transparent p-1 transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                          onMouseEnter={() => setHovered(value)}
+                          onFocus={() => setHovered(value)}
+                          onBlur={() => setHovered(0)}
+                          onClick={() => handleSelectRating(value)}
+                        >
+                          <Star
+                            className={`transition-all duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                              questionsOpen
+                                ? 'h-8 w-8 sm:h-9 sm:w-9'
+                                : 'h-11 w-11 sm:h-12 sm:w-12'
+                            } ${
+                              filled
+                                ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.55)]'
+                                : 'fill-transparent text-slate-300'
+                            }`}
+                            strokeWidth={1.5}
+                          />
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  <div
+                    className={`flex items-center justify-center transition-[margin,min-height] duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                      questionsOpen ? 'mt-2.5 min-h-7' : 'mt-5 min-h-9'
+                    }`}
+                    aria-live="polite"
+                  >
+                    {previewOption ? (
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-full bg-amber-50 font-semibold text-amber-800 transition-all duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                          questionsOpen
+                            ? 'px-2.5 py-1 text-xs'
+                            : 'px-3.5 py-1.5 text-sm'
+                        }`}
+                      >
+                        {previewOption.label}{' '}
+                        <span aria-hidden className="text-base leading-none">
+                          {previewOption.emoji}
+                        </span>
                       </span>
-                    </span>
+                    ) : null}
+                  </div>
+
+                  <p
+                    className={`overflow-hidden text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400 transition-all duration-500 ${EASE} motion-reduce:transition-none ${
+                      questionsOpen ? 'mt-0 max-h-0 opacity-0' : 'mt-6 max-h-8 opacity-100'
+                    }`}
+                  >
+                    Tap a star to share your review
+                  </p>
+
+                  {canShowQuestions ? (
+                    <div
+                      className={`grid transition-[grid-template-rows] duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                        questionsOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                      }`}
+                    >
+                      <div className="overflow-hidden pb-2 text-left">
+                        <p
+                          className={`mt-2 text-center text-[13px] leading-relaxed text-slate-500 ${revealClasses(
+                            questionsOpen,
+                          )}`}
+                          style={{ transitionDelay: questionsOpen ? '60ms' : '0ms' }}
+                        >
+                          Tell us a little about your visit so we can write it in your words.
+                        </p>
+
+                        <div className="mt-5 flex flex-col gap-5">
+                          {questions.map(({ question, options }, index) => (
+                            <fieldset
+                              key={question}
+                              className={`m-0 border-0 p-0 ${revealClasses(questionsOpen)}`}
+                              style={{
+                                transitionDelay: questionsOpen ? `${130 + index * 80}ms` : '0ms',
+                              }}
+                            >
+                              <legend className="mb-2.5 p-0 text-sm font-semibold text-ink">
+                                {question}
+                              </legend>
+                              <div className="flex flex-wrap gap-2">
+                                {options.map((option) => {
+                                  const isSelected = answers[question] === option
+                                  return (
+                                    <button
+                                      key={option}
+                                      type="button"
+                                      aria-pressed={isSelected}
+                                      onClick={() => handleSelectAnswer(question, option)}
+                                      className={`cursor-pointer rounded-full border px-3.5 py-2 text-[13px] font-medium transition-colors ${
+                                        isSelected
+                                          ? 'border-brand-600 bg-brand-50 text-brand-700'
+                                          : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                                      }`}
+                                    >
+                                      {option}
+                                    </button>
+                                  )
+                                })}
+                              </div>
+                            </fieldset>
+                          ))}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => void generateSuggestions(selected, location)}
+                          className={`mt-6 flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl border-0 bg-gradient-to-b from-brand-500 to-brand-700 px-4 py-3.5 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(107,47,213,0.28)] ${revealClasses(
+                            questionsOpen,
+                          )}`}
+                          style={{
+                            transitionDelay: questionsOpen
+                              ? `${130 + questions.length * 80}ms`
+                              : '0ms',
+                          }}
+                        >
+                          Continue
+                          <span aria-hidden>→</span>
+                        </button>
+                      </div>
+                    </div>
                   ) : null}
                 </div>
 
-                <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                  Tap a star to share your review
-                </p>
+                <div
+                  aria-hidden
+                  className={`w-full transition-[flex-grow,min-height] duration-[600ms] ${EASE} motion-reduce:transition-none ${
+                    questionsOpen ? 'min-h-0 grow-0' : 'min-h-4 grow'
+                  }`}
+                />
               </div>
             </RateCard>
           </div>

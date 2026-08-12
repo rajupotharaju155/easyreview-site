@@ -1,3 +1,9 @@
+/** Business-configured question shown before generating review drafts. */
+export interface AiQuestion {
+  question: string
+  options: string[]
+}
+
 export interface PublicLocation {
   id: string
   name: string
@@ -5,8 +11,15 @@ export interface PublicLocation {
   slug: string
   city: string | null
   state: string | null
+  primaryTypeDisplayName: string | null
   keywords: string[] | null
   languages: string[] | null
+  questions: AiQuestion[] | null
+}
+
+export interface ReviewAnswer {
+  question: string
+  answer: string
 }
 
 export interface SuggestReviewsPayload {
@@ -15,14 +28,15 @@ export interface SuggestReviewsPayload {
   name: string
   city?: string
   state?: string
+  primaryTypeDisplayName?: string
   keywords: string[]
   languages: string[]
+  answers?: ReviewAnswer[]
 }
 
 export interface ReviewSuggestion {
   text: string
   language: string
-  targetWordCount: number
 }
 
 export interface ReviewSuggestionsResponse {
