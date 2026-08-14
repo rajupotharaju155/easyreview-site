@@ -6,7 +6,7 @@ export function PricingCards() {
   return (
     <Row gutter={[20, 24]} align="stretch">
       {pricingTiers.map((tier) => (
-        <Col key={tier.id} xs={24} md={8}>
+        <Col key={tier.id} xs={24} sm={12} xl={6}>
           <PricingCard tier={tier} />
         </Col>
       ))}

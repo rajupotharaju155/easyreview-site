@@ -11,7 +11,7 @@ export function Pricing() {
       <SeoHead
         path="/pricing"
         title="Pricing — EasyReview"
-        description="Simple EasyReview pricing. Start free with one location, then grow with unlimited scans and multi-location analytics."
+        description="Simple EasyReview pricing. Start at ₹7 with Quick Trial, then choose Starter, Growth, or Business Pro."
         imageUrl={`${SITE_URL}/og-pricing.jpg`}
         imageAlt="EasyReview pricing — simple pricing, no surprises"
       />
@@ -21,7 +21,7 @@ export function Pricing() {
           <SectionHeading
             as="h1"
             title="Plans Built for Growing Ratings"
-            subtitle="Launch free, collect reviews from day one, and upgrade only when your business is ready to scale."
+            subtitle="Start a 7-day Quick Trial at ₹7, then upgrade to Starter, Growth, or Business Pro for a longer plan and included hardware."
           />
         </PageContainer>
       </section>

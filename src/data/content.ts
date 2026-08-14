@@ -62,57 +62,87 @@ export const howItWorksSteps: HowItWorksStep[] = [
   },
 ]
 
-/** Shared with hero scarcity copy — update in one place */
-export const EARLY_BIRD_SPOTS_LEFT = 22
-
 export const pricingTiers: PricingTier[] = [
   {
-    id: 'early-bird',
-    name: 'Early Bird',
-    price: '₹0',
-    description: 'Free for 1 month',
+    id: 'quick-trial',
+    name: 'Quick Trial',
+    price: '₹7',
+    priceNote: '/7 days',
+    perDayCost: '₹1/day',
     features: [
-      '1 business location',
-      'Unlimited QR scans & review requests',
+      'Admin Panel Access',
+      'Unlimited QR scans',
+      'Custom Review Link',
       'Real-time scan & review analytics',
-      'AI review drafts',
+      'Keyword targeting',
       'Private feedback gate',
+      { label: 'Multi-language AI drafts', included: false },
+      { label: 'QR Standee', included: false },
+      { label: 'NFC card', included: false }
     ],
-    ctaLabel: 'Claim Early Bird',
-    spotsLeft: EARLY_BIRD_SPOTS_LEFT,
-    badge: `${EARLY_BIRD_SPOTS_LEFT} spots left`,
-    highlighted: true,
+    ctaLabel: 'Start Quick Trial',
+  },
+  {
+    id: 'starter',
+    name: 'Starter',
+    price: '₹299',
+    priceNote: '/month',
+    perDayCost: '~₹10/day',
+    features: [
+      'Admin Panel Access',
+      'Unlimited QR scans',
+      'Custom Review Link',
+      'Real-time scan & review analytics',
+      'Keyword targeting',
+      'Private feedback gate',
+      'Multi-language AI drafts',
+      '1 QR Standee',
+      { label: 'NFC card', included: false }
+    ],
+    ctaLabel: 'Choose Starter',
   },
   {
     id: 'growth',
     name: 'Growth',
-    price: '₹299',
-    priceNote: '/mo per business',
-    description: 'For busy shops ready to scale reviews across more foot traffic.',
+    price: '₹999',
+    priceNote: '/6 months',
+    originalPrice: '₹1,794',
+    perDayCost: '~₹5.5/day',
     features: [
-      'Unlimited QR scans & review requests',
+      'Admin Panel Access',
+      'Unlimited QR scans',
+      'Custom Review Link',
       'Real-time scan & review analytics',
-      'Multi-location support',
       'Keyword targeting',
+      'Private feedback gate',
       'Multi-language AI drafts',
-      'Priority email support',
+      '1 QR Standee',
+      { label: 'NFC card', included: false }
     ],
     ctaLabel: 'Choose Growth',
+    highlighted: true,
+    badge: 'Most Popular',
   },
   {
-    id: 'enterprise',
-    name: 'Enterprise',
-    price: 'Custom',
-    priceNote: 'tailored pricing',
-    description: 'Built for multi-branch chains and franchise networks.',
+    id: 'business-pro',
+    name: 'Business Pro',
+    price: '₹1,499',
+    priceNote: '/year',
+    originalPrice: '₹3,588',
+    perDayCost: 'Just ₹4/day',
     features: [
-      'Unlimited locations',
-      'Custom onboarding',
-      'Dedicated success manager',
-      'SLA & invoicing',
-      'API access (coming soon)',
+      'Admin Panel Access',
+      'Unlimited QR scans',
+      'Custom Review Link',
+      'Real-time scan & review analytics',
+      'Keyword targeting',
+      'Private feedback gate',
+      'Multi-language AI drafts',
+      '1 QR Standee',
+      '1 NFC card',
+      'Priority WhatsApp support',
     ],
-    ctaLabel: 'Contact Sales',
+    ctaLabel: 'Choose Business Pro',
   },
 ]
 
@@ -134,21 +164,21 @@ export const addOns: AddOnItem[] = [
 export const pricingFaqs: FAQItem[] = [
   {
     id: 'p1',
-    question: 'Can I start on Early Bird and upgrade later?',
+    question: 'Can I start on Quick Trial and upgrade later?',
     answer:
-      'Yes. Claim an Early Bird spot for your first month free, then upgrade to Growth whenever you need unlimited scans or multi-location tools. Your QR links and settings stay intact.',
+      'Yes. Start a Quick Trial at ₹7 for 7 days, then upgrade to Starter, Growth, or Business Pro for a QR standee, multi-language AI drafts, or an NFC card. Your QR links and settings stay intact.',
   },
   {
     id: 'p2',
     question: 'Is pricing per business location?',
     answer:
-      'Growth is billed per business location per month. Enterprise plans can cover multiple branches under one agreement — contact sales for a package that fits your network.',
+      'Yes. Starter is ₹299/month, Growth is ₹999 for 6 months, and Business Pro is ₹1,499/year — each billed per business location.',
   },
   {
     id: 'p3',
     question: 'Do printed QR materials require a paid plan?',
     answer:
-      'No. Digital QR downloads are available on Early Bird. Physical stickers and standees are optional add-ons you can order separately when you want branded print pieces.',
+      'Quick Trial includes digital QR downloads but no QR standee or NFC card. Starter and Growth include 1 QR standee. Business Pro includes 1 QR standee and 1 NFC card. Extra stickers and standees are available as add-ons.',
   },
   {
     id: 'p4',
@@ -183,9 +213,9 @@ export const faqCategories: FAQCategory[] = [
       },
       {
         id: 'g4',
-        question: 'Is there a free plan?',
+        question: 'What’s the cheapest way to start?',
         answer:
-          'Yes. Early Bird is free for your first month while spots last. It includes one business location, AI drafts, the private feedback gate, and basic analytics.',
+          'Quick Trial is ₹7 for 7 days. It includes admin panel access, unlimited QR scans, a custom review link, keyword targeting, analytics, and the private feedback gate. Multi-language AI drafts, a QR standee, and an NFC card are not included.',
       },
     ],
   },
@@ -209,7 +239,7 @@ export const faqCategories: FAQCategory[] = [
         id: 'r3',
         question: 'Can I manage multiple business locations?',
         answer:
-          'Yes. Growth and Enterprise plans support multiple locations under one account so you can track scans, conversions, and private feedback across branches from a single dashboard.',
+          'Plans are billed per business location. You can run EasyReview for each location on its own plan and track scans, conversions, and private feedback from that location’s dashboard.',
       },
     ],
   },
@@ -219,15 +249,15 @@ export const faqCategories: FAQCategory[] = [
     items: [
       {
         id: 'b1',
-        question: 'Do I need a credit card to start?',
+        question: 'How do I get started?',
         answer:
-          'No credit card is required for Early Bird. You can create a business, download your QR materials, and start collecting reviews without entering payment details.',
+          'Create your business, download your QR materials, and start collecting reviews in minutes. Quick Trial is ₹7 for 7 days.',
       },
       {
         id: 'b2',
         question: 'What payment methods do you accept?',
         answer:
-          'Paid plans support common online payment methods for India. Enterprise customers can arrange invoicing and annual billing — reach out to sales for details.',
+          'Paid plans support common online payment methods for India. Choose Starter (₹299/month), Growth (₹999/6 months), or Business Pro (₹1,499/year) at checkout.',
       },
     ],
   },

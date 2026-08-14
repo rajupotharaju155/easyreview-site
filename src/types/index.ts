@@ -48,13 +48,24 @@ export interface FeatureCardProps {
   tags?: string[]
 }
 
+export type PricingFeature =
+  | string
+  | {
+      label: string
+      included: boolean
+    }
+
 export interface PricingTier {
   id: string
   name: string
   price: string
   priceNote?: string
-  description: string
-  features: string[]
+  /** Monthly-equivalent total shown struck through (6-month and annual plans). */
+  originalPrice?: string
+  /** Per-day cost shown under the price, e.g. "₹1/day". */
+  perDayCost?: string
+  description?: string
+  features: PricingFeature[]
   ctaLabel: string
   highlighted?: boolean
   badge?: string

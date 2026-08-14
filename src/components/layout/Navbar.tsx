@@ -40,8 +40,7 @@ export function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span className="sm:hidden">Get Started</span>
-          <span className="hidden sm:inline">Get Started Free</span>
+          Get Started
         </Button>
       </PageContainer>
     </header>

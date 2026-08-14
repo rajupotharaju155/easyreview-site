@@ -173,8 +173,8 @@ export const termsSections: LegalSection[] = [
     id: 'plans',
     title: 'Plans, Trials, and Payments',
     paragraphs: [
-      'EasyReview may offer Early Bird, Growth, Enterprise, or other plans with different features and limits. Plan details shown on our Pricing page may change.',
-      'Early Bird or promotional offers may be limited in quantity or duration (for example, free for a limited period while spots last). When a promotion ends, continued use may require a paid plan.',
+      'EasyReview may offer Quick Trial, Starter, Growth, Business Pro, or other plans with different features and limits. Plan details shown on our Pricing page may change.',
+      'Quick Trial or promotional offers may be limited in duration. When a promotion ends, continued use may require a paid plan.',
       'Paid plans are billed according to the pricing and billing cycle presented at purchase. Fees are generally non-refundable except where required by law or expressly stated otherwise. Taxes may apply.',
       'We may suspend or terminate access for non-payment or plan misuse.',
     ],

@@ -9,7 +9,7 @@ export function FAQ() {
       <SeoHead
         path="/faq"
         title="FAQ — EasyReview"
-        description="Answers about EasyReview setup, Google reviews, private feedback, multi-location management, and billing."
+        description="Answers about EasyReview setup, Google reviews, private feedback, plans, and billing."
         imageUrl={`${SITE_URL}/og-faq.jpg`}
         imageAlt="EasyReview FAQ — got questions? We've got answers"
       />

@@ -23,11 +23,11 @@ export function CTASection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Get Started Free
+            Get Started
           </Button>
         </div>
         <p className="mt-4 text-sm text-white/75">
-          No credit card required · Instant setup · Free locations to start
+          Instant setup · Quick Trial from ₹7 · Upgrade anytime
         </p>
       </PageContainer>
     </section>
