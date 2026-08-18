@@ -19,18 +19,18 @@ export function Logo({
   return (
     <Link
       to={to}
-      className={`inline-flex items-center gap-2.5 no-underline ${className}`}
+      className={`inline-flex items-center no-underline ${className}`}
       aria-label="EasyReview home"
     >
       <img
-        src="/logo-mark.png"
+        src="/logo.png"
         alt=""
         width={36}
         height={36}
         className="h-9 w-9 object-contain"
       />
       {showWordmark ? (
-        <span className={`font-display text-xl font-bold tracking-tight ${wordmarkClass}`}>
+        <span className={`mb-1 font-display text-xl font-bold tracking-tight ${wordmarkClass}`}>
           EasyReview
         </span>
       ) : null}

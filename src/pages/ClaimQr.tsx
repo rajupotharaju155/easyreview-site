@@ -180,13 +180,7 @@ export function ClaimQr() {
             <span className="text-[10px] font-semibold tracking-[0.14em] text-slate-400">
               POWERED BY
             </span>
-            <Link to="/" aria-label="EasyReview home" className="inline-flex no-underline">
-              <img
-                src="/logo-name.png"
-                alt="EasyReview"
-                className="h-6 w-auto object-contain opacity-80"
-              />
-            </Link>
+            <Logo className="opacity-80 [&_img]:h-5 [&_img]:w-5 [&_span]:text-xs" />
           </div>
         </div>
       </div>
