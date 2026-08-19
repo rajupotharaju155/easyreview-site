@@ -512,7 +512,7 @@ export function Rate() {
                                 {question}
                                 {multiSelect ? (
                                   <span className="ml-1.5 font-normal text-slate-500">
-                                    (You can select multiple)
+                                    (Allow multiple answers)
                                   </span>
                                 ) : null}
                               </legend>
