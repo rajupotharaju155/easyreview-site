@@ -127,8 +127,8 @@ export function Rate() {
   const [privateFeedbackText, setPrivateFeedbackText] = useState('')
   const [privateFeedbackError, setPrivateFeedbackError] = useState<string | null>(null)
   const [submittingFeedback, setSubmittingFeedback] = useState(false)
-  /** Chosen option keyed by question text. */
-  const [answers, setAnswers] = useState<Record<string, string>>({})
+  /** Chosen options keyed by question text. */
+  const [answers, setAnswers] = useState<Record<string, string[]>>({})
   const [questionsOpen, setQuestionsOpen] = useState(false)
 
   useEffect(() => {
@@ -214,8 +214,8 @@ export function Rate() {
 
     const selectedAnswers = (loc.questions ?? []).reduce<ReviewAnswer[]>(
       (collected, { question }) => {
-        const answer = answers[question]
-        if (answer) collected.push({ question, answer })
+        const chosen = answers[question]?.filter(Boolean) ?? []
+        if (chosen.length) collected.push({ question, answers: chosen })
         return collected
       },
       [],
@@ -258,11 +258,18 @@ export function Rate() {
     void generateSuggestions(value, location)
   }
 
-  function handleSelectAnswer(question: string, option: string) {
-    setAnswers((current) => ({
-      ...current,
-      [question]: current[question] === option ? '' : option,
-    }))
+  function handleSelectAnswer(question: string, option: string, multiSelect: boolean) {
+    setAnswers((current) => {
+      const selected = current[question] ?? []
+      if (multiSelect) {
+        const next = selected.includes(option)
+          ? selected.filter((item) => item !== option)
+          : [...selected, option]
+        return { ...current, [question]: next }
+      }
+      const next = selected.length === 1 && selected[0] === option ? [] : [option]
+      return { ...current, [question]: next }
+    })
   }
 
   async function handleSubmitPrivateFeedback(event: FormEvent<HTMLFormElement>) {
@@ -493,7 +500,7 @@ export function Rate() {
                         </p>
 
                         <div className="mt-5 flex flex-col gap-5">
-                          {questions.map(({ question, options }, index) => (
+                          {questions.map(({ question, options, multiSelect }, index) => (
                             <fieldset
                               key={question}
                               className={`m-0 border-0 p-0 ${revealClasses(questionsOpen)}`}
@@ -503,16 +510,23 @@ export function Rate() {
                             >
                               <legend className="mb-2.5 p-0 text-sm font-semibold text-ink">
                                 {question}
+                                {multiSelect ? (
+                                  <span className="ml-1.5 font-normal text-slate-500">
+                                    (You can select multiple)
+                                  </span>
+                                ) : null}
                               </legend>
                               <div className="flex flex-wrap gap-2">
                                 {options.map((option) => {
-                                  const isSelected = answers[question] === option
+                                  const isSelected = answers[question]?.includes(option) ?? false
                                   return (
                                     <button
                                       key={option}
                                       type="button"
                                       aria-pressed={isSelected}
-                                      onClick={() => handleSelectAnswer(question, option)}
+                                      onClick={() =>
+                                        handleSelectAnswer(question, option, Boolean(multiSelect))
+                                      }
                                       className={`cursor-pointer rounded-full border px-3.5 py-2 text-[13px] font-medium transition-colors ${
                                         isSelected
                                           ? 'border-brand-600 bg-brand-50 text-brand-700'

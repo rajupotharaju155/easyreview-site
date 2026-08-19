@@ -2,6 +2,7 @@
 export interface AiQuestion {
   question: string
   options: string[]
+  multiSelect?: boolean
 }
 
 export interface PublicLocation {
@@ -19,7 +20,7 @@ export interface PublicLocation {
 
 export interface ReviewAnswer {
   question: string
-  answer: string
+  answers: string[]
 }
 
 export interface SuggestReviewsPayload {
