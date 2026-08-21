@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link, useParams } from 'react-router-dom'
+import {useParams } from 'react-router-dom'
 import { Trefoil } from 'ldrs/react'
 import 'ldrs/react/Trefoil.css'
 import {
