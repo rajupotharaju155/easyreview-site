@@ -36,6 +36,10 @@ const GENERATING_MESSAGES = [
 
 type Step = 'rating' | 'generating' | 'suggestions' | 'private-feedback' | 'thank-you'
 
+const NO_SUBSCRIPTION_IMG = '/assets/app/no-subscription.jpg'
+const SUBSCRIPTION_UNAVAILABLE_TITLE = 'No Subscription!'
+const APP_CONTACT_URL = 'https://app.easyreview.co.in/contact'
+
 const EASE = 'ease-[cubic-bezier(0.22,1,0.36,1)]'
 
 /** Slide-up + fade used by each questionnaire row, staggered via inline transition delays. */
@@ -117,6 +121,7 @@ export function Rate() {
   const [location, setLocation] = useState<PublicLocation | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [errorTitle, setErrorTitle] = useState('Location not found')
   const [hovered, setHovered] = useState(0)
   const [selected, setSelected] = useState(0)
   const [step, setStep] = useState<Step>('rating')
@@ -136,6 +141,7 @@ export function Rate() {
 
     async function load() {
       if (!slug) {
+        setErrorTitle('Location not found')
         setError('Missing location')
         setLoading(false)
         return
@@ -143,6 +149,7 @@ export function Rate() {
 
       setLoading(true)
       setError(null)
+      setErrorTitle('Location not found')
 
       try {
         const data = await getLocationBySlug(slug)
@@ -151,13 +158,16 @@ export function Rate() {
         }
       } catch (err) {
         if (!cancelled) {
-          const message =
-            err instanceof ApiError && err.status === 404
-              ? 'This business could not be found.'
-              : err instanceof Error
-                ? err.message
-                : 'Something went wrong.'
-          setError(message)
+          if (err instanceof ApiError && err.status === 404) {
+            setErrorTitle('Location not found')
+            setError('This business could not be found.')
+          } else if (err instanceof ApiError && err.status === 402) {
+            setErrorTitle(SUBSCRIPTION_UNAVAILABLE_TITLE)
+            setError(err.message)
+          } else {
+            setErrorTitle('Something went wrong')
+            setError(err instanceof Error ? err.message : 'Something went wrong.')
+          }
           setLocation(null)
         }
       } finally {
@@ -356,20 +366,35 @@ export function Rate() {
         ) : error ? (
           <div className="animate-fade-up w-full sm:w-auto">
             <Helmet>
-              <title>Not found | EasyReview</title>
+              <title>{errorTitle} | EasyReview</title>
             </Helmet>
             <RateCard>
               <div className="text-center">
                 <h1 className="font-display text-2xl font-bold tracking-tight text-ink">
-                  Location not found
+                  {errorTitle}
                 </h1>
+                {errorTitle === SUBSCRIPTION_UNAVAILABLE_TITLE ? (
+                  <img
+                    src={NO_SUBSCRIPTION_IMG}
+                    alt=""
+                    className="mx-auto mt-5 w-full max-w-[260px]"
+                  />
+                ) : null}
                 <p className="mt-3 text-sm text-muted">{error}</p>
-                <Link
-                  to="/"
-                  className="mt-6 inline-block text-sm font-semibold text-brand-600 no-underline hover:text-brand-700"
-                >
-                  Go to EasyReview
-                </Link>
+                {errorTitle === SUBSCRIPTION_UNAVAILABLE_TITLE ? (
+                  <p className="mt-3 text-sm text-muted">
+                    If you are the business, please reach out to EasyReview on the{' '}
+                    <a
+                      href={APP_CONTACT_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-brand-600 no-underline hover:text-brand-700"
+                    >
+                      Contact page
+                    </a>
+                    .
+                  </p>
+                ) : null}
               </div>
             </RateCard>
           </div>
