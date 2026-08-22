@@ -12,6 +12,7 @@ import { NotFound } from './pages/NotFound'
 import { Pricing } from './pages/Pricing'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { Rate } from './pages/Rate'
+import { Menu } from './pages/Menu'
 import { TermsOfService } from './pages/TermsOfService'
 import { DentistGuide } from './pages/guides/DentistGuide'
 import { GymGuide } from './pages/guides/GymGuide'
@@ -41,6 +42,7 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="rate/:slug" element={<Rate />} />
+          <Route path="menu/:slug" element={<Menu />} />
           <Route path="q/:code" element={<ClaimQr />} />
           <Route path="demo-video" element={<DemoVideo />} />
           <Route element={<MainLayout />}>

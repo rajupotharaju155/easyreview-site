@@ -1,0 +1,92 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loading menu">
+  <title>Loading menu</title>
+  <style>
+    :root {
+      --loader-accent: #7F4FE0;
+      --loader-plate: #EDE8F7;
+      --loader-plate-edge: #C9B9EC;
+      --loader-steam: #7F4FE0;
+      --loader-text: #6B6280;
+    }
+    .plate {
+      fill: var(--loader-plate);
+      stroke: var(--loader-plate-edge);
+      stroke-width: 2;
+    }
+    .plate-inner {
+      fill: none;
+      stroke: var(--loader-plate-edge);
+      stroke-width: 1.5;
+    }
+    .shadow {
+      fill: #000;
+      opacity: 0.08;
+      animation: shadowPulse 1.6s ease-in-out infinite;
+      transform-origin: 80px 118px;
+    }
+    .cloche {
+      transform-origin: 80px 96px;
+      animation: cloches 1.6s ease-in-out infinite;
+    }
+    .cloche-body {
+      fill: var(--loader-accent);
+    }
+    .cloche-handle {
+      fill: var(--loader-accent);
+    }
+    .steam {
+      fill: none;
+      stroke: var(--loader-steam);
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: 0;
+    }
+    .steam-1 { animation: steamRise 1.6s ease-in infinite; }
+    .steam-2 { animation: steamRise 1.6s ease-in infinite 0.25s; }
+    .steam-3 { animation: steamRise 1.6s ease-in infinite 0.5s; }
+
+    @keyframes cloches {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes shadowPulse {
+      0%, 100% { transform: scaleX(1); opacity: 0.08; }
+      50% { transform: scaleX(0.85); opacity: 0.05; }
+    }
+    @keyframes steamRise {
+      0% { opacity: 0; transform: translateY(0) scaleY(0.6); }
+      30% { opacity: 0.7; }
+      70% { opacity: 0.5; }
+      100% { opacity: 0; transform: translateY(-14px) scaleY(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cloche, .shadow, .steam-1, .steam-2, .steam-3 {
+        animation: none;
+      }
+      .steam { opacity: 0.4; }
+    }
+  </style>
+
+  <!-- table shadow -->
+  <ellipse class="shadow" cx="80" cy="118" rx="34" ry="6"/>
+
+  <!-- plate -->
+  <ellipse class="plate" cx="80" cy="112" rx="46" ry="14"/>
+  <ellipse class="plate-inner" cx="80" cy="112" rx="30" ry="8"/>
+
+  <!-- steam wisps -->
+  <path class="steam steam-1" d="M62 74 q-4 -8 0 -16 q4 -8 0 -16"/>
+  <path class="steam steam-2" d="M80 70 q-4 -8 0 -16 q4 -8 0 -16"/>
+  <path class="steam steam-3" d="M98 74 q-4 -8 0 -16 q4 -8 0 -16"/>
+
+  <!-- cloche (dish cover) -->
+  <g class="cloche">
+    <rect class="cloche-handle" x="76" y="66" width="8" height="10" rx="2"/>
+    <circle class="cloche-handle" cx="80" cy="64" r="6"/>
+    <path class="cloche-body" d="M40 104
+      C40 78 58 62 80 62
+      C102 62 120 78 120 104
+      L40 104 Z"/>
+  </g>
+</svg>

@@ -65,6 +65,64 @@ export interface PublicQrCode {
   targetUrl: string | null
 }
 
+export interface PublicMenuItem {
+  id: string
+  locationId: string
+  categoryId: string
+  name: string
+  description: string | null
+  isNonVeg: boolean
+  imageUrl: string | null
+  isHalfServed: boolean
+  halfPrice: number | null
+  fullPrice: number
+  sortOrder: number
+}
+
+export interface PublicMenuCategory {
+  id: string
+  locationId: string
+  name: string
+  sortOrder: number
+  items: PublicMenuItem[]
+}
+
+export interface PublicMenuCombo {
+  id: string
+  locationId: string
+  name: string
+  sortOrder: number
+  itemIds: string[]
+  items: PublicMenuItem[]
+  itemsSubtotal: number
+  priceOverride: number | null
+  price: number
+  savings: number
+}
+
+export interface PublicMenuSpecial {
+  id: string
+  locationId: string
+  menuItemId: string
+  sortOrder: number
+  item: PublicMenuItem
+}
+
+export interface PublicMenu {
+  location: {
+    id: string
+    name: string
+    slug: string | null
+    city: string | null
+    state: string | null
+    phoneNumber: string | null
+    formattedAddress: string | null
+  }
+  categories: PublicMenuCategory[]
+  combos: PublicMenuCombo[]
+  specials: PublicMenuSpecial[]
+}
+
 export interface ApiErrorBody {
   message?: string | string[]
   statusCode?: number
