@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
 import { BookOpen, Phone, Sparkles, Star, Utensils, X } from 'lucide-react'
@@ -32,9 +32,26 @@ function VegBadge({ isNonVeg }: { isNonVeg: boolean }) {
   )
 }
 
-function DishImage({ src, alt }: { src: string | null; alt: string }) {
+function DishImage({
+  src,
+  alt,
+  onOpen,
+}: {
+  src: string | null
+  alt: string
+  onOpen?: () => void
+}) {
   if (src) {
-    return <img src={src} alt={alt} className="h-16 w-16 shrink-0 rounded-xl object-cover" />
+    return (
+      <button
+        type="button"
+        onClick={onOpen}
+        className="h-16 w-16 shrink-0 overflow-hidden rounded-xl"
+        aria-label={`View photo of ${alt}`}
+      >
+        <img src={src} alt="" className="h-full w-full object-cover" />
+      </button>
+    )
   }
   return (
     <div
@@ -46,10 +63,20 @@ function DishImage({ src, alt }: { src: string | null; alt: string }) {
   )
 }
 
-function ItemRow({ item }: { item: PublicMenuItem }) {
+function ItemRow({
+  item,
+  onOpenImage,
+}: {
+  item: PublicMenuItem
+  onOpenImage: (item: PublicMenuItem) => void
+}) {
   return (
     <article className="flex gap-3 border-b border-slate-100 py-3.5 last:border-b-0">
-      <DishImage src={item.imageUrl} alt={item.name} />
+      <DishImage
+        src={item.imageUrl}
+        alt={item.name}
+        onOpen={item.imageUrl ? () => onOpenImage(item) : undefined}
+      />
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-start gap-2">
           <div className="min-w-0 flex-1">
@@ -117,16 +144,80 @@ function ComboCard({ combo }: { combo: PublicMenuCombo }) {
   )
 }
 
-function CategoryItems({ items }: { items: PublicMenuItem[] }) {
+function CategoryItems({
+  items,
+  onOpenImage,
+}: {
+  items: PublicMenuItem[]
+  onOpenImage: (item: PublicMenuItem) => void
+}) {
   if (items.length === 0) {
     return <p className="py-12 text-center text-sm text-muted">No items in this category.</p>
   }
   return (
     <section>
       {items.map((item) => (
-        <ItemRow key={item.id} item={item} />
+        <ItemRow key={item.id} item={item} onOpenImage={onOpenImage} />
       ))}
     </section>
+  )
+}
+
+function ImagePreview({
+  item,
+  onClose,
+}: {
+  item: PublicMenuItem
+  onClose: () => void
+}) {
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  return (
+    <div
+      className="absolute inset-0 z-50 flex items-center justify-center bg-black/50 px-5 py-8"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dish-preview-title"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-h-full overflow-y-auto rounded-2xl bg-white p-4 shadow-[0_16px_40px_rgba(15,23,42,0.2)]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="flex items-center gap-2">
+          <VegBadge isNonVeg={item.isNonVeg} />
+          <h2
+            id="dish-preview-title"
+            className="min-w-0 font-display text-lg font-semibold leading-tight text-ink"
+          >
+            {item.name}
+          </h2>
+        </div>
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.name}
+            className="mt-3 aspect-square w-full rounded-xl object-cover"
+          />
+        ) : null}
+        {item.description ? (
+          <p className="mt-3 text-[13px] leading-relaxed text-muted">{item.description}</p>
+        ) : null}
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-4 w-full rounded-xl bg-ink py-2.5 text-sm font-semibold text-white"
+        >
+          Close
+        </button>
+      </div>
+    </div>
   )
 }
 
@@ -286,6 +377,11 @@ export function Menu() {
   const [foodFact] = useState(
     () => FOOD_FACTS[Math.floor(Math.random() * FOOD_FACTS.length)] ?? FOOD_FACTS[0],
   )
+  const [preview, setPreview] = useState<PublicMenuItem | null>(null)
+  const closePreview = useCallback(() => setPreview(null), [])
+  const openPreview = useCallback((item: PublicMenuItem) => {
+    setPreview(item)
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -488,7 +584,7 @@ export function Menu() {
                     <h2 className="text-sm font-semibold">Today's Special</h2>
                   </div>
                   {menu!.specials.map((special) => (
-                    <ItemRow key={special.id} item={special.item} />
+                    <ItemRow key={special.id} item={special.item} onOpenImage={openPreview} />
                   ))}
                 </section>
               ) : null}
@@ -507,7 +603,7 @@ export function Menu() {
                 .map((category) => (
                   <section key={category.id} ref={setSectionRef(category.id)}>
                     <h2 className="mb-1 text-sm font-semibold text-ink">{category.name}</h2>
-                    <CategoryItems items={category.items} />
+                    <CategoryItems items={category.items} onOpenImage={openPreview} />
                   </section>
                 ))}
             </div>
@@ -515,6 +611,8 @@ export function Menu() {
         </main>
 
         <MenuJumpFab sections={sections} onJump={jumpTo} />
+
+        {preview ? <ImagePreview item={preview} onClose={closePreview} /> : null}
 
         <footer className="flex shrink-0 items-center justify-center gap-2 border-t border-slate-100 px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
           <span className="text-[10px] font-semibold tracking-[0.14em] text-slate-400">
