@@ -104,10 +104,10 @@ export const pricingTiers: PricingTier[] = [
   {
     id: 'growth',
     name: 'Growth',
-    price: '₹999',
+    price: '₹1,499',
     priceNote: '/6 months',
     originalPrice: '₹1,794',
-    perDayCost: '~₹5.5/day',
+    perDayCost: '~₹8/day',
     features: [
       'Admin Panel Access',
       'Unlimited QR scans',
@@ -120,16 +120,14 @@ export const pricingTiers: PricingTier[] = [
       { label: 'NFC card', included: false }
     ],
     ctaLabel: 'Choose Growth',
-    highlighted: true,
-    badge: 'Most Popular',
   },
   {
     id: 'business-pro',
     name: 'Business Pro',
-    price: '₹1,499',
+    price: '₹2,499',
     priceNote: '/year',
     originalPrice: '₹3,588',
-    perDayCost: 'Just ₹4/day',
+    perDayCost: 'Just ₹6.8/day',
     features: [
       'Admin Panel Access',
       'Unlimited QR scans',
@@ -143,6 +141,8 @@ export const pricingTiers: PricingTier[] = [
       'Priority WhatsApp support',
     ],
     ctaLabel: 'Choose Business Pro',
+    highlighted: true,
+    badge: 'Best Value',
   },
 ]
 
@@ -172,7 +172,7 @@ export const pricingFaqs: FAQItem[] = [
     id: 'p2',
     question: 'Is pricing per business location?',
     answer:
-      'Yes. Starter is ₹299/month, Growth is ₹999 for 6 months, and Business Pro is ₹1,499/year — each billed per business location.',
+      'Yes. Starter is ₹299/month, Growth is ₹1,499 for 6 months, and Business Pro is ₹2,499/year — each billed per business location.',
   },
   {
     id: 'p3',
@@ -257,7 +257,7 @@ export const faqCategories: FAQCategory[] = [
         id: 'b2',
         question: 'What payment methods do you accept?',
         answer:
-          'Paid plans support common online payment methods for India. Choose Starter (₹299/month), Growth (₹999/6 months), or Business Pro (₹1,499/year) at checkout.',
+          'Paid plans support common online payment methods for India. Choose Starter (₹299/month), Growth (₹1,499/6 months), or Business Pro (₹2,499/year) at checkout.',
       },
     ],
   },
