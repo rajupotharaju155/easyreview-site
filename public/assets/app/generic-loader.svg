@@ -1,0 +1,47 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loading">
+  <title>Loading</title>
+  <style>
+    :root {
+      --loader-accent: #7F4FE0;
+      --loader-track: #E8E2F7;
+      --loader-dot: #7F4FE0;
+    }
+
+    .track {
+      fill: none;
+      stroke: var(--loader-track);
+      stroke-width: 8;
+    }
+    .arc {
+      fill: none;
+      stroke: var(--loader-accent);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 160 250;
+      transform-origin: 80px 80px;
+      animation: spin 1.1s linear infinite;
+    }
+    .center-dot {
+      fill: var(--loader-dot);
+      transform-origin: 80px 80px;
+      animation: pulse 1.1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.85); opacity: 0.6; }
+      50% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .arc { animation: none; }
+      .center-dot { animation: none; opacity: 0.85; }
+    }
+  </style>
+
+  <circle class="track" cx="80" cy="80" r="60"/>
+  <circle class="arc" cx="80" cy="80" r="60"/>
+  <circle class="center-dot" cx="80" cy="80" r="6"/>
+</svg>

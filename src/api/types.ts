@@ -65,6 +65,8 @@ export interface PublicQrCode {
   targetUrl: string | null
 }
 
+export type MenuStyle = 'restaurantStyle' | 'salonStyle'
+
 export interface PublicMenuItem {
   id: string
   locationId: string
@@ -76,7 +78,20 @@ export interface PublicMenuItem {
   isHalfServed: boolean
   halfPrice: number | null
   fullPrice: number
+  isMultiPriced: boolean
+  variantPrices: PublicMenuItemVariantPrice[]
   sortOrder: number
+}
+
+export interface PublicMenuPriceVariant {
+  id: string
+  name: string
+  sortOrder: number
+}
+
+export interface PublicMenuItemVariantPrice {
+  variantId: string
+  price: number
 }
 
 export interface PublicMenuCategory {
@@ -84,6 +99,7 @@ export interface PublicMenuCategory {
   locationId: string
   name: string
   sortOrder: number
+  priceVariants: PublicMenuPriceVariant[]
   items: PublicMenuItem[]
 }
 
@@ -117,6 +133,7 @@ export interface PublicMenu {
     state: string | null
     phoneNumber: string | null
     formattedAddress: string | null
+    menuStyle: MenuStyle
   }
   categories: PublicMenuCategory[]
   combos: PublicMenuCombo[]

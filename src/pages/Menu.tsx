@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
-import { BookOpen, Phone, Sparkles, Star, Utensils, X } from 'lucide-react'
+import { BookOpen, Phone, Scissors, Sparkles, Star, Utensils, X } from 'lucide-react'
 import { ApiError } from '../api/client'
 import { getPublicMenu } from '../api/menu'
-import type { PublicMenu, PublicMenuCombo, PublicMenuItem } from '../api/types'
+import type { PublicMenu, PublicMenuCategory, PublicMenuCombo, PublicMenuItem } from '../api/types'
 import { Logo } from '../components/shared/Logo'
+import { SalonPriceTable } from '../components/menu/SalonPriceTable'
 import { formatInr } from '../lib/money'
+import { isSalonMenu } from '../lib/menuStyle'
 
-const FOOD_FACTS = [
+/* const FOOD_FACTS = [
   'Honey never spoils — archaeologists have found 3,000-year-old jars still edible.',
   'Carrots were originally purple, not orange.',
   "Peanuts aren't nuts — they're legumes.",
@@ -17,7 +19,7 @@ const FOOD_FACTS = [
   'Chili peppers are fruits, botanically speaking.',
   'A "pinch" of salt is a real unit — roughly 1/8 teaspoon.',
   "Apples float because they're 25% air.",
-]
+] */
 
 function VegBadge({ isNonVeg }: { isNonVeg: boolean }) {
   const color = isNonVeg ? 'border-red-600' : 'border-emerald-600'
@@ -35,10 +37,12 @@ function VegBadge({ isNonVeg }: { isNonVeg: boolean }) {
 function DishImage({
   src,
   alt,
+  isSalon,
   onOpen,
 }: {
   src: string | null
   alt: string
+  isSalon: boolean
   onOpen?: () => void
 }) {
   if (src) {
@@ -53,21 +57,24 @@ function DishImage({
       </button>
     )
   }
+  const Icon = isSalon ? Scissors : Utensils
   return (
     <div
       className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-50 to-amber-100 text-amber-700"
       aria-hidden
     >
-      <Utensils className="h-6 w-6" strokeWidth={1.5} />
+      <Icon className="h-6 w-6" strokeWidth={1.5} />
     </div>
   )
 }
 
 function ItemRow({
   item,
+  isSalon,
   onOpenImage,
 }: {
   item: PublicMenuItem
+  isSalon: boolean
   onOpenImage: (item: PublicMenuItem) => void
 }) {
   return (
@@ -75,20 +82,25 @@ function ItemRow({
       <DishImage
         src={item.imageUrl}
         alt={item.name}
+        isSalon={isSalon}
         onOpen={item.imageUrl ? () => onOpenImage(item) : undefined}
       />
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-start gap-2">
           <div className="min-w-0 flex-1">
             <div className="flex min-w-0 items-center gap-2">
-              <VegBadge isNonVeg={item.isNonVeg} />
+              {isSalon ? null : <VegBadge isNonVeg={item.isNonVeg} />}
               <h3 className="min-w-0 truncate font-medium leading-5 text-ink">{item.name}</h3>
             </div>
             {item.description ? (
               <p className="mt-0.5 text-[13px] leading-relaxed text-muted">{item.description}</p>
             ) : null}
           </div>
-          {item.isHalfServed ? (
+          {item.isMultiPriced ? (
+            <p className="shrink-0 text-sm font-semibold leading-5 text-ink">
+              From {formatInr(item.fullPrice)}
+            </p>
+          ) : item.isHalfServed ? (
             <div className="shrink-0 text-right leading-5">
               <p className="text-sm font-semibold text-ink">
                 <span className="font-medium text-muted">Half</span>{' '}
@@ -109,7 +121,7 @@ function ItemRow({
   )
 }
 
-function ComboCard({ combo }: { combo: PublicMenuCombo }) {
+function ComboCard({ combo, isSalon }: { combo: PublicMenuCombo; isSalon: boolean }) {
   return (
     <article className="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50/80 to-white p-4">
       <div className="flex items-start justify-between gap-3">
@@ -130,7 +142,7 @@ function ComboCard({ combo }: { combo: PublicMenuCombo }) {
       <ul className="mt-3 space-y-1">
         {combo.items.map((item) => (
           <li key={item.id} className="flex items-center gap-2 text-[13px] text-muted">
-            <VegBadge isNonVeg={item.isNonVeg} />
+            {isSalon ? null : <VegBadge isNonVeg={item.isNonVeg} />}
             <span className="min-w-0 truncate">{item.name}</span>
           </li>
         ))}
@@ -145,19 +157,31 @@ function ComboCard({ combo }: { combo: PublicMenuCombo }) {
 }
 
 function CategoryItems({
-  items,
+  category,
+  isSalon,
   onOpenImage,
 }: {
-  items: PublicMenuItem[]
+  category: PublicMenuCategory
+  isSalon: boolean
   onOpenImage: (item: PublicMenuItem) => void
 }) {
-  if (items.length === 0) {
+  const variants = category.priceVariants ?? []
+  const matrixItems =
+    isSalon && variants.length > 0
+      ? category.items.filter((item) => item.isMultiPriced)
+      : []
+  const matrixIds = new Set(matrixItems.map((item) => item.id))
+  const listItems = category.items.filter((item) => !matrixIds.has(item.id))
+
+  if (category.items.length === 0) {
     return <p className="py-12 text-center text-sm text-muted">No items in this category.</p>
   }
+
   return (
     <section>
-      {items.map((item) => (
-        <ItemRow key={item.id} item={item} onOpenImage={onOpenImage} />
+      {matrixItems.length > 0 ? <SalonPriceTable variants={variants} items={matrixItems} /> : null}
+      {listItems.map((item) => (
+        <ItemRow key={item.id} item={item} isSalon={isSalon} onOpenImage={onOpenImage} />
       ))}
     </section>
   )
@@ -165,9 +189,11 @@ function CategoryItems({
 
 function ImagePreview({
   item,
+  isSalon,
   onClose,
 }: {
   item: PublicMenuItem
+  isSalon: boolean
   onClose: () => void
 }) {
   useEffect(() => {
@@ -190,14 +216,35 @@ function ImagePreview({
         className="w-full max-h-full overflow-y-auto rounded-2xl bg-white p-4 shadow-[0_16px_40px_rgba(15,23,42,0.2)]"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-center gap-2">
-          <VegBadge isNonVeg={item.isNonVeg} />
-          <h2
-            id="dish-preview-title"
-            className="min-w-0 font-display text-lg font-semibold leading-tight text-ink"
-          >
-            {item.name}
-          </h2>
+        <div className="flex items-start gap-3">
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            {isSalon ? null : <VegBadge isNonVeg={item.isNonVeg} />}
+            <h2
+              id="dish-preview-title"
+              className="min-w-0 truncate font-display text-lg font-semibold leading-tight text-ink"
+            >
+              {item.name}
+            </h2>
+          </div>
+          {item.isMultiPriced ? (
+            <p className="shrink-0 pt-0.5 text-sm font-semibold leading-tight text-ink">
+              From {formatInr(item.fullPrice)}
+            </p>
+          ) : item.isHalfServed ? (
+            <div className="shrink-0 pt-0.5 text-right leading-5">
+              <p className="text-sm font-semibold text-ink">
+                <span className="font-medium text-muted">Half</span>{' '}
+                {formatInr(item.halfPrice ?? item.fullPrice)}
+              </p>
+              <p className="text-sm font-semibold text-ink">
+                <span className="font-medium text-muted">Full</span> {formatInr(item.fullPrice)}
+              </p>
+            </div>
+          ) : (
+            <p className="shrink-0 pt-0.5 text-sm font-semibold leading-tight text-ink">
+              {formatInr(item.fullPrice)}
+            </p>
+          )}
         </div>
         {item.imageUrl ? (
           <img
@@ -374,9 +421,9 @@ export function Menu() {
   const sectionRefs = useRef(new Map<string, HTMLElement>())
   const jumpingRef = useRef(false)
   const [activeId, setActiveId] = useState<string | null>(null)
-  const [foodFact] = useState(
-    () => FOOD_FACTS[Math.floor(Math.random() * FOOD_FACTS.length)] ?? FOOD_FACTS[0],
-  )
+  // const [foodFact] = useState(
+  //   () => FOOD_FACTS[Math.floor(Math.random() * FOOD_FACTS.length)] ?? FOOD_FACTS[0],
+  // )
   const [preview, setPreview] = useState<PublicMenuItem | null>(null)
   const closePreview = useCallback(() => setPreview(null), [])
   const openPreview = useCallback((item: PublicMenuItem) => {
@@ -405,7 +452,7 @@ export function Menu() {
         if (cancelled) return
         if (err instanceof ApiError && err.status === 404) {
           setErrorTitle('Menu not found')
-          setError('This restaurant menu could not be found.')
+          setError('This menu could not be found.')
         } else {
           setErrorTitle('Something went wrong')
           setError(err instanceof Error ? err.message : 'Something went wrong.')
@@ -491,6 +538,7 @@ export function Menu() {
   }
 
   const location = menu?.location
+  const isSalon = isSalonMenu(location?.menuStyle)
   const phone = location?.phoneNumber
   const placeLine = [location?.city, location?.state].filter(Boolean).join(', ')
   const hasContent = sections.length > 0
@@ -504,7 +552,7 @@ export function Menu() {
         {location ? (
           <meta
             name="description"
-            content={`View the menu, combos, and today's special at ${location.name}.`}
+            content={`View the menu${isSalon ? '' : ', combos,'} and today's special at ${location.name}.`}
           />
         ) : null}
       </Helmet>
@@ -517,15 +565,15 @@ export function Menu() {
             aria-live="polite"
           >
             <img
-              src="/assets/app/menu-loader-purple.svg"
+              src="/assets/app/generic-loader.svg"
               alt="Loading menu"
               width={160}
               height={160}
               className="h-40 w-40"
             />
-            <p className="-mt-2 max-w-xs text-center text-sm leading-relaxed text-muted">
+            {/* <p className="-mt-2 max-w-xs text-center text-sm leading-relaxed text-muted">
               {foodFact}
-            </p>
+            </p> */}
           </div>
         ) : (
           <>
@@ -544,7 +592,7 @@ export function Menu() {
               <a
                 href={telHref(phone)}
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700 no-underline"
-                aria-label="Call restaurant"
+                aria-label={isSalon ? 'Call salon' : 'Call restaurant'}
               >
                 <Phone className="h-4 w-4" />
               </a>
@@ -566,10 +614,14 @@ export function Menu() {
             </div>
           ) : !hasContent ? (
             <div className="py-16 text-center">
-              <Utensils className="mx-auto h-10 w-10 text-amber-500" strokeWidth={1.5} />
+              {isSalon ? (
+                <Scissors className="mx-auto h-10 w-10 text-amber-500" strokeWidth={1.5} />
+              ) : (
+                <Utensils className="mx-auto h-10 w-10 text-amber-500" strokeWidth={1.5} />
+              )}
               <h2 className="mt-4 font-display text-xl font-bold text-ink">Menu coming soon</h2>
               <p className="mt-2 text-sm text-muted">
-                {location?.name} has not published dishes yet.
+                {location?.name} has not published {isSalon ? 'services' : 'dishes'} yet.
               </p>
             </div>
           ) : (
@@ -584,7 +636,7 @@ export function Menu() {
                     <h2 className="text-sm font-semibold">Today's Special</h2>
                   </div>
                   {menu!.specials.map((special) => (
-                    <ItemRow key={special.id} item={special.item} onOpenImage={openPreview} />
+                    <ItemRow key={special.id} item={special.item} isSalon={isSalon} onOpenImage={openPreview} />
                   ))}
                 </section>
               ) : null}
@@ -593,7 +645,7 @@ export function Menu() {
                 <section ref={setSectionRef('combos')} className="space-y-3">
                   <h2 className="text-sm font-semibold text-ink">Combos</h2>
                   {menu!.combos.map((combo) => (
-                    <ComboCard key={combo.id} combo={combo} />
+                    <ComboCard key={combo.id} combo={combo} isSalon={isSalon} />
                   ))}
                 </section>
               ) : null}
@@ -602,8 +654,14 @@ export function Menu() {
                 .filter((category) => category.items.length > 0)
                 .map((category) => (
                   <section key={category.id} ref={setSectionRef(category.id)}>
-                    <h2 className="mb-1 text-sm font-semibold text-ink">{category.name}</h2>
-                    <CategoryItems items={category.items} onOpenImage={openPreview} />
+                    <h2 className="mb-1 font-display text-sm font-semibold italic text-ink">
+                      {category.name}
+                    </h2>
+                    <CategoryItems
+                      category={category}
+                      isSalon={isSalon}
+                      onOpenImage={openPreview}
+                    />
                   </section>
                 ))}
             </div>
@@ -612,7 +670,7 @@ export function Menu() {
 
         <MenuJumpFab sections={sections} onJump={jumpTo} />
 
-        {preview ? <ImagePreview item={preview} onClose={closePreview} /> : null}
+        {preview ? <ImagePreview item={preview} isSalon={isSalon} onClose={closePreview} /> : null}
 
         <footer className="flex shrink-0 items-center justify-center gap-2 border-t border-slate-100 px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
           <span className="text-[10px] font-semibold tracking-[0.14em] text-slate-400">
