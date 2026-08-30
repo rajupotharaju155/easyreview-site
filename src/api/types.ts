@@ -67,6 +67,8 @@ export interface PublicQrCode {
 
 export type MenuStyle = 'restaurantStyle' | 'salonStyle'
 
+export type MenuPriceType = 'fixed' | 'onwards' | 'free'
+
 export interface PublicMenuItem {
   id: string
   locationId: string
@@ -77,7 +79,8 @@ export interface PublicMenuItem {
   imageUrl: string | null
   isHalfServed: boolean
   halfPrice: number | null
-  fullPrice: number
+  fullPrice: number | null
+  priceType: MenuPriceType
   isMultiPriced: boolean
   variantPrices: PublicMenuItemVariantPrice[]
   sortOrder: number

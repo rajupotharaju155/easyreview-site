@@ -7,7 +7,7 @@ import { getPublicMenu } from '../api/menu'
 import type { PublicMenu, PublicMenuCategory, PublicMenuCombo, PublicMenuItem } from '../api/types'
 import { Logo } from '../components/shared/Logo'
 import { SalonPriceTable } from '../components/menu/SalonPriceTable'
-import { formatInr } from '../lib/money'
+import { formatInr, formatItemPrice } from '../lib/money'
 import { isSalonMenu } from '../lib/menuStyle'
 
 /* const FOOD_FACTS = [
@@ -26,7 +26,7 @@ function VegBadge({ isNonVeg }: { isNonVeg: boolean }) {
   const fill = isNonVeg ? 'bg-red-600' : 'bg-emerald-600'
   return (
     <span
-      className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center self-center rounded-[3px] border leading-none ${color} bg-white`}
+      className={`mt-0.5 inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center self-start rounded-[3px] border leading-none ${color} bg-white`}
       aria-label={isNonVeg ? 'Non-veg' : 'Veg'}
     >
       <span className={`h-1.5 w-1.5 rounded-full ${fill}`} />
@@ -68,6 +68,42 @@ function DishImage({
   )
 }
 
+function ItemPrice({
+  item,
+  className = '',
+}: {
+  item: PublicMenuItem
+  className?: string
+}) {
+  if (item.isHalfServed) {
+    return (
+      <div className={`shrink-0 text-right leading-5 ${className}`}>
+        <p className="text-sm font-semibold text-ink">
+          <span className="font-medium text-muted">Half</span>{' '}
+          {formatInr(item.halfPrice ?? item.fullPrice ?? 0)}
+        </p>
+        <p className="text-sm font-semibold text-ink">
+          <span className="font-medium text-muted">Full</span> {formatInr(item.fullPrice ?? 0)}
+        </p>
+      </div>
+    )
+  }
+
+  const amount = formatItemPrice(item)
+  if (item.priceType === 'onwards' && !item.isMultiPriced) {
+    return (
+      <div className={`shrink-0 text-right leading-tight ${className}`}>
+        <p className="text-sm font-semibold text-ink">{amount}</p>
+        <p className="text-[11px] font-medium text-muted">onwards</p>
+      </div>
+    )
+  }
+
+  return (
+    <p className={`shrink-0 text-sm font-semibold leading-5 text-ink ${className}`}>{amount}</p>
+  )
+}
+
 function ItemRow({
   item,
   isSalon,
@@ -88,33 +124,15 @@ function ItemRow({
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-start gap-2">
           <div className="min-w-0 flex-1">
-            <div className="flex min-w-0 items-center gap-2">
+            <div className="flex min-w-0 items-start gap-2">
               {isSalon ? null : <VegBadge isNonVeg={item.isNonVeg} />}
-              <h3 className="min-w-0 truncate font-medium leading-5 text-ink">{item.name}</h3>
+              <h3 className="min-w-0 break-words font-medium leading-snug text-ink">{item.name}</h3>
             </div>
             {item.description ? (
               <p className="mt-0.5 text-[13px] leading-relaxed text-muted">{item.description}</p>
             ) : null}
           </div>
-          {item.isMultiPriced ? (
-            <p className="shrink-0 text-sm font-semibold leading-5 text-ink">
-              From {formatInr(item.fullPrice)}
-            </p>
-          ) : item.isHalfServed ? (
-            <div className="shrink-0 text-right leading-5">
-              <p className="text-sm font-semibold text-ink">
-                <span className="font-medium text-muted">Half</span>{' '}
-                {formatInr(item.halfPrice ?? item.fullPrice)}
-              </p>
-              <p className="text-sm font-semibold text-ink">
-                <span className="font-medium text-muted">Full</span> {formatInr(item.fullPrice)}
-              </p>
-            </div>
-          ) : (
-            <p className="shrink-0 text-sm font-semibold leading-5 text-ink">
-              {formatInr(item.fullPrice)}
-            </p>
-          )}
+          <ItemPrice item={item} />
         </div>
       </div>
     </article>
@@ -141,9 +159,9 @@ function ComboCard({ combo, isSalon }: { combo: PublicMenuCombo; isSalon: boolea
       </div>
       <ul className="mt-3 space-y-1">
         {combo.items.map((item) => (
-          <li key={item.id} className="flex items-center gap-2 text-[13px] text-muted">
+          <li key={item.id} className="flex items-start gap-2 text-[13px] text-muted">
             {isSalon ? null : <VegBadge isNonVeg={item.isNonVeg} />}
-            <span className="min-w-0 truncate">{item.name}</span>
+            <span className="min-w-0 break-words">{item.name}</span>
           </li>
         ))}
       </ul>
@@ -217,34 +235,16 @@ function ImagePreview({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start gap-3">
-          <div className="flex min-w-0 flex-1 items-center gap-2">
+          <div className="flex min-w-0 flex-1 items-start gap-2">
             {isSalon ? null : <VegBadge isNonVeg={item.isNonVeg} />}
             <h2
               id="dish-preview-title"
-              className="min-w-0 truncate font-display text-lg font-semibold leading-tight text-ink"
+              className="min-w-0 break-words font-display text-lg font-semibold leading-snug text-ink"
             >
               {item.name}
             </h2>
           </div>
-          {item.isMultiPriced ? (
-            <p className="shrink-0 pt-0.5 text-sm font-semibold leading-tight text-ink">
-              From {formatInr(item.fullPrice)}
-            </p>
-          ) : item.isHalfServed ? (
-            <div className="shrink-0 pt-0.5 text-right leading-5">
-              <p className="text-sm font-semibold text-ink">
-                <span className="font-medium text-muted">Half</span>{' '}
-                {formatInr(item.halfPrice ?? item.fullPrice)}
-              </p>
-              <p className="text-sm font-semibold text-ink">
-                <span className="font-medium text-muted">Full</span> {formatInr(item.fullPrice)}
-              </p>
-            </div>
-          ) : (
-            <p className="shrink-0 pt-0.5 text-sm font-semibold leading-tight text-ink">
-              {formatInr(item.fullPrice)}
-            </p>
-          )}
+          <ItemPrice item={item} className="pt-0.5" />
         </div>
         {item.imageUrl ? (
           <img
