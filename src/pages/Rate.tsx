@@ -715,7 +715,7 @@ export function Rate() {
                 </div>
               ) : (
                 <div className="flex min-h-0 flex-1 flex-col">
-                  <div className="mt-4 min-h-0 flex-1 overflow-y-auto overscroll-contain pt-2 sm:max-h-[40dvh] sm:flex-none">
+                  <div className="mt-4 min-h-0 flex-1 overflow-y-auto overscroll-contain pt-2 sm:max-h-[68dvh] sm:flex-none">
                     <div className="flex flex-col gap-3 pb-1">
                       {suggestions.map((suggestion, index) => {
                         const isSelected = index === selectedSuggestionIndex
