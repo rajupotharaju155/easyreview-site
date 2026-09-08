@@ -20,6 +20,7 @@ EasyReview is a review-growth product for local businesses in India and beyond. 
 - [Photography Google reviews guide](https://easyreview.co.in/guides/photography-google-reviews): How photographers collect Google reviews after every shoot
 - [Repair shop Google reviews guide](https://easyreview.co.in/guides/mobile-laptop-repair-google-reviews): How mobile and laptop repair shops win more 5-star reviews
 - [FAQ](https://easyreview.co.in/faq): Common questions about EasyReview
+- [Contact us](https://easyreview.co.in/contact): Contact form for plans, standees, and account questions
 
 ## Optional
 

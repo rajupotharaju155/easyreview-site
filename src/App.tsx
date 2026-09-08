@@ -4,6 +4,7 @@ import { MainLayout } from './components/layout/MainLayout'
 import { ScrollToTop } from './components/layout/ScrollToTop'
 import { ClaimQr } from './pages/ClaimQr'
 import { CompetitorAnalysis } from './pages/CompetitorAnalysis'
+import { Contact } from './pages/Contact'
 import { DemoVideo } from './pages/DemoVideo'
 import { FAQ } from './pages/FAQ'
 import { Guides } from './pages/Guides'
@@ -84,6 +85,7 @@ export default function App() {
               element={<PhotographyGuide />}
             />
             <Route path="faq" element={<FAQ />} />
+            <Route path="contact" element={<Contact />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsOfService />} />
             <Route path="*" element={<NotFound />} />

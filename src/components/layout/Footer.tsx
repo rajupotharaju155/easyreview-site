@@ -8,6 +8,7 @@ const productLinks = [
   { label: 'Competitor Analysis', to: '/competitor-analysis' },
   { label: 'Demo video', to: '/demo-video' },
   { label: 'FAQ', to: '/faq' },
+  { label: 'Contact us', to: '/contact' },
 ]
 
 const guideLinks = [

@@ -55,6 +55,7 @@ const routes = [
   '/guides/photography-google-reviews',
   '/demo-video',
   '/faq',
+  '/contact',
   '/privacy',
   '/terms',
   '/',

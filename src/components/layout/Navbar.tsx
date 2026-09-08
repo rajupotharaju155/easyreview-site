@@ -9,6 +9,7 @@ const navLinks = [
   { label: 'Guides', to: '/guides' },
   { label: 'Demo video', to: '/demo-video' },
   { label: 'FAQ', to: '/faq' },
+  { label: 'Contact us', to: '/contact' },
 ]
 
 export function Navbar() {

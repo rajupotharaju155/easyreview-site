@@ -143,6 +143,30 @@ export interface PublicMenu {
   specials: PublicMenuSpecial[]
 }
 
+export type SubmittedFrom = 'app' | 'site'
+
+export interface ContactMessage {
+  id: string
+  name: string
+  email: string
+  countryCode: string
+  phone: string
+  message: string
+  submittedFrom: SubmittedFrom
+  userId: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type CreateContactMessagePayload = {
+  name: string
+  email: string
+  countryCode: string
+  phone: string
+  message: string
+  submittedFrom: SubmittedFrom
+}
+
 export interface ApiErrorBody {
   message?: string | string[]
   statusCode?: number
