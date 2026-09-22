@@ -12,6 +12,7 @@ import { Home } from './pages/Home'
 import { NotFound } from './pages/NotFound'
 import { Pricing } from './pages/Pricing'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
+import { Profile } from './pages/Profile'
 import { Rate } from './pages/Rate'
 import { Menu } from './pages/Menu'
 import { TermsOfService } from './pages/TermsOfService'
@@ -44,6 +45,7 @@ export default function App() {
         <Routes>
           <Route path="rate/:slug" element={<Rate />} />
           <Route path="menu/:slug" element={<Menu />} />
+          <Route path="profile/:slug" element={<Profile />} />
           <Route path="q/:code" element={<ClaimQr />} />
           <Route path="demo-video" element={<DemoVideo />} />
           <Route element={<MainLayout />}>

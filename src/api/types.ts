@@ -172,3 +172,65 @@ export interface ApiErrorBody {
   statusCode?: number
   error?: string
 }
+
+export type ProfileLinkType =
+  | 'google_business'
+  | 'instagram'
+  | 'facebook'
+  | 'x'
+  | 'linkedin'
+  | 'youtube'
+  | 'whatsapp'
+  | 'telegram'
+  | 'tiktok'
+  | 'snapchat'
+  | 'spotify'
+  | 'reddit'
+  | 'twitch'
+  | 'yelp'
+  | 'shopify'
+  | 'zoom'
+  | 'notion'
+  | 'website'
+  | 'custom'
+
+export interface PublicProfileLink {
+  id: string
+  type: ProfileLinkType
+  label: string
+  url: string
+}
+
+export interface PublicProfile {
+  id: string
+  slug: string
+  displayName: string
+  designation: string | null
+  companyName: string | null
+  bio: string | null
+  phone: string | null
+  whatsappPhone: string | null
+  email: string | null
+  coverImageUrl: string | null
+  profileImageUrl: string | null
+  links: PublicProfileLink[]
+}
+
+export interface CreateProfileLeadPayload {
+  name: string
+  phone: string
+  email?: string
+  companyName?: string
+  note?: string
+}
+
+export interface ProfileLead {
+  id: string
+  profileId: string
+  name: string
+  phone: string
+  email: string | null
+  companyName: string | null
+  note: string | null
+  createdAt: string
+}
