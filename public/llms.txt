@@ -1,13 +1,16 @@
 # EasyReview
 
-> EasyReview helps local businesses turn happy customers into 5-star Google reviews with QR codes, while routing unhappy feedback privately before it reaches Google.
+> EasyReview helps local businesses turn happy customers into 5-star Google reviews with QR codes, while routing unhappy feedback privately before it reaches Google. The same app also includes EasyMenu, EasyStory, and EasyProfile.
 
-EasyReview is a review-growth product for local businesses in India and beyond. Customers scan a counter QR, rate their visit, get AI-drafted review text for 4–5★ experiences, or submit private feedback for 1–3★.
+EasyReview is a review-growth product for local businesses in India and beyond. Customers scan a counter QR, rate their visit, get AI-drafted review text for 4–5★ experiences, or submit private feedback for 1–3★. EasyMenu is a digital menu, EasyStory makes posters for WhatsApp Status and Instagram Stories, and EasyProfile is a digital business card. Each product has its own plan.
 
 ## Pages
 
 - [Home](https://easyreview.co.in/): Product overview, how it works, and features
-- [Pricing](https://easyreview.co.in/pricing): Plans, Quick Trial offer, and add-ons
+- [EasyMenu](https://easyreview.co.in/products/easy-menu): Digital menu QR for restaurants and salons
+- [EasyStory](https://easyreview.co.in/products/easy-story): Posters for WhatsApp Status and Instagram Stories
+- [EasyProfile](https://easyreview.co.in/products/easy-profile): Digital business card shared by QR or NFC
+- [Pricing](https://easyreview.co.in/pricing): Plans for EasyReview, EasyMenu, EasyStory, and EasyProfile
 - [Competitor analysis](https://easyreview.co.in/competitor-analysis): Compare your Google presence against nearby competitors
 - [Guides](https://easyreview.co.in/guides): Practical Google review playbooks for local businesses
 - [Restaurant Google reviews guide](https://easyreview.co.in/guides/restaurant-qr-code-google-reviews): How restaurants use QR codes to get more 5-star Google reviews

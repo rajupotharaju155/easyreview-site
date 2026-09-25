@@ -26,8 +26,7 @@ export const stats: StatItem[] = [
   {
     id: 'trust-response',
     value: '35%',
-    description:
-      'More revenue earned by businesses that reply to at least 25% of their reviews.',
+    description: 'More revenue earned by businesses that reply to at least 25% of their reviews.',
     icon: 'reply',
   },
   {
@@ -78,7 +77,7 @@ export const pricingTiers: PricingTier[] = [
       'Private feedback gate',
       { label: 'Multi-language AI drafts', included: false },
       { label: 'QR Standee', included: false },
-      { label: 'NFC card', included: false }
+      { label: 'NFC card', included: false },
     ],
     ctaLabel: 'Start Quick Trial',
   },
@@ -97,7 +96,7 @@ export const pricingTiers: PricingTier[] = [
       'Private feedback gate',
       'Multi-language AI drafts',
       '1 QR Standee',
-      { label: 'NFC card', included: false }
+      { label: 'NFC card', included: false },
     ],
     ctaLabel: 'Choose Starter',
   },
@@ -117,7 +116,7 @@ export const pricingTiers: PricingTier[] = [
       'Private feedback gate',
       'Multi-language AI drafts',
       '1 QR Standee',
-      { label: 'NFC card', included: false }
+      { label: 'NFC card', included: false },
     ],
     ctaLabel: 'Choose Growth',
   },
@@ -258,6 +257,30 @@ export const faqCategories: FAQCategory[] = [
         question: 'What payment methods do you accept?',
         answer:
           'Paid plans support common online payment methods for India. Choose Starter (₹299/month), Growth (₹1,499/6 months), or Business Pro (₹2,499/year) at checkout.',
+      },
+    ],
+  },
+  {
+    id: 'other-products',
+    title: 'Other products',
+    items: [
+      {
+        id: 'o1',
+        question: 'What else is in the EasyReview app?',
+        answer:
+          'The same app includes EasyMenu, a digital menu for restaurants and salons; EasyStory, posters for WhatsApp Status and Instagram Stories; and EasyProfile, a digital business card shared by QR or NFC.',
+      },
+      {
+        id: 'o2',
+        question: 'Does an EasyReview plan cover EasyMenu, EasyStory, and EasyProfile?',
+        answer:
+          'EasyMenu and EasyStory start at ₹399/month, with 6-month and yearly options. EasyProfile is a one-time NFC card: ₹999 for PVC or ₹1,999 for metal, and the digital card stays active for life.',
+      },
+      {
+        id: 'o3',
+        question: 'Where do customers see my menu, story, or business card?',
+        answer:
+          'EasyMenu opens from a menu QR or link. EasyProfile opens from a QR scan or an NFC tap, and visitors can leave a lead. EasyStory posters are yours to post on WhatsApp Status and Instagram Stories.',
       },
     ],
   },

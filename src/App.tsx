@@ -11,6 +11,7 @@ import { Guides } from './pages/Guides'
 import { Home } from './pages/Home'
 import { NotFound } from './pages/NotFound'
 import { Pricing } from './pages/Pricing'
+import { ProductPage } from './pages/ProductPage'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { Profile } from './pages/Profile'
 import { Rate } from './pages/Rate'
@@ -51,17 +52,17 @@ export default function App() {
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="pricing" element={<Pricing />} />
+            <Route path="products/easy-menu" element={<ProductPage productId="easy-menu" />} />
+            <Route path="products/easy-story" element={<ProductPage productId="easy-story" />} />
+            <Route
+              path="products/easy-profile"
+              element={<ProductPage productId="easy-profile" />}
+            />
             <Route path="competitor-analysis" element={<CompetitorAnalysis />} />
             <Route path="guides" element={<Guides />} />
-            <Route
-              path="guides/restaurant-qr-code-google-reviews"
-              element={<RestaurantGuide />}
-            />
+            <Route path="guides/restaurant-qr-code-google-reviews" element={<RestaurantGuide />} />
             <Route path="guides/how-hotels-can-win-google-reviews" element={<HotelGuide />} />
-            <Route
-              path="guides/turn-members-into-5-star-google-review"
-              element={<GymGuide />}
-            />
+            <Route path="guides/turn-members-into-5-star-google-review" element={<GymGuide />} />
             <Route
               path="guides/easiest-way-salons-collect-google-reviews"
               element={<SalonGuide />}
@@ -74,18 +75,9 @@ export default function App() {
               path="guides/mobile-laptop-repair-google-reviews"
               element={<RepairShopGuide />}
             />
-            <Route
-              path="guides/spa-wellness-google-reviews"
-              element={<SpaWellnessGuide />}
-            />
-            <Route
-              path="guides/real-estate-5-star-google-reviews"
-              element={<RealEstateGuide />}
-            />
-            <Route
-              path="guides/photography-google-reviews"
-              element={<PhotographyGuide />}
-            />
+            <Route path="guides/spa-wellness-google-reviews" element={<SpaWellnessGuide />} />
+            <Route path="guides/real-estate-5-star-google-reviews" element={<RealEstateGuide />} />
+            <Route path="guides/photography-google-reviews" element={<PhotographyGuide />} />
             <Route path="faq" element={<FAQ />} />
             <Route path="contact" element={<Contact />} />
             <Route path="privacy" element={<PrivacyPolicy />} />

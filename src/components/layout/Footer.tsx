@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom'
+import { marketingProducts } from '../../data/products'
 import { Logo } from '../shared/Logo'
 import { PageContainer } from './PageContainer'
 
 const productLinks = [
-  { label: 'Home', to: '/' },
+  ...marketingProducts.map((product) => ({ label: product.name, to: product.path })),
   { label: 'Pricing', to: '/pricing' },
+]
+
+const companyLinks = [
   { label: 'Competitor Analysis', to: '/competitor-analysis' },
   { label: 'Demo video', to: '/demo-video' },
   { label: 'FAQ', to: '/faq' },
@@ -60,16 +64,17 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
       <PageContainer className="py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <Logo />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-              Helping local businesses turn happy customers into five-star Google reviews — while
-              keeping complaints private.
+              Google reviews, digital menus, story posters, and digital business cards for local
+              businesses.
             </p>
           </div>
 
           <FooterColumn title="Product" links={productLinks} />
+          <FooterColumn title="Company" links={companyLinks} />
           <FooterColumn title="Guides" links={guideLinks} />
           <FooterColumn title="Legal" links={legalLinks} />
         </div>
