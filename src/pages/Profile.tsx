@@ -13,7 +13,9 @@ import { useParams } from 'react-router-dom'
 import { ApiError } from '../api/client'
 import { getProfileBySlug, submitProfileLead } from '../api/profiles'
 import type { PublicProfile } from '../api/types'
+import { ProfileCardHeader } from '../components/profile/ProfileCardHeader'
 import { ProfileLinkIcon } from '../components/profile/ProfileLinkIcon'
+import { SITE_URL } from '../components/shared/SeoHead'
 import { normaliseWhatsappNumber, WHATSAPP_ICON_SRC } from '../lib/profileLinks'
 import { downloadProfileVCard } from '../lib/vcard'
 
@@ -32,10 +34,6 @@ const EMPTY_LEAD_FORM: LeadForm = {
   companyName: '',
   note: '',
 }
-
-/** Bright accent gradient shown behind the avatar when no cover image is set. */
-const COVER_FALLBACK =
-  'linear-gradient(135deg, rgba(107,47,213,0.85) 0%, rgba(56,189,248,0.75) 100%)'
 
 export function Profile() {
   const { slug = '' } = useParams<{ slug: string }>()
@@ -190,67 +188,10 @@ export function Profile() {
       </Helmet>
 
       <main className="mx-auto flex w-full max-w-[420px] flex-1 flex-col bg-white shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:my-6 sm:rounded-[24px] sm:overflow-hidden">
-        {/* Cover + avatar --------------------------------------------------- */}
-        <header className="relative">
-          {profile.coverImageUrl ? (
-            <button
-              type="button"
-              onClick={() => setLightboxSrc(profile.coverImageUrl)}
-              className="block aspect-[3/1] w-full cursor-zoom-in border-0 bg-transparent p-0"
-              aria-label="View cover photo"
-            >
-              <img
-                src={profile.coverImageUrl}
-                alt=""
-                className="h-full w-full object-cover"
-              />
-            </button>
-          ) : (
-            <div
-              className="aspect-[3/1] w-full"
-              style={{ background: COVER_FALLBACK }}
-              aria-hidden
-            />
-          )}
-
-          {profile.profileImageUrl ? (
-            <button
-              type="button"
-              onClick={() => setLightboxSrc(profile.profileImageUrl)}
-              className="absolute -bottom-8 left-4 h-16 w-16 cursor-zoom-in overflow-hidden rounded-2xl border-[3px] border-white bg-slate-200 p-0 shadow-[0_6px_14px_rgba(15,23,42,0.15)]"
-              aria-label={`View profile photo of ${profile.displayName}`}
-            >
-              <img
-                src={profile.profileImageUrl}
-                alt={profile.displayName}
-                className="h-full w-full object-cover"
-              />
-            </button>
-          ) : (
-            <div className="absolute -bottom-8 left-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border-[3px] border-white bg-slate-100 text-xl font-semibold text-slate-400 shadow-[0_6px_14px_rgba(15,23,42,0.15)]">
-              {profile.displayName.trim().charAt(0).toUpperCase()}
-            </div>
-          )}
-        </header>
-
-        {/* Identity --------------------------------------------------------- */}
-        <section className="mt-10 px-4 sm:px-5">
-          <h1 className="font-display text-lg font-bold leading-tight tracking-tight text-ink">
-            {profile.displayName}
-          </h1>
-          {profile.designation || profile.companyName ? (
-            <p className="mt-0.5 text-[13px] text-slate-600">
-              {profile.designation}
-              {profile.designation && profile.companyName ? ' · ' : ''}
-              {profile.companyName}
-            </p>
-          ) : null}
-          {profile.bio ? (
-            <p className="mt-1.5 text-[13px] leading-relaxed text-slate-600">
-              {profile.bio}
-            </p>
-          ) : null}
-        </section>
+        <ProfileCardHeader
+          profile={profile}
+          onOpenImage={setLightboxSrc}
+        />
 
         {/* Save contact / Exchange contact --------------------------------- */}
         <section className="mt-3 flex gap-2 px-4 sm:px-5">
@@ -333,19 +274,26 @@ export function Profile() {
         )}
 
         {/* Powered by ------------------------------------------------------ */}
-        <footer className="mt-auto flex items-center justify-center gap-1 border-t border-slate-100 px-4 py-2">
-          <span className="text-[8px] font-semibold tracking-[0.14em] text-slate-400">
-            POWERED BY
-          </span>
-          <img
-            src="/logo.png"
-            alt=""
-            aria-hidden
-            className="h-3 w-3 shrink-0 object-contain opacity-70"
-          />
-          <span className="font-display text-[10px] font-bold tracking-tight text-ink opacity-70">
-            EasyReview
-          </span>
+        <footer className="mt-auto border-t border-slate-100">
+          <a
+            href={SITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full cursor-pointer items-center justify-center gap-1 px-4 py-2 no-underline"
+          >
+            <span className="text-[8px] font-semibold tracking-[0.14em] text-slate-400">
+              POWERED BY
+            </span>
+            <img
+              src="/logo.png"
+              alt=""
+              aria-hidden
+              className="h-3 w-3 shrink-0 object-contain opacity-70"
+            />
+            <span className="font-display text-[10px] font-bold tracking-tight text-ink opacity-70">
+              EasyReview
+            </span>
+          </a>
         </footer>
       </main>
 

@@ -213,6 +213,8 @@ export interface PublicProfile {
   email: string | null
   coverImageUrl: string | null
   profileImageUrl: string | null
+  /** `portrait` (default) or `classic`. Missing values render as Portrait. */
+  cardTemplate?: 'portrait' | 'classic' | null
   links: PublicProfileLink[]
 }
 
