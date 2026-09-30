@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ApiError } from '../api/client'
 import { getProfileBySlug, submitProfileLead } from '../api/profiles'
 import type { PublicProfile } from '../api/types'
@@ -36,6 +36,7 @@ const EMPTY_LEAD_FORM: LeadForm = {
 }
 
 export function Profile() {
+  const navigate = useNavigate()
   const { slug = '' } = useParams<{ slug: string }>()
   const [profile, setProfile] = useState<PublicProfile | null>(null)
   const [loading, setLoading] = useState(true)
@@ -56,14 +57,22 @@ export function Profile() {
     }
 
     let cancelled = false
+    let redirecting = false
     setLoading(true)
     setError(null)
+    setProfile(null)
 
     getProfileBySlug(slug)
       .then((data) => {
-        if (!cancelled) {
-          setProfile(data)
+        if (cancelled) return
+        if (data.slug && data.slug !== slug) {
+          redirecting = true
+          navigate(`/profile/${encodeURIComponent(data.slug)}`, {
+            replace: true,
+          })
+          return
         }
+        setProfile(data)
       })
       .catch((err: unknown) => {
         if (cancelled) return
@@ -76,13 +85,13 @@ export function Profile() {
         }
       })
       .finally(() => {
-        if (!cancelled) setLoading(false)
+        if (!cancelled && !redirecting) setLoading(false)
       })
 
     return () => {
       cancelled = true
     }
-  }, [slug])
+  }, [navigate, slug])
 
   const whatsappNumber = useMemo(
     () =>
