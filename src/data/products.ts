@@ -44,7 +44,7 @@ export const marketingProducts: MarketingProduct[] = [
     heroTitle: 'Turn happy visits into Google reviews',
     heroSubtitle:
       'Customers scan a QR, happy guests get an AI draft to post, and unhappy guests send private feedback.',
-    heroImage: '/assets/hero/easy-review-hero-image.png',
+    heroImage: '/og/easy-review-og.jpg',
     heroImageAlt:
       'EasyReview banner with a review QR standee and a phone showing AI-written Google review drafts.',
     faqs: [],
@@ -66,8 +66,8 @@ export const marketingProducts: MarketingProduct[] = [
     heroTitle: 'Digital menu QR code for restaurants and salons',
     heroSubtitle:
       'Build a restaurant or salon menu, mark today’s special, and put a QR on the table. Sold-out items disappear from the guest menu as soon as you hide them.',
-    heroImage: '/assets/hero/easy-menu-hero-image.png',
-    heroHalfImage: '/assets/hero/easy-menu-half-hero-image.png',
+    heroImage: '/og/easy-menu-og.jpg',
+    heroHalfImage: '/assets/hero/easy-menu-half-hero-image.webp',
     heroImageAlt:
       'EasyMenu table standee with a menu QR code, next to a phone showing a digital restaurant menu.',
     faqs: [
@@ -165,8 +165,8 @@ export const marketingProducts: MarketingProduct[] = [
     heroTitle: 'Story posters for WhatsApp Status and Instagram',
     heroSubtitle:
       'Pick what the poster is for, choose a mood, and add the offer. EasyStory makes a 9:16 image you can post on WhatsApp Status or Instagram Stories.',
-    heroImage: '/assets/hero/easy-story-hero-image.png',
-    heroHalfImage: '/assets/hero/easy-story-half-hero-image.png',
+    heroImage: '/og/easy-story-og.jpg',
+    heroHalfImage: '/assets/hero/easy-story-half-hero-image.webp',
     heroImageAlt:
       'EasyStory on a laptop and phone, with sample story posters for a sale, food, fitness, and a salon offer.',
     faqs: [
@@ -263,8 +263,8 @@ export const marketingProducts: MarketingProduct[] = [
     heroTitle: 'Digital business card with a QR code and NFC',
     heroSubtitle:
       'Share your name, photo, phone, and links from one public card. People open it with a QR scan or an NFC tap, save the contact, or leave their details.',
-    heroImage: '/assets/hero/easy-profile-hero-image.png',
-    heroHalfImage: '/assets/hero/easy-profile-half-hero-image.png',
+    heroImage: '/og/easy-profile-og.jpg',
+    heroHalfImage: '/assets/hero/easy-profile-half-hero-image.webp',
     heroImageAlt:
       'EasyProfile NFC card with a QR code, next to a phone showing a digital business card with call, WhatsApp, and social links.',
     faqs: [

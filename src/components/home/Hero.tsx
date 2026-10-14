@@ -55,10 +55,10 @@ export function Hero() {
 
         <div className="animate-fade-up-delay-1 relative flex justify-center lg:-ml-10 lg:justify-end">
           <img
-            src="/assets/hero/easy-review-half-hero-image.png"
+            src="/assets/hero/easy-review-half-hero-image.webp"
             alt="EasyReview standee with a review QR code beside a phone showing AI-written Google review drafts"
-            width={1312}
-            height={1199}
+            width={1200}
+            height={1097}
             fetchPriority="high"
             className="hero-photo w-full max-w-xl"
           />

@@ -36,7 +36,9 @@ export function Pricing() {
         path="/pricing"
         title="Pricing — EasyReview"
         description="Simple pricing for EasyReview, EasyMenu, EasyStory, and EasyProfile. EasyReview starts at ₹7. EasyMenu and EasyStory start at ₹399/month. EasyProfile is a one-time NFC card."
-        imageUrl={`${SITE_URL}/og-pricing.jpg`}
+        imageUrl={`${SITE_URL}/og/og-pricing.jpg`}
+        imageWidth="1024"
+        imageHeight="537"
         imageAlt="EasyReview pricing — simple pricing, no surprises"
       />
 

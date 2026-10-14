@@ -23,10 +23,10 @@ import { SITE_URL, SeoHead } from '../components/shared/SeoHead'
 import { getMarketingProduct, marketingProducts, modulePricingTiers, type ProductId } from '../data/products'
 import { PricingCards } from '../components/pricing/PricingCards'
 
-const HERO_WIDTH = 1951
-const HERO_HEIGHT = 806
-const HALF_HERO_WIDTH = 1312
-const HALF_HERO_HEIGHT = 1199
+const HERO_WIDTH = 1200
+const HERO_HEIGHT = 630
+const HALF_HERO_WIDTH = 1200
+const HALF_HERO_HEIGHT = 1097
 
 const FEATURE_ICONS: Record<string, LucideIcon> = {
   layout: UtensilsCrossed,

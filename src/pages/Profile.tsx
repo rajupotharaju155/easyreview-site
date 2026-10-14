@@ -294,7 +294,7 @@ export function Profile() {
               POWERED BY
             </span>
             <img
-              src="/logo.png"
+              src="/logo.svg"
               alt=""
               aria-hidden
               className="h-3 w-3 shrink-0 object-contain opacity-70"

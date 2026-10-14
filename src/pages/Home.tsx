@@ -19,8 +19,8 @@ export function Home() {
         description="EasyReview helps local businesses convert foot traffic into 5-star Google reviews with QR codes, while privately capturing negative feedback."
         imageUrl={product.heroImage ? `${SITE_URL}${product.heroImage}` : undefined}
         imageAlt={product.heroImageAlt}
-        imageWidth="1951"
-        imageHeight="806"
+        imageWidth="1200"
+        imageHeight="630"
       />
       <Hero />
       <ProblemStats />

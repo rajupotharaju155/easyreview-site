@@ -10,7 +10,9 @@ export function FAQ() {
         path="/faq"
         title="FAQ — EasyReview"
         description="Answers about EasyReview setup, Google reviews, private feedback, plans, and EasyMenu, EasyStory, and EasyProfile."
-        imageUrl={`${SITE_URL}/og-faq.jpg`}
+        imageUrl={`${SITE_URL}/og/og-faq.jpg`}
+        imageWidth="1024"
+        imageHeight="537"
         imageAlt="EasyReview FAQ — got questions? We've got answers"
       />
 

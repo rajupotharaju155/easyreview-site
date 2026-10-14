@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async'
 
 export const SITE_URL = 'https://easyreview.co.in'
-export const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`
-export const OG_IMAGE_WIDTH = '1024'
-export const OG_IMAGE_HEIGHT = '537'
+export const OG_IMAGE_URL = `${SITE_URL}/og/easy-review-og.jpg`
+export const OG_IMAGE_WIDTH = '1200'
+export const OG_IMAGE_HEIGHT = '630'
 
 type SeoHeadProps = {
   title: string
