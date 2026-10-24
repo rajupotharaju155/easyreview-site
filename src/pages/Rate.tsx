@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import { Helmet } from 'react-helmet-async'
-import {useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Trefoil } from 'ldrs/react'
 import 'ldrs/react/Trefoil.css'
 import {
@@ -99,11 +99,7 @@ function RateCard({
           fill || alignTop ? 'min-h-0 justify-start' : 'justify-center'
         }`}
       >
-        {fill ? (
-          <div className="flex min-h-0 flex-1 flex-col">{children}</div>
-        ) : (
-          children
-        )}
+        {fill ? <div className="flex min-h-0 flex-1 flex-col">{children}</div> : children}
       </div>
 
       <div className="flex shrink-0 items-center justify-center gap-2 border-t border-slate-100 px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
@@ -236,11 +232,7 @@ export function Rate() {
         locationId: loc.id,
         starRating,
         name: loc.name,
-        city: loc.city ?? undefined,
-        state: loc.state ?? undefined,
         primaryTypeDisplayName: loc.primaryTypeDisplayName ?? undefined,
-        keywords: loc.keywords?.length ? loc.keywords : ['great service'],
-        languages: loc.languages?.length ? loc.languages : ['English'],
         answers: selectedAnswers.length ? selectedAnswers : undefined,
       })
       setSuggestions(response.suggestions)
@@ -429,9 +421,7 @@ export function Rate() {
                   </h1>
                   <p
                     className={`overflow-hidden text-[15px] leading-relaxed text-slate-500 transition-all duration-500 ${EASE} motion-reduce:transition-none ${
-                      questionsOpen
-                        ? 'mt-0 max-h-0 opacity-0'
-                        : 'mt-3 max-h-12 opacity-100'
+                      questionsOpen ? 'mt-0 max-h-0 opacity-0' : 'mt-3 max-h-12 opacity-100'
                     }`}
                   >
                     How was your experience with us today?
@@ -463,9 +453,7 @@ export function Rate() {
                         >
                           <Star
                             className={`transition-all duration-[600ms] ${EASE} motion-reduce:transition-none ${
-                              questionsOpen
-                                ? 'h-8 w-8 sm:h-9 sm:w-9'
-                                : 'h-11 w-11 sm:h-12 sm:w-12'
+                              questionsOpen ? 'h-8 w-8 sm:h-9 sm:w-9' : 'h-11 w-11 sm:h-12 sm:w-12'
                             } ${
                               filled
                                 ? 'fill-amber-400 text-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.55)]'
@@ -487,9 +475,7 @@ export function Rate() {
                     {previewOption ? (
                       <span
                         className={`inline-flex items-center gap-1.5 rounded-full bg-amber-50 font-semibold text-amber-800 transition-all duration-[600ms] ${EASE} motion-reduce:transition-none ${
-                          questionsOpen
-                            ? 'px-2.5 py-1 text-xs'
-                            : 'px-3.5 py-1.5 text-sm'
+                          questionsOpen ? 'px-2.5 py-1 text-xs' : 'px-3.5 py-1.5 text-sm'
                         }`}
                       >
                         {previewOption.label}{' '}
@@ -614,10 +600,7 @@ export function Rate() {
                 </p>
               </div>
 
-              <form
-                className="mt-6"
-                onSubmit={(event) => void handleSubmitPrivateFeedback(event)}
-              >
+              <form className="mt-6" onSubmit={(event) => void handleSubmitPrivateFeedback(event)}>
                 <label htmlFor="private-feedback" className="sr-only">
                   Private feedback
                 </label>

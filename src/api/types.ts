@@ -27,11 +27,7 @@ export interface SuggestReviewsPayload {
   locationId: string
   starRating: number
   name: string
-  city?: string
-  state?: string
   primaryTypeDisplayName?: string
-  keywords: string[]
-  languages: string[]
   answers?: ReviewAnswer[]
 }
 

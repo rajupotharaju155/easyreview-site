@@ -84,10 +84,14 @@ function componentText(
   ...types: string[]
 ): string {
   if (!components) return ''
-  const match = components.find((component) =>
-    types.some((type) => component.types.includes(type)),
-  )
-  return match?.longText?.trim() || match?.shortText?.trim() || ''
+  // Types are in priority order; components are ordered most-specific first,
+  // so searching per type keeps e.g. a sublocality from beating the locality.
+  for (const type of types) {
+    const match = components.find((component) => component.types.includes(type))
+    const text = match?.longText?.trim() || match?.shortText?.trim()
+    if (text) return text
+  }
+  return ''
 }
 
 function buildAddressLine1(
@@ -237,22 +241,25 @@ export async function fetchPlaceDetails(placeId: string): Promise<PlaceDetails> 
   const components = place.addressComponents
   const resolvedPlaceId = place.id || placeId
   const primaryType = place.primaryType?.trim() || ''
-  const types = Array.from(
-    new Set((place.types ?? []).map((type) => type.trim()).filter(Boolean)),
-  )
+  const types = Array.from(new Set((place.types ?? []).map((type) => type.trim()).filter(Boolean)))
   const reviews = mapReviews(place.reviews)
 
   const details: PlaceDetails = {
     placeId: resolvedPlaceId,
     name: place.displayName?.trim() || '',
     addressLine1: buildAddressLine1(components, formattedAddress),
-    city: componentText(components, 'locality', 'postal_town', 'sublocality', 'sublocality_level_1'),
+    city: componentText(
+      components,
+      'locality',
+      'postal_town',
+      'sublocality',
+      'sublocality_level_1',
+    ),
     state: componentText(components, 'administrative_area_level_1'),
     pincode: componentText(components, 'postal_code'),
     country: componentText(components, 'country'),
     formattedAddress,
-    phoneNumber:
-      place.internationalPhoneNumber?.trim() || place.nationalPhoneNumber?.trim() || '',
+    phoneNumber: place.internationalPhoneNumber?.trim() || place.nationalPhoneNumber?.trim() || '',
     websiteURI: place.websiteURI?.trim() || '',
     googleMapsURI: place.googleMapsURI?.trim() || '',
     rating: typeof place.rating === 'number' ? place.rating : null,
