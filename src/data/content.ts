@@ -268,13 +268,13 @@ export const faqCategories: FAQCategory[] = [
         id: 'o1',
         question: 'What else is in the EasyReview app?',
         answer:
-          'The same app includes EasyMenu, a digital menu for restaurants and salons; EasyStory, posters for WhatsApp Status and Instagram Stories; and EasyProfile, a digital business card shared by QR or NFC.',
+          'The same app includes EasyMenu, a digital menu for restaurants and salons; EasyStory, posters for WhatsApp Status and Instagram Stories; EasyProfile, a digital business card shared by QR or NFC; and EasyCash, for GST invoices and tracking income and expenses.',
       },
       {
         id: 'o2',
-        question: 'Does an EasyReview plan cover EasyMenu, EasyStory, and EasyProfile?',
+        question: 'Does an EasyReview plan cover EasyMenu, EasyStory, EasyProfile, and EasyCash?',
         answer:
-          'EasyMenu and EasyStory start at ₹399/month, with 6-month and yearly options. EasyProfile is a one-time NFC card: ₹999 for PVC or ₹1,999 for metal, and the digital card stays active for life.',
+          'EasyMenu and EasyStory start at ₹399/month, with 6-month and yearly options. EasyProfile is a one-time NFC card: ₹999 for PVC or ₹1,999 for metal, and the digital card stays active for life. EasyCash is free.',
       },
       {
         id: 'o3',

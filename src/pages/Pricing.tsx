@@ -35,7 +35,7 @@ export function Pricing() {
       <SeoHead
         path="/pricing"
         title="Pricing — EasyReview"
-        description="Simple pricing for EasyReview, EasyMenu, EasyStory, and EasyProfile. EasyReview starts at ₹7. EasyMenu and EasyStory start at ₹399/month. EasyProfile is a one-time NFC card."
+        description="Simple pricing for EasyReview, EasyMenu, EasyStory, EasyProfile, and EasyCash. EasyReview starts at ₹7. EasyMenu and EasyStory start at ₹399/month. EasyProfile is a one-time NFC card. EasyCash is free."
         imageUrl={`${SITE_URL}/og/og-pricing.jpg`}
         imageWidth="1024"
         imageHeight="537"
@@ -52,7 +52,9 @@ export function Pricing() {
                 ? 'Start a 7-day Quick Trial at ₹7, then upgrade to Starter, Growth, or Business Pro for a longer plan and included hardware.'
                 : productId === 'easy-profile'
                   ? 'Buy an NFC card once. A PVC card is ₹999 and a metal card is ₹1,999. The digital card stays active for life.'
-                  : `${product.tagline} Starter is ₹399/month, with 6-month and yearly plans.`
+                  : productId === 'easy-cash'
+                    ? `${product.tagline} Free to use.`
+                    : `${product.tagline} Starter is ₹399/month, with 6-month and yearly plans.`
             }
           />
           <div
@@ -88,10 +90,12 @@ export function Pricing() {
           <PricingCards tiers={tiers} />
           <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted">
             {isReview
-              ? 'Each product has its own plan. Switch above to see EasyMenu, EasyStory, and EasyProfile.'
+              ? 'Each product has its own plan. Switch above to see EasyMenu, EasyStory, EasyProfile, and EasyCash.'
               : productId === 'easy-profile'
                 ? 'The digital card is included with the NFC card and stays active for life.'
-                : `${product.name} is billed on its own plan.`}
+                : productId === 'easy-cash'
+                  ? 'EasyCash is in the same EasyReview account. No separate plan is needed.'
+                  : `${product.name} is billed on its own plan.`}
           </p>
         </PageContainer>
       </section>

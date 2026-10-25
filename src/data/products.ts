@@ -1,6 +1,6 @@
 import type { FAQItem, HowItWorksStep, PricingTier } from '../types'
 
-export type ProductId = 'easy-review' | 'easy-menu' | 'easy-story' | 'easy-profile'
+export type ProductId = 'easy-review' | 'easy-menu' | 'easy-story' | 'easy-profile' | 'easy-cash'
 
 export interface ProductFeature {
   id: string
@@ -351,6 +351,111 @@ export const marketingProducts: MarketingProduct[] = [
       'Create an EasyProfile card in the EasyReview app, then hand it over with a QR or an NFC tap.',
     ctaNote: 'PVC card ₹999 · Metal card ₹1,999 · Lifetime access',
   },
+  {
+    id: 'easy-cash',
+    name: 'EasyCash',
+    tagline: 'GST invoices, income and expenses, and your monthly net.',
+    path: '/products/easy-cash',
+    seoTitle: 'GST Invoice Generator and Expense Tracker for Small Businesses — EasyCash',
+    seoDescription:
+      'Create GST invoices with CGST, SGST or IGST worked out for you, then print them or share them on WhatsApp. Track income and expenses and see what your business keeps each month.',
+    heroTitle: 'GST invoices and a simple cash book for your business',
+    heroSubtitle:
+      'Make a GST invoice in a minute and share it on WhatsApp. Record income and expenses as they happen, and see money in, money out, and net for every month.',
+    heroImage: '/og/easy-cash-og.jpg',
+    heroHalfImage: '/assets/hero/easy-cash-half-hero-image.webp',
+    heroImageAlt:
+      'An EasyCash GST tax invoice with CGST and SGST and a WhatsApp share of the invoice PDF, next to a phone creating a new GST invoice.',
+    faqs: [
+      {
+        id: 'cash-1',
+        question: 'Can I make GST invoices with EasyCash?',
+        answer:
+          'Yes. Make a tax invoice, a bill of supply, or a plain invoice if you are not registered under GST. Add your GSTIN and the customer’s state, and EasyCash works out CGST and SGST, or IGST when the customer is in another state.',
+      },
+      {
+        id: 'cash-2',
+        question: 'How are invoices numbered?',
+        answer:
+          'Automatically, like INV/26-27/0001. Numbers restart every April with the new financial year, and you choose the prefix.',
+      },
+      {
+        id: 'cash-3',
+        question: 'How do I send an invoice to a customer?',
+        answer:
+          'Print it, save it as a PDF, or share it on WhatsApp. The invoice shows your logo, GSTIN, and bank or UPI details so the customer knows where to pay.',
+      },
+      {
+        id: 'cash-4',
+        question: 'Do invoice payments count as income?',
+        answer:
+          'Yes. When you record a payment against an invoice, it is added to that day’s income, so your monthly totals stay correct. Unpaid amounts show as “to collect”.',
+      },
+      {
+        id: 'cash-5',
+        question: 'How much does EasyCash cost?',
+        answer:
+          'EasyCash is free to use in your EasyReview account, alongside any other product in the app.',
+      },
+    ],
+    steps: [
+      {
+        id: 'details',
+        step: '01',
+        title: 'Add your business details',
+        description:
+          'Enter your GSTIN, address, logo, and bank or UPI details once. They appear on every invoice.',
+      },
+      {
+        id: 'invoice',
+        step: '02',
+        title: 'Create and share invoices',
+        description:
+          'Pick a customer, add items, and EasyCash adds the GST. Print it, save a PDF, or send it on WhatsApp.',
+      },
+      {
+        id: 'track',
+        step: '03',
+        title: 'See what you keep',
+        description:
+          'Record payments and the day’s expenses. EasyCash shows money in, money out, and net for each month.',
+      },
+    ],
+    features: [
+      {
+        id: 'gst-invoices',
+        title: 'GST invoices in a minute',
+        description:
+          'Tax invoices, bills of supply, or plain invoices. CGST and SGST, or IGST, worked out from your state and your customer’s, with HSN/SAC codes and discounts.',
+        tags: ['CGST + SGST', 'IGST', 'Bill of supply'],
+      },
+      {
+        id: 'send-invoices',
+        title: 'Print, PDF, or WhatsApp',
+        description:
+          'Every invoice carries your logo, GSTIN, and bank or UPI details, and numbers itself for the financial year.',
+        tags: ['PDF', 'WhatsApp', 'INV/26-27/0001'],
+      },
+      {
+        id: 'cash-book',
+        title: 'Income and expenses',
+        description:
+          'Add the whole day’s expenses in one go, with who you paid and how. Invoice payments land in income on their own.',
+        tags: ['Cash', 'UPI', 'Bank transfer'],
+      },
+      {
+        id: 'net',
+        title: 'Monthly and lifetime totals',
+        description:
+          'Money in, money out, and net for every month and since you started, plus what customers still owe you.',
+        tags: ['Net', 'To collect'],
+      },
+    ],
+    ctaTitle: 'Send your next invoice from EasyCash',
+    ctaSubtitle:
+      'Add your business details in the EasyReview app, then create a GST invoice and share it on WhatsApp.',
+    ctaNote: 'Free · GST invoices included',
+  },
 ]
 
 const menuFeatures: PricingTier['features'] = [
@@ -424,6 +529,23 @@ function moduleTiers(
 export const modulePricingTiers: Record<Exclude<ProductId, 'easy-review'>, PricingTier[]> = {
   'easy-menu': moduleTiers('easy-menu', menuFeatures),
   'easy-story': moduleTiers('easy-story', storyFeatures),
+  'easy-cash': [
+    {
+      id: 'easy-cash-free',
+      name: 'Free',
+      price: '₹0',
+      features: [
+        'GST invoices',
+        'Print, PDF, and WhatsApp share',
+        'Saved customers',
+        'Income and expenses',
+        'Monthly and lifetime totals',
+        'Admin Panel Access',
+      ],
+      ctaLabel: 'Start free',
+      highlighted: true,
+    },
+  ],
   'easy-profile': [
     {
       id: 'easy-profile-pvc',

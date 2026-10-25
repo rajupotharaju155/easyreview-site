@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd'
-import { IdCard, Images, UtensilsCrossed, type LucideIcon } from 'lucide-react'
+import { IdCard, Images, ReceiptIndianRupee, UtensilsCrossed, type LucideIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { suiteProducts, type ProductId } from '../../data/products'
 import { PageContainer } from '../layout/PageContainer'
@@ -9,6 +9,7 @@ const ICONS: Record<Exclude<ProductId, 'easy-review'>, LucideIcon> = {
   'easy-menu': UtensilsCrossed,
   'easy-story': Images,
   'easy-profile': IdCard,
+  'easy-cash': ReceiptIndianRupee,
 }
 
 export function ProductSuite() {
@@ -19,14 +20,14 @@ export function ProductSuite() {
           id="suite-heading"
           eyebrow="The EasyReview app"
           title="Also in the same app"
-          subtitle="A digital menu, story posters, and a business card. Each one has its own plan."
+          subtitle="A digital menu, story posters, a business card, and GST invoices with a cash book."
           className="mb-10 sm:mb-12"
         />
         <Row gutter={[20, 20]}>
           {suiteProducts.map((product) => {
             const Icon = ICONS[product.id as Exclude<ProductId, 'easy-review'>]
             return (
-              <Col key={product.id} xs={24} md={8}>
+              <Col key={product.id} xs={24} md={12} lg={6}>
                 <Link
                   to={product.path}
                   className="flex h-full flex-col rounded-2xl border border-border bg-white p-6 no-underline shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-7"

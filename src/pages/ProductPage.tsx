@@ -1,6 +1,8 @@
 import { Button, Col, Collapse, Row } from 'antd'
 import {
+  ChartColumn,
   Clock,
+  FileText,
   IdCard,
   Image,
   Images,
@@ -8,10 +10,12 @@ import {
   Percent,
   Phone,
   QrCode,
+  Send,
   Sparkles,
   Star,
   UserPlus,
   UtensilsCrossed,
+  Wallet,
   type LucideIcon,
 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
@@ -20,7 +24,12 @@ import { PageContainer } from '../components/layout/PageContainer'
 import { FeatureCard } from '../components/shared/FeatureCard'
 import { SectionHeading } from '../components/shared/SectionHeading'
 import { SITE_URL, SeoHead } from '../components/shared/SeoHead'
-import { getMarketingProduct, marketingProducts, modulePricingTiers, type ProductId } from '../data/products'
+import {
+  getMarketingProduct,
+  marketingProducts,
+  modulePricingTiers,
+  type ProductId,
+} from '../data/products'
 import { PricingCards } from '../components/pricing/PricingCards'
 
 const HERO_WIDTH = 1200
@@ -41,6 +50,10 @@ const FEATURE_ICONS: Record<string, LucideIcon> = {
   share: QrCode,
   save: Phone,
   leads: UserPlus,
+  'gst-invoices': FileText,
+  'send-invoices': Send,
+  'cash-book': Wallet,
+  net: ChartColumn,
 }
 
 interface ProductPageProps {
@@ -250,12 +263,12 @@ export function ProductPage({ productId }: ProductPageProps) {
           <SectionHeading
             id="other-products-heading"
             title="Also in the EasyReview app"
-            subtitle="Each product has its own page and its own plan."
+            subtitle="Each product has its own page and plan."
             className="mb-10 sm:mb-12"
           />
           <Row gutter={[20, 20]}>
             {others.map((item) => (
-              <Col key={item.id} xs={24} md={8}>
+              <Col key={item.id} xs={24} md={12} lg={6}>
                 <Link
                   to={item.path}
                   className="flex h-full flex-col rounded-2xl border border-border bg-white p-6 no-underline shadow-sm transition-shadow duration-300 hover:shadow-md"

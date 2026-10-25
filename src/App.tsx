@@ -58,6 +58,7 @@ export default function App() {
               path="products/easy-profile"
               element={<ProductPage productId="easy-profile" />}
             />
+            <Route path="products/easy-cash" element={<ProductPage productId="easy-cash" />} />
             <Route path="competitor-analysis" element={<CompetitorAnalysis />} />
             <Route path="guides" element={<Guides />} />
             <Route path="guides/restaurant-qr-code-google-reviews" element={<RestaurantGuide />} />

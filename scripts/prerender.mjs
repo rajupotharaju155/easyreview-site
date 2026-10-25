@@ -45,6 +45,7 @@ const routes = [
   '/products/easy-menu',
   '/products/easy-story',
   '/products/easy-profile',
+  '/products/easy-cash',
   '/competitor-analysis',
   '/guides',
   '/guides/restaurant-qr-code-google-reviews',

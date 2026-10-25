@@ -13,8 +13,8 @@ export function CTASection() {
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-base text-white/80">
           Create your business profile, download QR materials, and start collecting five-star
-          reviews in under two minutes. The same app also includes EasyMenu, EasyStory, and
-          EasyProfile.
+          reviews in under two minutes. The same app also includes EasyMenu, EasyStory, EasyProfile,
+          and EasyCash.
         </p>
         <div className="mt-8">
           <Button
