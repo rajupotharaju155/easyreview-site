@@ -1,21 +1,36 @@
 import { Col, Row } from 'antd'
-import { Eye, MessageSquareReply, Star } from 'lucide-react'
-import type { ReactNode } from 'react'
+import type { ComponentType } from 'react'
 import { stats } from '../../data/content'
-import type { StatIconName } from '../../types'
+import { useCountUp } from '../../hooks/useCountUp'
+import type { StatItem } from '../../types'
 import { PageContainer } from '../layout/PageContainer'
 import { SectionHeading } from '../shared/SectionHeading'
 import { StatCard } from '../shared/StatCard'
+import { ReplyRevenueBars, ShopperDots, StarRevenueSteps } from './StatVisuals'
 
-const iconMap: Record<StatIconName, ReactNode> = {
-  eye: <Eye className="h-5 w-5" aria-hidden />,
-  reply: <MessageSquareReply className="h-5 w-5" aria-hidden />,
-  star: <Star className="h-5 w-5" aria-hidden />,
+const VISUALS: Record<string, ComponentType<{ progress: number }>> = {
+  'reviews-check': ShopperDots,
+  'trust-response': ReplyRevenueBars,
+  'rating-lift': StarRevenueSteps,
+}
+
+function AnimatedStat({ stat }: { stat: StatItem }) {
+  const { ref, display, progress } = useCountUp<HTMLElement>(stat.value)
+  const Visual = VISUALS[stat.id]
+
+  return (
+    <StatCard
+      ref={ref}
+      value={display}
+      description={stat.description}
+      visual={Visual ? <Visual progress={progress} /> : null}
+    />
+  )
 }
 
 export function ProblemStats() {
   return (
-    <section className="bg-white py-16 sm:py-20" aria-labelledby="stats-heading">
+    <section className="bg-surface py-16 sm:py-20" aria-labelledby="stats-heading">
       <PageContainer>
         <SectionHeading
           id="stats-heading"
@@ -27,11 +42,7 @@ export function ProblemStats() {
         <Row gutter={[20, 20]}>
           {stats.map((stat) => (
             <Col key={stat.id} xs={24} md={8}>
-              <StatCard
-                value={stat.value}
-                description={stat.description}
-                icon={iconMap[stat.icon]}
-              />
+              <AnimatedStat stat={stat} />
             </Col>
           ))}
         </Row>

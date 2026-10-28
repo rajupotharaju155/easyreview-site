@@ -7,7 +7,7 @@ import { SectionHeading } from '../shared/SectionHeading'
 
 export function HowItWorks() {
   return (
-    <section className="bg-surface py-16 sm:py-20" aria-labelledby="how-heading">
+    <section className="bg-white py-16 sm:py-20" aria-labelledby="how-heading">
       <PageContainer>
         <SectionHeading
           id="how-heading"

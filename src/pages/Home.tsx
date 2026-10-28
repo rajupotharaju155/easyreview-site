@@ -1,11 +1,12 @@
 import { SITE_URL, SeoHead } from '../components/shared/SeoHead'
 import { getMarketingProduct } from '../data/products'
 import { CTASection } from '../components/home/CTASection'
-import { FeatureGrid } from '../components/home/FeatureGrid'
+import { CustomerLogos } from '../components/home/CustomerLogos'
 import { Hero } from '../components/home/Hero'
-import { ProductSuite } from '../components/home/ProductSuite'
 import { HowItWorks } from '../components/home/HowItWorks'
 import { MultiLanguage } from '../components/home/MultiLanguage'
+import { ProductShowcase } from '../components/home/ProductShowcase'
+import { Testimonials } from '../components/home/Testimonials'
 import { ProblemStats } from '../components/home/ProblemStats'
 
 export function Home() {
@@ -23,11 +24,12 @@ export function Home() {
         imageHeight="630"
       />
       <Hero />
+      <CustomerLogos />
       <ProblemStats />
       <HowItWorks />
+      <ProductShowcase />
       <MultiLanguage />
-      <FeatureGrid />
-      <ProductSuite />
+      <Testimonials />
       <CTASection />
     </>
   )

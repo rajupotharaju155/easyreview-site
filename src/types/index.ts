@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 
 export interface SectionHeadingProps {
   eyebrow?: string
@@ -9,21 +9,48 @@ export interface SectionHeadingProps {
   id?: string
   /** Page title heading. Defaults to h2 for in-page sections. */
   as?: 'h1' | 'h2'
+  /** Use 'dark' on dark sections so the text stays readable. */
+  tone?: 'light' | 'dark'
 }
-
-export type StatIconName = 'eye' | 'reply' | 'star'
 
 export interface StatItem {
   id: string
   value: string
   description: string
-  icon: StatIconName
+}
+
+/** A number about EasyReview's own customers, not an industry figure. */
+export interface ResultItem {
+  id: string
+  value: string
+  label: string
+  /** Product this number belongs to, so the product showcase can show it too. */
+  productId?: string
+}
+
+export interface CustomerLogo {
+  id: string
+  name: string
+  src: string
+  width: number
+  height: number
+}
+
+export interface Testimonial {
+  id: string
+  name: string
+  role: string
+  business: string
+  quote: string
+  /** Matches a CustomerLogo id; customers without a logo show their initials. */
+  logoId?: string
 }
 
 export interface StatCardProps {
+  ref?: Ref<HTMLElement>
   value: string
   description: string
-  icon: ReactNode
+  visual?: ReactNode
 }
 
 export interface HowItWorksStep {
@@ -31,14 +58,6 @@ export interface HowItWorksStep {
   step: string
   title: string
   description: string
-}
-
-export interface FeatureItem {
-  id: string
-  title: string
-  description: string
-  icon: ReactNode
-  tags?: string[]
 }
 
 export interface FeatureCardProps {

@@ -47,9 +47,39 @@ export const marketingProducts: MarketingProduct[] = [
     heroImage: '/og/easy-review-og.jpg',
     heroImageAlt:
       'EasyReview banner with a review QR standee and a phone showing AI-written Google review drafts.',
+    heroHalfImage: '/assets/hero/easy-review-half-hero-image.webp',
     faqs: [],
     steps: [],
-    features: [],
+    features: [
+      {
+        id: 'qr',
+        title: 'Print-Ready QR Codes',
+        description:
+          'Generate and download standee-ready QR designs for counters, tables, menus, and window displays in minutes.',
+        tags: ['High-res PDF', 'Custom slug'],
+      },
+      {
+        id: 'ai',
+        title: 'AI-Drafted Reviews',
+        description:
+          'Multiple personalized review drafts per scan, tailored to your business type so customers never face a blank page.',
+        tags: ['Keyword optimized', 'Business-aware'],
+      },
+      {
+        id: 'private',
+        title: 'Private Feedback Gate',
+        description:
+          'Negative experiences are captured privately — never publicly — so you can fix issues before they become Google reviews.',
+        tags: ['1–3★ routed', 'Internal only'],
+      },
+      {
+        id: 'analytics',
+        title: 'Live Analytics Dashboard',
+        description:
+          'Track scans, conversions, rating trends, and feedback across one or multiple business locations in real time.',
+        tags: ['Multi-location', 'Trends'],
+      },
+    ],
     ctaTitle: 'Start Growing Your Google Reviews Today',
     ctaSubtitle:
       'Create your business profile, download QR materials, and start collecting five-star reviews in under two minutes.',
@@ -580,6 +610,3 @@ export function getMarketingProduct(id: ProductId): MarketingProduct {
 export function isProductId(value: string | null): value is ProductId {
   return marketingProducts.some((product) => product.id === value)
 }
-
-/** Products with their own marketing page. EasyReview stays on the homepage. */
-export const suiteProducts = marketingProducts.filter((product) => product.id !== 'easy-review')

@@ -1,10 +1,13 @@
 import type {
   AddOnItem,
+  CustomerLogo,
   FAQCategory,
   FAQItem,
   HowItWorksStep,
   PricingTier,
+  ResultItem,
   StatItem,
+  Testimonial,
 } from '../types'
 
 export const HERO_HEADLINES = [
@@ -16,24 +19,178 @@ export const HERO_HEADLINES = [
 /** Active headline — swap index when you pick a favorite from HERO_HEADLINES */
 export const ACTIVE_HERO_HEADLINE = HERO_HEADLINES[0]
 
+export const results: ResultItem[] = [
+  { id: 'businesses', value: '350+', label: 'Small businesses' },
+  { id: 'reviews', value: '10,000+', label: 'Reviews generated', productId: 'easy-review' },
+  { id: 'menus', value: '270+', label: 'Digital menus live', productId: 'easy-menu' },
+  { id: 'cards', value: '200+', label: 'Digital business cards live', productId: 'easy-profile' },
+]
+
+export const customerLogos: CustomerLogo[] = [
+  {
+    id: 'coco-hostel',
+    name: 'Coco Hostel',
+    src: '/assets/customers/coco-hostel.webp',
+    width: 320,
+    height: 160,
+  },
+  {
+    id: 'flip-and-drip',
+    name: 'Flip & Drip',
+    src: '/assets/customers/flip-and-drip.webp',
+    width: 162,
+    height: 160,
+  },
+  {
+    id: 'waffle-house',
+    name: 'Waffle House',
+    src: '/assets/customers/waffle-house.webp',
+    width: 320,
+    height: 107,
+  },
+  {
+    id: 'gujarat-sweets',
+    name: 'Gujarat Sweets',
+    src: '/assets/customers/gujarat-sweets.webp',
+    width: 160,
+    height: 160,
+  },
+  { id: 'kidzee', name: 'Kidzee', src: '/assets/customers/kidzee.webp', width: 320, height: 88 },
+  {
+    id: 'maya-cafe',
+    name: 'Maya Cafe',
+    src: '/assets/customers/maya-cafe.webp',
+    width: 166,
+    height: 160,
+  },
+  {
+    id: 'preetham-luxury-salon',
+    name: 'Preetham Luxury Salon',
+    src: '/assets/customers/preetham-luxury-salon.webp',
+    width: 159,
+    height: 160,
+  },
+  {
+    id: 'raghavendra-vegetarian',
+    name: 'Raghavendra Vegetarian Restaurant',
+    src: '/assets/customers/raghavendra-vegetarian.webp',
+    width: 320,
+    height: 107,
+  },
+  {
+    id: 'shawarma-house',
+    name: 'Shawarma House',
+    src: '/assets/customers/shawarma-house.webp',
+    width: 240,
+    height: 160,
+  },
+  {
+    id: 'ashish-reddy-mess',
+    name: 'Ashish Reddy Mess',
+    src: '/assets/customers/ashish-reddy-mess.webp',
+    width: 240,
+    height: 160,
+  },
+  {
+    id: 'divya-salon',
+    name: 'Divya Salon',
+    src: '/assets/customers/divya-salon.webp',
+    width: 143,
+    height: 160,
+  },
+  {
+    id: 'vaatsalya-inn',
+    name: 'Vaatsalya Inn',
+    src: '/assets/customers/vaatsalya-inn.webp',
+    width: 248,
+    height: 160,
+  },
+  {
+    id: 'johns-club',
+    name: 'John’s Club',
+    src: '/assets/customers/johns-club.webp',
+    width: 320,
+    height: 107,
+  },
+  {
+    id: 'streets-of-punjab',
+    name: 'Streets of Punjab',
+    src: '/assets/customers/streets-of-punjab.webp',
+    width: 320,
+    height: 160,
+  },
+  {
+    id: 'tri-bite',
+    name: 'Tri-Bite',
+    src: '/assets/customers/tri-bite.webp',
+    width: 320,
+    height: 146,
+  },
+]
+
+// Drafts written for each customer to approve. Replace any quote they change before publishing.
+export const testimonials: Testimonial[] = [
+  {
+    id: 'malhar-patel',
+    name: 'Malhar Patel',
+    role: 'Proprietor',
+    business: 'Gujarat Sweets',
+    logoId: 'gujarat-sweets',
+    quote:
+      'In festival season the counter is packed and nobody has time to type a review. Now customers scan the QR while their box is being packed and post in under a minute. Our Google profile finally shows how busy we really are.',
+  },
+  {
+    id: 'preetham-naidu',
+    name: 'Preetham Naidu',
+    role: 'Founder',
+    business: 'Preetham Luxury Salon',
+    logoId: 'preetham-luxury-salon',
+    quote:
+      'My clients loved the service but never knew what to write. The AI drafts sound like a real client, not a copy-paste line. And when someone isn’t happy, I hear about it privately and can call them the same day.',
+  },
+  {
+    id: 'gurdeep-singh',
+    name: 'Gurdeep Singh',
+    role: 'Owner',
+    business: 'Streets of Punjab',
+    logoId: 'streets-of-punjab',
+    quote:
+      'We put the standee on every table. Families scan it while they wait for the bill, and the drafts come in the language they’re comfortable with, so even our older guests leave reviews now.',
+  },
+  {
+    id: 'naman-bhandari',
+    name: 'Naman Bhandari',
+    role: 'Owner',
+    business: 'Hotel Vaatsalya Inn',
+    logoId: 'vaatsalya-inn',
+    quote:
+      'Guests used to promise a review at checkout and forget by the time they reached home. Now they scan at reception before they leave, and the dashboard shows me how many scanned and how many posted.',
+  },
+  {
+    id: 'dayakar',
+    name: 'Dayakar',
+    role: 'Owner',
+    business: 'Mayuri Family Restaurant',
+    quote:
+      'Setup took a few minutes and I didn’t need anyone’s help. Happy customers go straight to Google, and complaints come to me first, so I can fix the problem while the customer is still here.',
+  },
+]
+
 export const stats: StatItem[] = [
   {
     id: 'reviews-check',
     value: '97%',
     description: 'Of consumers read online reviews before choosing a local business.',
-    icon: 'eye',
   },
   {
     id: 'trust-response',
     value: '35%',
     description: 'More revenue earned by businesses that reply to at least 25% of their reviews.',
-    icon: 'reply',
   },
   {
     id: 'rating-lift',
     value: '+9%',
     description: 'Revenue increase for every additional star in your average rating.',
-    icon: 'star',
   },
 ]
 

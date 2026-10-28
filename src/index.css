@@ -7,8 +7,9 @@
   font-weight: 400 700;
   font-display: swap;
   src: url('/fonts/dm-sans-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
-    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -17,8 +18,9 @@
   font-weight: 600 800;
   font-display: swap;
   src: url('/fonts/outfit-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
-    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @theme {
@@ -35,6 +37,7 @@
   --color-muted: #64748b;
   --color-surface: #f8fafc;
   --color-border: #e2e8f0;
+  --color-night: #0d0a1f;
 }
 
 @layer base {
@@ -60,10 +63,10 @@
 /* Dissolve the photo into the hero. The left fade is wider on desktop so it meets the headline. */
 .hero-photo {
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, #000 14%),
+    linear-gradient(to right, transparent 0%, #000 14%, #000 94%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, #000 8%, #000 90%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0%, #000 14%),
+    linear-gradient(to right, transparent 0%, #000 14%, #000 94%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, #000 8%, #000 90%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -72,10 +75,10 @@
 @media (min-width: 1024px) {
   .hero-photo {
     -webkit-mask-image:
-      linear-gradient(to right, transparent 0%, #000 34%),
+      linear-gradient(to right, transparent 0%, #000 34%, #000 94%, transparent 100%),
       linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
     mask-image:
-      linear-gradient(to right, transparent 0%, #000 34%),
+      linear-gradient(to right, transparent 0%, #000 34%, #000 94%, transparent 100%),
       linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
   }
 }
@@ -86,6 +89,15 @@
     radial-gradient(ellipse 80% 60% at 10% 0%, rgba(107, 47, 213, 0.12), transparent 55%),
     radial-gradient(ellipse 60% 50% at 90% 20%, rgba(124, 58, 237, 0.1), transparent 50%),
     linear-gradient(180deg, #f8fafc 0%, #ffffff 55%, #ffffff 100%);
+}
+
+/* Dark band for alternating homepage sections, lit with the brand purple */
+.section-dark {
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 0%, rgba(124, 58, 237, 0.35), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 95% 100%, rgba(107, 47, 213, 0.25), transparent 60%),
+    var(--color-night);
+  color: #fff;
 }
 
 .cta-band {
@@ -183,6 +195,69 @@
   -webkit-background-clip: text;
   color: transparent;
   animation: gradient-move 4s ease-in-out infinite;
+}
+
+/* Lighter stops of the same gradient so it reads on a dark background */
+.hero-gradient-text-dark {
+  background-image: linear-gradient(90deg, #c9a9ff, #e4d4ff, #a78bfa, #f0abfc, #c9a9ff);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient-move 4s ease-in-out infinite;
+}
+
+/* Customer logo strip: two copies of the list scroll left and loop */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+}
+
+.logo-marquee:hover .logo-marquee-track {
+  animation-play-state: paused;
+}
+
+.logo-marquee-list {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0 0.5rem;
+  list-style: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .logo-marquee-track {
+    animation: none;
+    width: auto;
+    justify-content: center;
+  }
+
+  .logo-marquee-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .logo-marquee-list[aria-hidden] {
+    display: none;
+  }
 }
 
 .review-draft-carousel .slick-dots {

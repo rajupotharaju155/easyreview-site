@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
+import { DARK_HERO_ID, NAVBAR_HEIGHT } from '../components/layout/navbarLayout'
 import { PageContainer } from '../components/layout/PageContainer'
 import { FeatureCard } from '../components/shared/FeatureCard'
 import { SectionHeading } from '../components/shared/SectionHeading'
@@ -69,14 +70,18 @@ function ProductHeroCopy({
 }) {
   return (
     <div className={centered ? undefined : 'min-w-0'}>
-      <p className="text-sm font-semibold text-brand-700">{product.name}</p>
+      <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-brand-100">
+        {product.name}
+      </span>
       <h1
         id="product-heading"
-        className="mt-2 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-5xl sm:leading-[1.1]"
+        className="mt-5 font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl sm:leading-[1.1]"
       >
         {product.heroTitle}
       </h1>
-      <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">{product.heroSubtitle}</p>
+      <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
+        {product.heroSubtitle}
+      </p>
       <div
         className={`mt-8 flex flex-col gap-3 sm:flex-row sm:items-center ${centered ? 'items-center justify-center' : ''}`}
       >
@@ -92,12 +97,12 @@ function ProductHeroCopy({
         </Button>
         <a
           href="#product-pricing"
-          className="text-sm font-semibold text-brand-700 no-underline hover:text-brand-600"
+          className="text-sm font-semibold text-brand-100 no-underline hover:text-white"
         >
           See {product.name} pricing
         </a>
       </div>
-      <p className="mt-4 text-sm text-muted">{product.ctaNote}</p>
+      <p className="mt-4 text-sm text-white/60">{product.ctaNote}</p>
     </div>
   )
 }
@@ -133,8 +138,11 @@ export function ProductPage({ productId }: ProductPageProps) {
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
+      {/* Pulled up under the sticky navbar, which stays transparent while it sits over this section. */}
       <section
-        className="hero-atmosphere relative overflow-hidden border-b border-border"
+        id={DARK_HERO_ID}
+        className="section-dark relative overflow-hidden"
+        style={{ marginTop: -NAVBAR_HEIGHT, paddingTop: NAVBAR_HEIGHT }}
         aria-labelledby="product-heading"
       >
         {product.heroHalfImage ? (
@@ -160,7 +168,7 @@ export function ProductPage({ productId }: ProductPageProps) {
                 width={HERO_WIDTH}
                 height={HERO_HEIGHT}
                 fetchPriority="high"
-                className="w-full rounded-2xl border border-border bg-white shadow-sm"
+                className="w-full rounded-2xl border border-white/10 shadow-sm"
               />
             ) : null}
             <div className="mx-auto mt-8 max-w-3xl text-center">
