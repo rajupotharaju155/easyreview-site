@@ -30,4 +30,5 @@ EasyReview is a review-growth product for local businesses in India and beyond. 
 
 - [Privacy Policy](https://easyreview.co.in/privacy): How customer and business data is handled
 - [Terms of Service](https://easyreview.co.in/terms): Legal terms for using EasyReview
+- [Refund Policy](https://easyreview.co.in/refund-policy): Cancellations, refunds, billing errors, and replacements for physical items
 - [Sitemap](https://easyreview.co.in/sitemap.xml): Machine-readable list of public URLs

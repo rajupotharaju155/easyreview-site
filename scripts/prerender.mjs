@@ -62,6 +62,7 @@ const routes = [
   '/contact',
   '/privacy',
   '/terms',
+  '/refund-policy',
   '/',
 ]
 

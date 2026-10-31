@@ -16,6 +16,7 @@ import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { Profile } from './pages/Profile'
 import { Rate } from './pages/Rate'
 import { Menu } from './pages/Menu'
+import { RefundPolicy } from './pages/RefundPolicy'
 import { TermsOfService } from './pages/TermsOfService'
 import { DentistGuide } from './pages/guides/DentistGuide'
 import { GymGuide } from './pages/guides/GymGuide'
@@ -83,6 +84,7 @@ export default function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsOfService />} />
+            <Route path="refund-policy" element={<RefundPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

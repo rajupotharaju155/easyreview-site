@@ -1,7 +1,9 @@
 import type { LegalSection } from '../types/legal'
+import { WHATSAPP_NUMBER_DISPLAY } from './contact'
 
 export const PRIVACY_LAST_UPDATED = 'July 25, 2026'
 export const TERMS_LAST_UPDATED = 'July 25, 2026'
+export const REFUND_LAST_UPDATED = 'July 25, 2026'
 export const LEGAL_CONTACT_EMAIL = 'support@easyreview.com'
 
 export const privacySections: LegalSection[] = [
@@ -16,9 +18,7 @@ export const privacySections: LegalSection[] = [
   {
     id: 'info-we-collect',
     title: 'Information We Collect',
-    paragraphs: [
-      'We collect information in the following categories:',
-    ],
+    paragraphs: ['We collect information in the following categories:'],
     bullets: [
       'Account information: name, email address, business name, business category, and login credentials when you create an account.',
       'Business profile data: location details, Google Business links or place identifiers, QR slug settings, language preferences, and keyword targeting settings.',
@@ -61,9 +61,7 @@ export const privacySections: LegalSection[] = [
   {
     id: 'sharing',
     title: 'How We Share Information',
-    paragraphs: [
-      'We do not sell personal information. We may share information with:',
-    ],
+    paragraphs: ['We do not sell personal information. We may share information with:'],
     bullets: [
       'Service providers who help us host, analyze, process payments, send email, or provide AI generation — under contractual confidentiality and data-processing obligations.',
       'Business account holders, when end-customer feedback or scan analytics relate to their locations.',
@@ -175,7 +173,7 @@ export const termsSections: LegalSection[] = [
     paragraphs: [
       'EasyReview may offer Quick Trial, Starter, Growth, Business Pro, or other plans with different features and limits. Plan details shown on our Pricing page may change.',
       'Quick Trial or promotional offers may be limited in duration. When a promotion ends, continued use may require a paid plan.',
-      'Paid plans are billed according to the pricing and billing cycle presented at purchase. Fees are generally non-refundable except where required by law or expressly stated otherwise. Taxes may apply.',
+      'Paid plans are billed according to the pricing and billing cycle presented at purchase. Fees are generally non-refundable except where required by law or as described in our Refund and Cancellation Policy. Taxes may apply.',
       'We may suspend or terminate access for non-payment or plan misuse.',
     ],
   },
@@ -240,8 +238,95 @@ export const termsSections: LegalSection[] = [
   {
     id: 'contact',
     title: 'Contact Us',
+    paragraphs: [`Questions about these Terms can be sent to ${LEGAL_CONTACT_EMAIL}.`],
+  },
+]
+
+export const refundSections: LegalSection[] = [
+  {
+    id: 'overview',
+    title: 'Overview',
     paragraphs: [
-      `Questions about these Terms can be sent to ${LEGAL_CONTACT_EMAIL}.`,
+      'EasyReview is software delivered online. Your account, QR codes, and dashboard are available as soon as a payment goes through, so payments are final once access is active.',
+      'This policy covers EasyReview, EasyMenu, and EasyStory plans, the Quick Trial, and physical items we ship, such as QR standees, QR stickers, and NFC cards (including EasyProfile cards). EasyCash is free and involves no payment.',
+    ],
+  },
+  {
+    id: 'subscriptions',
+    title: 'Plans and the Quick Trial',
+    paragraphs: [
+      'Payments for plans and the Quick Trial are non-refundable, in full or in part. This applies whether or not the account is used, and includes cases such as:',
+    ],
+    bullets: [
+      'Unused days left in a billing period, or an unused Quick Trial.',
+      'A change in business plans, closing or selling the business, or no longer needing the service.',
+      'Being unhappy with results, or expecting a feature that the plan does not include.',
+      'Moving to a lower plan before the current period ends.',
+    ],
+  },
+  {
+    id: 'cancellation',
+    title: 'Cancelling a Plan',
+    paragraphs: [
+      'You can cancel a plan at any time. Your access continues until the end of the period you have already paid for, and you will not be charged for the next period.',
+      'If a plan renews automatically, cancel before the renewal date to avoid the next charge. A renewal that has already been charged is not refunded.',
+      'Your QR links and settings stay in your account, so you can pick up again by choosing a plan later.',
+    ],
+  },
+  {
+    id: 'physical-items',
+    title: 'QR Standees, Stickers, and NFC Cards',
+    paragraphs: [
+      'Physical items are printed or programmed for your business, with your QR code and details, so they cannot be returned or refunded once an order is placed.',
+      'If an item arrives damaged, does not work, or is printed with the wrong details because of our mistake, we will replace it at no cost. To request a replacement:',
+    ],
+    bullets: [
+      'Contact us within 7 days of delivery.',
+      'Share photos of the item and its packaging, and your order details.',
+      'Keep the original item until we confirm the replacement.',
+    ],
+  },
+  {
+    id: 'billing-errors',
+    title: 'Billing Errors',
+    paragraphs: [
+      'We refund charges that should not have happened, such as a duplicate payment for the same order, a charge made after you cancelled because of an error on our side, or a charge for a plan you did not choose because of a technical fault.',
+      'Report a billing error within 30 days of the charge. Approved refunds go back to the original payment method. The time it takes to appear depends on your bank or payment provider.',
+    ],
+  },
+  {
+    id: 'suspension',
+    title: 'Suspended or Closed Accounts',
+    paragraphs: [
+      'If we suspend or close an account for breaking our Terms of Service, misuse, or unlawful activity, no refund is due for any remaining period.',
+    ],
+  },
+  {
+    id: 'disputes',
+    title: 'Payment Disputes',
+    paragraphs: [
+      'Please contact us before raising a dispute or chargeback with your bank. Most billing questions are quicker to settle with us directly. While a dispute is open, we may pause the account until it is resolved.',
+    ],
+  },
+  {
+    id: 'your-rights',
+    title: 'Your Rights Under Law',
+    paragraphs: [
+      'Nothing in this policy limits any right to a refund or remedy that you have under the consumer protection laws that apply to you.',
+    ],
+  },
+  {
+    id: 'changes',
+    title: 'Changes to This Policy',
+    paragraphs: [
+      'We may update this policy from time to time. The date at the top of this page shows when it last changed. Changes apply to payments made after that date.',
+    ],
+  },
+  {
+    id: 'contact',
+    title: 'Contact Us',
+    paragraphs: [
+      `For billing questions, replacements, or billing errors, email ${LEGAL_CONTACT_EMAIL} or message us on WhatsApp at ${WHATSAPP_NUMBER_DISPLAY}. Include your registered email or phone number, your business name, and the payment or order details so we can help quickly.`,
     ],
   },
 ]

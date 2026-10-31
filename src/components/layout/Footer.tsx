@@ -58,6 +58,7 @@ const guideLinks = [
 const legalLinks = [
   { label: 'Privacy Policy', to: '/privacy' },
   { label: 'Terms of Service', to: '/terms' },
+  { label: 'Refund Policy', to: '/refund-policy' },
 ]
 
 export function Footer() {
