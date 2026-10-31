@@ -1,8 +1,9 @@
-import { Button, Form, Input, Select, message } from 'antd'
+import { Button, Form, Input, message } from 'antd'
 import { useState } from 'react'
 import { ApiError } from '../../api/client'
 import { createContactMessage } from '../../api/contact-messages'
-import { COUNTRY_DIAL_OPTIONS, dialCodeForIso } from '../../lib/countryDialCodes'
+import { dialCodeForIso } from '../../lib/countryDialCodes'
+import { CountryCodeSelect } from '../shared/CountryCodeSelect'
 
 type WriteToUsFormValues = {
   name: string
@@ -29,9 +30,7 @@ export function WriteToUsForm() {
       message.success('Message sent. We will get back to you soon.')
       form.setFieldValue('message', undefined)
     } catch (error) {
-      message.error(
-        error instanceof ApiError ? error.message : 'Unable to send your message.',
-      )
+      message.error(error instanceof ApiError ? error.message : 'Unable to send your message.')
     } finally {
       setSubmitting(false)
     }
@@ -39,12 +38,8 @@ export function WriteToUsForm() {
 
   return (
     <section className="rounded-2xl border border-border bg-white p-4 shadow-[0_2px_12px_rgba(15,23,42,0.04)] sm:p-5">
-      <h2 className="font-display text-lg font-semibold tracking-tight text-ink">
-        Write to us
-      </h2>
-      <p className="mt-1 text-sm text-muted">
-        Send a message and we&apos;ll get back to you.
-      </p>
+      <h2 className="font-display text-lg font-semibold tracking-tight text-ink">Write to us</h2>
+      <p className="mt-1 text-sm text-muted">Send a message and we&apos;ll get back to you.</p>
 
       <Form
         form={form}
@@ -83,19 +78,7 @@ export function WriteToUsForm() {
               rules={[{ required: true, message: 'Select a country' }]}
               className="!mb-4"
             >
-              <Select
-                showSearch
-                options={COUNTRY_DIAL_OPTIONS}
-                optionFilterProp="label"
-                filterOption={(input, option) =>
-                  String(option?.search ?? option?.label ?? '')
-                    .toLowerCase()
-                    .includes(input.trim().toLowerCase())
-                }
-                className="w-[9.25rem]"
-                popupMatchSelectWidth={280}
-                aria-label="Country code"
-              />
+              <CountryCodeSelect />
             </Form.Item>
             <Form.Item
               name="phone"
@@ -110,11 +93,7 @@ export function WriteToUsForm() {
               ]}
               className="!mb-4 min-w-0 flex-1"
             >
-              <Input
-                inputMode="tel"
-                maxLength={15}
-                placeholder="Phone number"
-              />
+              <Input inputMode="tel" maxLength={15} placeholder="Phone number" />
             </Form.Item>
           </div>
         </Form.Item>
@@ -127,11 +106,7 @@ export function WriteToUsForm() {
             { max: 2000, message: 'Message must be 2000 characters or fewer' },
           ]}
         >
-          <Input.TextArea
-            rows={4}
-            maxLength={2000}
-            placeholder="How can we help?"
-          />
+          <Input.TextArea rows={4} maxLength={2000} placeholder="How can we help?" />
         </Form.Item>
 
         <Button

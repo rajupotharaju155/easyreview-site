@@ -123,6 +123,34 @@ export interface PublicMenuSpecial {
   item: PublicMenuItem
 }
 
+export type MenuOrderType = 'dine_in' | 'takeaway' | 'room_service'
+
+export interface PlaceMenuOrderLine {
+  menuItemId?: string
+  comboId?: string
+  /** "half" / "full" for half-served items, a price variant id for multi-priced ones. */
+  priceOption?: string
+  quantity: number
+}
+
+export interface PlaceMenuOrderPayload {
+  customerName: string
+  customerCountryCode: string
+  customerPhone: string
+  orderType: MenuOrderType
+  spotNumber?: string | null
+  note?: string | null
+  items: PlaceMenuOrderLine[]
+}
+
+export interface PlacedMenuOrder {
+  id: string
+  orderNumber: number
+  totalAmount: number
+  currency: string
+  whatsappUrl: string | null
+}
+
 export interface PublicMenu {
   location: {
     id: string
@@ -132,7 +160,12 @@ export interface PublicMenu {
     state: string | null
     phoneNumber: string | null
     formattedAddress: string | null
+    country: string | null
     menuStyle: MenuStyle
+    menuOrderingEnabled: boolean
+    menuOrderTypes: MenuOrderType[]
+    /** ISO 4217, e.g. "INR". */
+    currency: string
   }
   categories: PublicMenuCategory[]
   combos: PublicMenuCombo[]

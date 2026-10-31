@@ -4,10 +4,22 @@ import { useParams } from 'react-router-dom'
 import { BookOpen, Phone, Scissors, Sparkles, Star, Utensils, X } from 'lucide-react'
 import { ApiError } from '../api/client'
 import { getPublicMenu } from '../api/menu'
-import type { PublicMenu, PublicMenuCategory, PublicMenuCombo, PublicMenuItem } from '../api/types'
+import type {
+  PublicMenu,
+  PublicMenuCategory,
+  PublicMenuCombo,
+  PublicMenuItem,
+  PublicMenuPriceVariant,
+} from '../api/types'
 import { Logo } from '../components/shared/Logo'
 import { SalonPriceTable } from '../components/menu/SalonPriceTable'
-import { formatInr, formatItemPrice } from '../lib/money'
+import { CartBar } from '../components/menu/order/CartBar'
+import { CartSheet } from '../components/menu/order/CartSheet'
+import { ComboCartControl, ItemCartControl } from '../components/menu/order/ItemCartControl'
+import { ItemOptionsSheet } from '../components/menu/order/ItemOptionsSheet'
+import { useMenuCart } from '../hooks/useMenuCart'
+import { MenuContext, useMenuContext, type MenuContextValue } from '../hooks/useMenuContext'
+import { formatItemPrice, formatMoney } from '../lib/money'
 import { isSalonMenu } from '../lib/menuStyle'
 
 /* const FOOD_FACTS = [
@@ -75,21 +87,23 @@ function ItemPrice({
   item: PublicMenuItem
   className?: string
 }) {
+  const { currency } = useMenuContext()
   if (item.isHalfServed) {
     return (
       <div className={`shrink-0 text-right leading-5 ${className}`}>
         <p className="text-sm font-semibold text-ink">
           <span className="font-medium text-muted">Half</span>{' '}
-          {formatInr(item.halfPrice ?? item.fullPrice ?? 0)}
+          {formatMoney(item.halfPrice ?? item.fullPrice ?? 0, currency)}
         </p>
         <p className="text-sm font-semibold text-ink">
-          <span className="font-medium text-muted">Full</span> {formatInr(item.fullPrice ?? 0)}
+          <span className="font-medium text-muted">Full</span>{' '}
+          {formatMoney(item.fullPrice ?? 0, currency)}
         </p>
       </div>
     )
   }
 
-  const amount = formatItemPrice(item)
+  const amount = formatItemPrice(item, currency)
   if (item.priceType === 'onwards' && !item.isMultiPriced) {
     return (
       <div className={`shrink-0 text-right leading-tight ${className}`}>
@@ -106,10 +120,12 @@ function ItemPrice({
 
 function ItemRow({
   item,
+  variants,
   isSalon,
   onOpenImage,
 }: {
   item: PublicMenuItem
+  variants: PublicMenuPriceVariant[]
   isSalon: boolean
   onOpenImage: (item: PublicMenuItem) => void
 }) {
@@ -134,12 +150,16 @@ function ItemRow({
           </div>
           <ItemPrice item={item} />
         </div>
+        <div className="mt-2 flex justify-end empty:hidden">
+          <ItemCartControl item={item} variants={variants} />
+        </div>
       </div>
     </article>
   )
 }
 
 function ComboCard({ combo, isSalon }: { combo: PublicMenuCombo; isSalon: boolean }) {
+  const { currency, cart } = useMenuContext()
   return (
     <article className="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50/80 to-white p-4">
       <div className="flex items-start justify-between gap-3">
@@ -151,9 +171,9 @@ function ComboCard({ combo, isSalon }: { combo: PublicMenuCombo; isSalon: boolea
           <h3 className="font-display text-base font-semibold text-ink">{combo.name}</h3>
         </div>
         <div className="shrink-0 text-right">
-          <p className="text-sm font-bold text-ink">{formatInr(combo.price)}</p>
+          <p className="text-sm font-bold text-ink">{formatMoney(combo.price, currency)}</p>
           {combo.savings > 0 ? (
-            <p className="text-[11px] text-muted line-through">{formatInr(combo.itemsSubtotal)}</p>
+            <p className="text-[11px] text-muted line-through">{formatMoney(combo.itemsSubtotal, currency)}</p>
           ) : null}
         </div>
       </div>
@@ -165,10 +185,17 @@ function ComboCard({ combo, isSalon }: { combo: PublicMenuCombo; isSalon: boolea
           </li>
         ))}
       </ul>
-      {combo.savings > 0 ? (
-        <p className="mt-3 inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[12px] font-semibold text-emerald-700">
-          You save {formatInr(combo.savings)}
-        </p>
+      {combo.savings > 0 || cart ? (
+      <div className="mt-3 flex items-center justify-between gap-3">
+        {combo.savings > 0 ? (
+          <p className="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[12px] font-semibold text-emerald-700">
+            You save {formatMoney(combo.savings, currency)}
+          </p>
+        ) : (
+          <span />
+        )}
+        <ComboCartControl combo={combo} />
+      </div>
       ) : null}
     </article>
   )
@@ -199,7 +226,13 @@ function CategoryItems({
     <section>
       {matrixItems.length > 0 ? <SalonPriceTable variants={variants} items={matrixItems} /> : null}
       {listItems.map((item) => (
-        <ItemRow key={item.id} item={item} isSalon={isSalon} onOpenImage={onOpenImage} />
+        <ItemRow
+          key={item.id}
+          item={item}
+          variants={variants}
+          isSalon={isSalon}
+          onOpenImage={onOpenImage}
+        />
       ))}
     </section>
   )
@@ -355,9 +388,12 @@ function CategoryPills({
 function MenuJumpFab({
   sections,
   onJump,
+  raised,
 }: {
   sections: JumpSection[]
   onJump: (id: string) => void
+  /** Sits above the cart bar when it is showing. */
+  raised: boolean
 }) {
   const [open, setOpen] = useState(false)
   if (sections.length === 0) return null
@@ -374,7 +410,7 @@ function MenuJumpFab({
       ) : null}
 
       {open ? (
-        <div className="absolute bottom-[5.75rem] right-4 z-40 w-[min(16.5rem,calc(100%-2rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.18)]">
+        <div className={`absolute ${raised ? 'bottom-[9.5rem]' : 'bottom-[5.75rem]'} right-4 z-40 w-[min(16.5rem,calc(100%-2rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.18)]`}>
           <p className="border-b border-slate-100 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
             Jump to
           </p>
@@ -400,7 +436,7 @@ function MenuJumpFab({
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="absolute bottom-16 right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-ink px-3.5 py-2.5 text-white shadow-[0_10px_24px_rgba(15,23,42,0.28)]"
+        className={`absolute ${raised ? 'bottom-[7.25rem]' : 'bottom-16'} right-4 z-40 inline-flex items-center gap-1.5 rounded-full bg-ink px-3.5 py-2.5 text-white shadow-[0_10px_24px_rgba(15,23,42,0.28)]`}
         aria-expanded={open}
         aria-label={open ? 'Close category menu' : 'Open category menu'}
       >
@@ -429,6 +465,14 @@ export function Menu() {
   const openPreview = useCallback((item: PublicMenuItem) => {
     setPreview(item)
   }, [])
+  const cart = useMenuCart(slug)
+  const [cartOpen, setCartOpen] = useState(false)
+  const closeCart = useCallback(() => setCartOpen(false), [])
+  const [optionsFor, setOptionsFor] = useState<{
+    item: PublicMenuItem
+    variants: PublicMenuPriceVariant[]
+  } | null>(null)
+  const closeOptions = useCallback(() => setOptionsFor(null), [])
 
   useEffect(() => {
     let cancelled = false
@@ -539,6 +583,24 @@ export function Menu() {
 
   const location = menu?.location
   const isSalon = isSalonMenu(location?.menuStyle)
+  const currency = location?.currency ?? 'INR'
+  const orderingOn = Boolean(location?.menuOrderingEnabled && location.menuOrderTypes.length > 0)
+  const menuContext = useMemo<MenuContextValue>(
+    () => ({
+      currency,
+      cart: orderingOn ? cart : null,
+      openItemOptions: (item, variants) => setOptionsFor({ item, variants }),
+    }),
+    [currency, orderingOn, cart],
+  )
+  const variantsByCategory = useMemo(
+    () =>
+      new Map(
+        (menu?.categories ?? []).map((category) => [category.id, category.priceVariants ?? []]),
+      ),
+    [menu],
+  )
+  const showCartBar = orderingOn && cart.count > 0
   const phone = location?.phoneNumber
   const placeLine = [location?.city, location?.state].filter(Boolean).join(', ')
   const hasContent = sections.length > 0
@@ -557,6 +619,7 @@ export function Menu() {
         ) : null}
       </Helmet>
 
+      <MenuContext.Provider value={menuContext}>
       <div className="relative mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-white shadow-[0_0_40px_rgba(15,23,42,0.06)]">
         {loading ? (
           <div
@@ -636,7 +699,13 @@ export function Menu() {
                     <h2 className="text-sm font-semibold">Today's Special</h2>
                   </div>
                   {menu!.specials.map((special) => (
-                    <ItemRow key={special.id} item={special.item} isSalon={isSalon} onOpenImage={openPreview} />
+                    <ItemRow
+                      key={special.id}
+                      item={special.item}
+                      variants={variantsByCategory.get(special.item.categoryId) ?? []}
+                      isSalon={isSalon}
+                      onOpenImage={openPreview}
+                    />
                   ))}
                 </section>
               ) : null}
@@ -668,9 +737,39 @@ export function Menu() {
           )}
         </main>
 
-        <MenuJumpFab sections={sections} onJump={jumpTo} />
+        {showCartBar ? (
+          <CartBar
+            count={cart.count}
+            total={cart.total}
+            currency={currency}
+            onOpen={() => setCartOpen(true)}
+          />
+        ) : null}
+
+        <MenuJumpFab sections={sections} onJump={jumpTo} raised={showCartBar} />
 
         {preview ? <ImagePreview item={preview} isSalon={isSalon} onClose={closePreview} /> : null}
+
+        {optionsFor && orderingOn ? (
+          <ItemOptionsSheet
+            item={optionsFor.item}
+            variants={optionsFor.variants}
+            cart={cart}
+            currency={currency}
+            onClose={closeOptions}
+          />
+        ) : null}
+
+        {cartOpen && location && orderingOn ? (
+          <CartSheet
+            slug={slug}
+            cart={cart}
+            currency={currency}
+            orderTypes={location.menuOrderTypes}
+            businessCountry={location.country}
+            onClose={closeCart}
+          />
+        ) : null}
 
         <footer className="flex shrink-0 items-center justify-center gap-2 border-t border-slate-100 px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
           <span className="text-[10px] font-semibold tracking-[0.14em] text-slate-400">
@@ -681,6 +780,7 @@ export function Menu() {
           </>
         )}
       </div>
+      </MenuContext.Provider>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 import type { PublicMenuItem, PublicMenuPriceVariant } from '../../api/types'
-import { formatInr } from '../../lib/money'
+import { useMenuContext } from '../../hooks/useMenuContext'
+import { formatMoney } from '../../lib/money'
 import { priceForVariant } from '../../lib/menuPricing'
+import { ItemCartControl } from './order/ItemCartControl'
 
 export function SalonPriceTable({
   variants,
@@ -9,6 +11,7 @@ export function SalonPriceTable({
   variants: PublicMenuPriceVariant[]
   items: PublicMenuItem[]
 }) {
+  const { currency, cart } = useMenuContext()
   if (variants.length === 0 || items.length === 0) return null
 
   return (
@@ -29,6 +32,7 @@ export function SalonPriceTable({
                 {variant.name}
               </th>
             ))}
+            {cart ? <th className="w-[4.75rem] py-2" aria-label="Add to cart" /> : null}
           </tr>
         </thead>
         <tbody>
@@ -46,10 +50,15 @@ export function SalonPriceTable({
                       index % 2 === 0 ? 'bg-slate-50' : 'bg-slate-200/70'
                     } ${price == null ? 'text-slate-400' : 'font-semibold text-ink'}`}
                   >
-                    {price == null ? '' : formatInr(price)}
+                    {price == null ? '' : formatMoney(price, currency)}
                   </td>
                 )
               })}
+              {cart ? (
+                <td className="py-2 pl-1.5 text-right">
+                  <ItemCartControl item={item} variants={variants} />
+                </td>
+              ) : null}
             </tr>
           ))}
         </tbody>
