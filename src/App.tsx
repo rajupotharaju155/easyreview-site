@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MainLayout } from './components/layout/MainLayout'
+import { RouteTracker } from './components/layout/RouteTracker'
 import { ScrollToTop } from './components/layout/ScrollToTop'
 import { ClaimQr } from './pages/ClaimQr'
 import { CompetitorAnalysis } from './pages/CompetitorAnalysis'
@@ -44,6 +45,7 @@ export default function App() {
     <ConfigProvider theme={theme}>
       <BrowserRouter>
         <ScrollToTop />
+        <RouteTracker />
         <Routes>
           <Route path="rate/:slug" element={<Rate />} />
           <Route path="menu/:slug" element={<Menu />} />
