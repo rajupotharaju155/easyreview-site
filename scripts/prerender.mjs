@@ -47,6 +47,7 @@ const routes = [
   '/products/easy-profile',
   '/products/easy-cash',
   '/competitor-analysis',
+  '/qr-code-generator',
   '/guides',
   '/guides/restaurant-qr-code-google-reviews',
   '/guides/how-hotels-can-win-google-reviews',

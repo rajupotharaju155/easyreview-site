@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { freeToolLinks } from '../../data/freeTools'
 import { marketingProducts } from '../../data/products'
 import { Logo } from '../shared/Logo'
 import { PageContainer } from './PageContainer'
@@ -9,7 +10,6 @@ const productLinks = [
 ]
 
 const companyLinks = [
-  { label: 'Competitor Analysis', to: '/competitor-analysis' },
   { label: 'Demo video', to: '/demo-video' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Contact us', to: '/contact' },
@@ -65,7 +65,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
       <PageContainer className="py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
           <div>
             <Logo />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
@@ -75,6 +75,7 @@ export function Footer() {
           </div>
 
           <FooterColumn title="Product" links={productLinks} />
+          <FooterColumn title="Free tools" links={freeToolLinks} />
           <FooterColumn title="Company" links={companyLinks} />
           <FooterColumn title="Guides" links={guideLinks} />
           <FooterColumn title="Legal" links={legalLinks} />

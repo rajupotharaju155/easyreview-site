@@ -1,6 +1,8 @@
 import { Button } from 'antd'
+import { ChevronDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { freeToolLinks } from '../../data/freeTools'
 import { marketingProducts } from '../../data/products'
 import { Logo } from '../shared/Logo'
 import { DARK_HERO_ID, NAVBAR_HEIGHT } from './navbarLayout'
@@ -52,6 +54,70 @@ function useNavbarTone(pathname: string): NavbarTone {
   return atTop ? 'clear' : 'dark'
 }
 
+function navItemColor(onDark: boolean, isActive: boolean) {
+  if (onDark) return isActive ? 'text-white' : 'text-white/60 hover:text-white'
+  return isActive ? 'text-brand-700' : 'text-muted hover:text-brand-600'
+}
+
+/** Opens on hover, focus, or tap. The links stay in the DOM so the prerendered HTML includes them. */
+function FreeToolsMenu({ onDark }: { onDark: boolean }) {
+  const { pathname } = useLocation()
+  const [open, setOpen] = useState(false)
+  const isActive = freeToolLinks.some((link) => link.to === pathname)
+
+  return (
+    <div
+      className="relative hidden lg:block"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false)
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') setOpen(false)
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls="free-tools-menu"
+        onClick={() => setOpen(true)}
+        className={`inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-sm font-medium whitespace-nowrap transition-colors ${navItemColor(onDark, isActive)}`}
+      >
+        Free tools
+        <ChevronDown
+          size={14}
+          aria-hidden
+          className={`transition-transform ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+
+      {/* The top padding bridges the gap to the button, so moving the mouse down keeps it open. */}
+      <div
+        id="free-tools-menu"
+        className={`absolute top-full left-0 pt-3 transition-[opacity,visibility] duration-150 ${open ? 'visible opacity-100' : 'invisible opacity-0'}`}
+      >
+        <ul className="m-0 w-60 list-none rounded-xl border border-border bg-white p-1.5 shadow-lg">
+          {freeToolLinks.map((link) => (
+            <li key={link.to}>
+              <NavLink
+                to={link.to}
+                onClick={() => setOpen(false)}
+                className={({ isActive: isCurrent }) =>
+                  `block rounded-lg px-3 py-2 text-sm font-medium no-underline transition-colors hover:bg-surface ${isCurrent ? 'text-brand-700' : 'text-ink hover:text-brand-600'}`
+                }
+              >
+                {link.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
 export function Navbar() {
   const { pathname } = useLocation()
   const tone = useNavbarTone(pathname)
@@ -70,20 +136,14 @@ export function Navbar() {
                 key={product.id}
                 to={product.path}
                 end={product.path === '/'}
-                className={({ isActive }) => {
-                  const color = onDark
-                    ? isActive
-                      ? 'text-white'
-                      : 'text-white/60 hover:text-white'
-                    : isActive
-                      ? 'text-brand-700'
-                      : 'text-muted hover:text-brand-600'
-                  return `text-sm font-medium whitespace-nowrap no-underline transition-colors ${color}`
-                }}
+                className={({ isActive }) =>
+                  `text-sm font-medium whitespace-nowrap no-underline transition-colors ${navItemColor(onDark, isActive)}`
+                }
               >
                 {product.name}
               </NavLink>
             ))}
+            <FreeToolsMenu onDark={onDark} />
           </nav>
         </div>
         <Button

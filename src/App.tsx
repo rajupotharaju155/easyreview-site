@@ -13,6 +13,7 @@ import { Home } from './pages/Home'
 import { NotFound } from './pages/NotFound'
 import { Pricing } from './pages/Pricing'
 import { ProductPage } from './pages/ProductPage'
+import { QrCodeGenerator } from './pages/QrCodeGenerator'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { Profile } from './pages/Profile'
 import { Rate } from './pages/Rate'
@@ -63,6 +64,7 @@ export default function App() {
             />
             <Route path="products/easy-cash" element={<ProductPage productId="easy-cash" />} />
             <Route path="competitor-analysis" element={<CompetitorAnalysis />} />
+            <Route path="qr-code-generator" element={<QrCodeGenerator />} />
             <Route path="guides" element={<Guides />} />
             <Route path="guides/restaurant-qr-code-google-reviews" element={<RestaurantGuide />} />
             <Route path="guides/how-hotels-can-win-google-reviews" element={<HotelGuide />} />

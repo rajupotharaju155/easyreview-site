@@ -1,10 +1,11 @@
 import { Collapse } from 'antd'
 import { faqCategories } from '../../data/content'
+import type { FAQCategory } from '../../types'
 
-export function FAQAccordion() {
+export function FAQAccordion({ categories = faqCategories }: { categories?: FAQCategory[] }) {
   return (
     <div className="space-y-10">
-      {faqCategories.map((category) => (
+      {categories.map((category) => (
         <div key={category.id}>
           <h2 className="mb-4 font-display text-xl font-semibold text-ink">{category.title}</h2>
           <Collapse

@@ -1,3 +1,4 @@
+import { downloadBlob } from './download'
 import type { PublicProfile } from '../api/types'
 
 /**
@@ -57,13 +58,5 @@ export function buildProfileVCard(profile: PublicProfile): string {
 export function downloadProfileVCard(profile: PublicProfile): void {
   const contents = buildProfileVCard(profile)
   const blob = new Blob([contents], { type: 'text/vcard;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  const anchor = document.createElement('a')
-  anchor.href = url
-  anchor.download = `${profile.slug || 'contact'}.vcf`
-  document.body.appendChild(anchor)
-  anchor.click()
-  document.body.removeChild(anchor)
-  // Delay the revoke so mobile Safari has time to hand the blob to the OS.
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000)
+  downloadBlob(blob, `${profile.slug || 'contact'}.vcf`)
 }

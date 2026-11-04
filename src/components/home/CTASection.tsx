@@ -1,7 +1,11 @@
 import { Button } from 'antd'
 import { PageContainer } from '../layout/PageContainer'
 
-export function CTASection() {
+export function CTASection({
+  note = 'Instant setup · Quick Trial from ₹7 · Upgrade anytime',
+}: {
+  note?: string
+}) {
   return (
     <section className="cta-band py-16 sm:py-20" aria-labelledby="cta-heading">
       <PageContainer className="text-center">
@@ -27,9 +31,7 @@ export function CTASection() {
             Get Started
           </Button>
         </div>
-        <p className="mt-4 text-sm text-white/75">
-          Instant setup · Quick Trial from ₹7 · Upgrade anytime
-        </p>
+        <p className="mt-4 text-sm text-white/75">{note}</p>
       </PageContainer>
     </section>
   )

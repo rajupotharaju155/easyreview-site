@@ -13,6 +13,7 @@ EasyReview is a review-growth product for local businesses in India and beyond. 
 - [EasyCash](https://easyreview.co.in/products/easy-cash): GST invoice generator, income and expense tracking, and monthly net
 - [Pricing](https://easyreview.co.in/pricing): Plans for EasyReview, EasyMenu, EasyStory, EasyProfile, and EasyCash
 - [Competitor analysis](https://easyreview.co.in/competitor-analysis): Compare your Google presence against nearby competitors
+- [Free QR code generator](https://easyreview.co.in/qr-code-generator): Create custom QR codes with a logo and gradient colors, and download them as PNG, SVG, PDF, or JPG
 - [Guides](https://easyreview.co.in/guides): Practical Google review playbooks for local businesses
 - [Restaurant Google reviews guide](https://easyreview.co.in/guides/restaurant-qr-code-google-reviews): How restaurants use QR codes to get more 5-star Google reviews
 - [Hotel Google reviews guide](https://easyreview.co.in/guides/how-hotels-can-win-google-reviews): How hotels win more 5-star reviews before guests leave

@@ -310,3 +310,8 @@
 .ant-collapse-borderless > .ant-collapse-item {
   border-bottom: 1px solid var(--color-border) !important;
 }
+
+/* Checkerboard behind the QR preview when its background is transparent */
+.qr-transparent-grid {
+  background: repeating-conic-gradient(#e2e8f0 0% 25%, #fff 0% 50%) 0 0 / 20px 20px;
+}
