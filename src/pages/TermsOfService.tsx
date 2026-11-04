@@ -10,7 +10,7 @@ export function TermsOfService() {
       <SeoHead
         path="/terms"
         title="Terms of Service — EasyReview"
-        description="Read the EasyReview Terms of Service covering accounts, acceptable use, plans, AI drafts, and liability."
+        description="Read the EasyReview Terms of Service, covering accounts, acceptable use, plans, AI-written review drafts, and limits of liability."
       />
 
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">

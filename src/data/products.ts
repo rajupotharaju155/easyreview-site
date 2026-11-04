@@ -40,7 +40,7 @@ export const marketingProducts: MarketingProduct[] = [
     path: '/',
     seoTitle: 'EasyReview — Turn Happy Customers Into 5-Star Google Reviews',
     seoDescription:
-      'EasyReview helps local businesses convert foot traffic into 5-star Google reviews with QR codes, while privately capturing negative feedback.',
+      'Turn happy customers into 5-star Google reviews with a simple QR code. Customers rate their visit, and unhappy feedback comes to you privately first.',
     heroTitle: 'Turn happy visits into Google reviews',
     heroSubtitle:
       'Customers scan a QR, happy guests get an AI draft to post, and unhappy guests send private feedback.',
@@ -92,7 +92,7 @@ export const marketingProducts: MarketingProduct[] = [
     path: '/products/easy-menu',
     seoTitle: 'Digital Menu QR Code for Restaurants and Salons — EasyMenu',
     seoDescription:
-      'Create a digital menu for a restaurant or salon and share it with a QR code. Add dishes or services, photos, combos, and today’s special. Guests open it in the browser.',
+      'Create a digital menu for your restaurant or salon and share it with a QR code. Add dishes, services, photos, combos, and today’s special.',
     heroTitle: 'Digital menu QR code for restaurants and salons',
     heroSubtitle:
       'Build a restaurant or salon menu, mark today’s special, and put a QR on the table. Sold-out items disappear from the guest menu as soon as you hide them.',
@@ -191,7 +191,7 @@ export const marketingProducts: MarketingProduct[] = [
     path: '/products/easy-story',
     seoTitle: 'WhatsApp Status and Instagram Story Posters — EasyStory',
     seoDescription:
-      'Create 9:16 story posters for WhatsApp Status and Instagram Stories. Pick a festival, sale, new service, or opening hours, then download the poster and post it.',
+      'Create 9:16 posters for WhatsApp Status and Instagram Stories. Pick a festival, sale, new service, or opening hours, then download and post.',
     heroTitle: 'Story posters for WhatsApp Status and Instagram',
     heroSubtitle:
       'Pick what the poster is for, choose a mood, and add the offer. EasyStory makes a 9:16 image you can post on WhatsApp Status or Instagram Stories.',
@@ -289,7 +289,7 @@ export const marketingProducts: MarketingProduct[] = [
     path: '/products/easy-profile',
     seoTitle: 'Digital Business Card with QR Code and NFC — EasyProfile',
     seoDescription:
-      'Share a digital business card with a QR code or an NFC tap. Visitors open your photo, phone, and links in the browser, save your contact, or leave a lead.',
+      'Share a digital business card with a QR code or NFC tap. People see your photo, phone, and links in the browser, and can save your contact.',
     heroTitle: 'Digital business card with a QR code and NFC',
     heroSubtitle:
       'Share your name, photo, phone, and links from one public card. People open it with a QR scan or an NFC tap, save the contact, or leave their details.',
@@ -388,7 +388,7 @@ export const marketingProducts: MarketingProduct[] = [
     path: '/products/easy-cash',
     seoTitle: 'GST Invoice Generator and Expense Tracker for Small Businesses — EasyCash',
     seoDescription:
-      'Create GST invoices with CGST, SGST or IGST worked out for you, then print them or share them on WhatsApp. Track income and expenses and see what your business keeps each month.',
+      'Create GST invoices with tax worked out for you, then print or share them on WhatsApp. Track income and expenses and see what you keep each month.',
     heroTitle: 'GST invoices and a simple cash book for your business',
     heroSubtitle:
       'Make a GST invoice in a minute and share it on WhatsApp. Record income and expenses as they happen, and see money in, money out, and net for every month.',

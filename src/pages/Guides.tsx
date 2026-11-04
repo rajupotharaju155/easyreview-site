@@ -10,7 +10,7 @@ export function Guides() {
       <SeoHead
         path="/guides"
         title="Guides — EasyReview"
-        description="Practical guides for local businesses that want more Google reviews — without awkward asks or public surprise complaints."
+        description="Practical guides for restaurants, hotels, gyms, salons, and other local businesses that want more Google reviews, without awkward asks."
       />
 
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">

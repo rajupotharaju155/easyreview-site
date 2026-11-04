@@ -17,7 +17,7 @@ export function Home() {
       <SeoHead
         path="/"
         title="EasyReview — Turn Happy Customers Into 5-Star Google Reviews"
-        description="EasyReview helps local businesses convert foot traffic into 5-star Google reviews with QR codes, while privately capturing negative feedback."
+        description="Turn happy customers into 5-star Google reviews with a simple QR code. Customers rate their visit, and unhappy feedback comes to you privately first."
         imageUrl={product.heroImage ? `${SITE_URL}${product.heroImage}` : undefined}
         imageAlt={product.heroImageAlt}
         imageWidth="1200"

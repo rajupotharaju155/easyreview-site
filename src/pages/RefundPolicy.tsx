@@ -10,7 +10,7 @@ export function RefundPolicy() {
       <SeoHead
         path="/refund-policy"
         title="Refund and Cancellation Policy — EasyReview"
-        description="How cancellations, refunds, billing errors, and replacements for QR standees and NFC cards work at EasyReview."
+        description="See how EasyReview handles cancellations, refunds, and billing errors, plus replacements for QR standees and NFC cards."
       />
 
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">

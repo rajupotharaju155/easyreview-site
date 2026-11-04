@@ -10,7 +10,7 @@ export function PrivacyPolicy() {
       <SeoHead
         path="/privacy"
         title="Privacy Policy — EasyReview"
-        description="Learn how EasyReview collects, uses, and protects information for businesses and customers using our review platform."
+        description="Learn how EasyReview collects, uses, and protects information for the businesses and customers who use our review platform and products."
       />
 
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">

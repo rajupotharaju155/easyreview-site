@@ -9,7 +9,7 @@ export function DemoVideo() {
       <SeoHead
         path="/demo-video"
         title="Demo video — EasyReview"
-        description="Watch how EasyReview helps customers leave five-star Google reviews in a few taps."
+        description="Watch how EasyReview works: a customer scans a QR code, rates their visit, and leaves a 5-star Google review in a few taps with an AI-written draft."
       />
       <div className="flex h-dvh min-h-0 flex-col bg-[#F4F1EA]">
         <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-black/5 bg-white/90 px-4 backdrop-blur-md sm:px-6">

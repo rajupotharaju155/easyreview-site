@@ -18,7 +18,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/restaurant-qr-code-google-reviews',
     title: 'The QR Code Trick Restaurants Use to Get 5-Star Google Reviews',
     description:
-      'Guests enjoy the meal and leave — then forget to review. Here’s a simple QR code method restaurants use to get more Google reviews, without awkward asking or public 1-star surprises.',
+      'Guests enjoy the meal, then forget to review. Learn a simple QR code method restaurants use to get more Google reviews, without awkward asking.',
     category: 'Restaurants',
     readMinutes: 6,
     publishedAt: '2026-08-08',
@@ -31,7 +31,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/how-hotels-can-win-google-reviews',
     title: 'How Hotels Can Win More 5-Star Reviews Before Guests Leave',
     description:
-      'Hotel guests check out and disappear. Here’s a simple QR method that captures Google reviews before they leave — while keeping complaints private.',
+      'Hotel guests check out and disappear. Learn a simple QR method that collects Google reviews before they leave and keeps complaints private.',
     category: 'Hotels',
     readMinutes: 6,
     publishedAt: '2026-08-08',
@@ -44,7 +44,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/turn-members-into-5-star-google-review',
     title: 'How to Turn Happy Members Into 5-Star Google Reviews for Your Gym',
     description:
-      'Members finish a good workout and leave without reviewing. Here’s a simple QR method gyms use to get more Google reviews — without awkward asks or public 1-stars.',
+      'Members finish a workout and leave without reviewing. Learn a simple QR method gyms use to get more Google reviews, without awkward asks.',
     category: 'Gyms',
     readMinutes: 6,
     publishedAt: '2026-08-08',
@@ -57,7 +57,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/easiest-way-salons-collect-google-reviews',
     title: 'The Easiest Way for Salons to Collect Reviews After Every Appointment',
     description:
-      'Clients look great after a haircut or spa visit — then leave without reviewing. Here’s a simple QR method salons use to collect Google reviews after every appointment.',
+      'Clients love their new look, then leave without reviewing. Learn a simple QR method salons use to collect Google reviews after every appointment.',
     category: 'Salons',
     readMinutes: 6,
     publishedAt: '2026-08-08',
@@ -70,7 +70,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/dental-practices-5-star-google-reviews',
     title: 'How Dental Practices Can Get More 5-Star Google Reviews',
     description:
-      'Patients leave after treatment and forget to review. Here’s a simple QR method dental clinics use to get more Google reviews — while keeping sensitive feedback private.',
+      'Patients forget to review after treatment. Learn a simple QR method dental clinics use to get more Google reviews and keep sensitive feedback private.',
     category: 'Dentists',
     readMinutes: 6,
     publishedAt: '2026-08-08',
@@ -83,7 +83,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/real-estate-5-star-google-reviews',
     title: 'How to Turn Happy Clients Into 5-Star Google Reviews for Your Real Estate Business',
     description:
-      'Deals close and clients move on without reviewing. Here’s a simple QR method real estate agents use to get more Google reviews — at handover, without awkward asks.',
+      'Deals close and clients move on. Learn a simple QR method real estate agents use to get more Google reviews at handover, without awkward asks.',
     category: 'Real estate',
     readMinutes: 6,
     publishedAt: '2026-08-08',
@@ -96,7 +96,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/spa-wellness-google-reviews',
     title: 'Spa & Wellness Reviews: A Simple System to Get More 5-Star Ratings',
     description:
-      'Clients leave a spa feeling calm — then forget to review. Here’s a simple QR method spas and wellness centres use to get more Google reviews after every treatment.',
+      'Clients leave calm, then forget to review. Learn a simple QR method spas and wellness centres use to get more Google reviews after every treatment.',
     category: 'Spa & wellness',
     readMinutes: 6,
     publishedAt: '2026-08-08',
@@ -109,7 +109,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/photography-google-reviews',
     title: 'The Easiest Way for Photographers to Collect Reviews After Every Shoot',
     description:
-      'Clients love the photos — then forget to review. Here’s a simple QR method photographers use to collect Google reviews at gallery delivery, without awkward asks.',
+      'Clients love the photos, then forget to review. Learn a simple QR method photographers use to collect Google reviews at gallery delivery.',
     category: 'Photographers',
     readMinutes: 6,
     publishedAt: '2026-08-09',
@@ -122,7 +122,7 @@ export const guides: GuideSummary[] = [
     path: '/guides/mobile-laptop-repair-google-reviews',
     title: 'How Mobile & Laptop Repair Shops Can Win More 5-Star Reviews',
     description:
-      'Customers pick up a fixed phone or laptop and leave without reviewing. Here’s a simple QR method repair shops use to get more Google reviews — without awkward asks or public 1-stars.',
+      'Customers collect a fixed phone or laptop and leave without reviewing. Learn a simple QR method repair shops use to get more Google reviews.',
     category: 'Repair shops',
     readMinutes: 6,
     publishedAt: '2026-08-08',

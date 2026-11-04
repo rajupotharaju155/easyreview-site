@@ -136,7 +136,7 @@ export function CompetitorAnalysis() {
       <SeoHead
         path="/competitor-analysis"
         title="Competitor Analysis — EasyReview"
-        description="Compare your Google Business profile against local competitors — ratings, reviews, website, and listing completeness side by side."
+        description="Free tool: compare your Google Business Profile with local competitors. See ratings, reviews, website, and listing completeness side by side."
         imageUrl={`${SITE_URL}/og/og-competitor-analysis.jpg`}
         imageWidth="1024"
         imageHeight="537"

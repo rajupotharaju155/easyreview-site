@@ -9,7 +9,7 @@ export function Contact() {
       <SeoHead
         path="/contact"
         title="Contact us — EasyReview"
-        description="Have a question about EasyReview? Send us a message and we'll help you get more Google reviews for your business."
+        description="Have a question about plans, QR standees, or your account? Send the EasyReview team a message and we'll help you get more Google reviews."
       />
 
       <section className="hero-atmosphere border-b border-border py-14 sm:py-16">

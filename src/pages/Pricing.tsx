@@ -35,7 +35,7 @@ export function Pricing() {
       <SeoHead
         path="/pricing"
         title="Pricing — EasyReview"
-        description="Simple pricing for EasyReview, EasyMenu, EasyStory, EasyProfile, and EasyCash. EasyReview starts at ₹7. EasyMenu and EasyStory start at ₹399/month. EasyProfile is a one-time NFC card. EasyCash is free."
+        description="Compare plans for EasyReview, EasyMenu, EasyStory, and EasyProfile. Start with a low-cost trial, upgrade anytime, and use EasyCash for free."
         imageUrl={`${SITE_URL}/og/og-pricing.jpg`}
         imageWidth="1024"
         imageHeight="537"
