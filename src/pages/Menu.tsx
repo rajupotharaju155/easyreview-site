@@ -80,13 +80,7 @@ function DishImage({
   )
 }
 
-function ItemPrice({
-  item,
-  className = '',
-}: {
-  item: PublicMenuItem
-  className?: string
-}) {
+function ItemPrice({ item, className = '' }: { item: PublicMenuItem; className?: string }) {
   const { currency } = useMenuContext()
   if (item.isHalfServed) {
     return (
@@ -173,7 +167,9 @@ function ComboCard({ combo, isSalon }: { combo: PublicMenuCombo; isSalon: boolea
         <div className="shrink-0 text-right">
           <p className="text-sm font-bold text-ink">{formatMoney(combo.price, currency)}</p>
           {combo.savings > 0 ? (
-            <p className="text-[11px] text-muted line-through">{formatMoney(combo.itemsSubtotal, currency)}</p>
+            <p className="text-[11px] text-muted line-through">
+              {formatMoney(combo.itemsSubtotal, currency)}
+            </p>
           ) : null}
         </div>
       </div>
@@ -186,16 +182,16 @@ function ComboCard({ combo, isSalon }: { combo: PublicMenuCombo; isSalon: boolea
         ))}
       </ul>
       {combo.savings > 0 || cart ? (
-      <div className="mt-3 flex items-center justify-between gap-3">
-        {combo.savings > 0 ? (
-          <p className="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[12px] font-semibold text-emerald-700">
-            You save {formatMoney(combo.savings, currency)}
-          </p>
-        ) : (
-          <span />
-        )}
-        <ComboCartControl combo={combo} />
-      </div>
+        <div className="mt-3 flex items-center justify-between gap-3">
+          {combo.savings > 0 ? (
+            <p className="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[12px] font-semibold text-emerald-700">
+              You save {formatMoney(combo.savings, currency)}
+            </p>
+          ) : (
+            <span />
+          )}
+          <ComboCartControl combo={combo} />
+        </div>
       ) : null}
     </article>
   )
@@ -212,9 +208,7 @@ function CategoryItems({
 }) {
   const variants = category.priceVariants ?? []
   const matrixItems =
-    isSalon && variants.length > 0
-      ? category.items.filter((item) => item.isMultiPriced)
-      : []
+    isSalon && variants.length > 0 ? category.items.filter((item) => item.isMultiPriced) : []
   const matrixIds = new Set(matrixItems.map((item) => item.id))
   const listItems = category.items.filter((item) => !matrixIds.has(item.id))
 
@@ -308,10 +302,7 @@ function telHref(phone: string): string {
 
 type JumpSection = { id: string; label: string; count: number }
 
-function scrollSectionInto(
-  scroller: HTMLElement | null,
-  section: HTMLElement | null,
-) {
+function scrollSectionInto(scroller: HTMLElement | null, section: HTMLElement | null) {
   if (!scroller || !section) return
   const next =
     scroller.scrollTop +
@@ -323,10 +314,7 @@ function scrollSectionInto(
 function scrollChildX(scroller: HTMLElement, child: HTMLElement) {
   const scrollerRect = scroller.getBoundingClientRect()
   const childRect = child.getBoundingClientRect()
-  const delta =
-    childRect.left +
-    childRect.width / 2 -
-    (scrollerRect.left + scrollerRect.width / 2)
+  const delta = childRect.left + childRect.width / 2 - (scrollerRect.left + scrollerRect.width / 2)
   const max = Math.max(0, scroller.scrollWidth - scroller.clientWidth)
   const next = Math.max(0, Math.min(max, scroller.scrollLeft + delta))
   if (Math.abs(next - scroller.scrollLeft) < 1) return
@@ -410,7 +398,9 @@ function MenuJumpFab({
       ) : null}
 
       {open ? (
-        <div className={`absolute ${raised ? 'bottom-[9.5rem]' : 'bottom-[5.75rem]'} right-4 z-40 w-[min(16.5rem,calc(100%-2rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.18)]`}>
+        <div
+          className={`absolute ${raised ? 'bottom-[9.5rem]' : 'bottom-[5.75rem]'} right-4 z-40 w-[min(16.5rem,calc(100%-2rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.18)]`}
+        >
           <p className="border-b border-slate-100 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
             Jump to
           </p>
@@ -440,7 +430,11 @@ function MenuJumpFab({
         aria-expanded={open}
         aria-label={open ? 'Close category menu' : 'Open category menu'}
       >
-        {open ? <X className="h-4 w-4" aria-hidden /> : <BookOpen className="h-4 w-4" aria-hidden />}
+        {open ? (
+          <X className="h-4 w-4" aria-hidden />
+        ) : (
+          <BookOpen className="h-4 w-4" aria-hidden />
+        )}
         <span className="text-sm font-semibold">Menu</span>
       </button>
     </>
@@ -608,178 +602,184 @@ export function Menu() {
   return (
     <div className="relative min-h-dvh bg-[#fffaf5]">
       <Helmet>
-        <title>
-          {location ? `${location.name} Menu | EasyReview` : 'EasyMenu | EasyReview'}
-        </title>
+        <title>{location ? `${location.name} Menu | EasyReview` : 'EasyMenu | EasyReview'}</title>
         {location ? (
           <meta
             name="description"
             content={`View the menu${isSalon ? '' : ', combos,'} and today's special at ${location.name}.`}
           />
         ) : null}
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <MenuContext.Provider value={menuContext}>
-      <div className="relative mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-white shadow-[0_0_40px_rgba(15,23,42,0.06)]">
-        {loading ? (
-          <div
-            className="flex h-full flex-col items-center justify-center px-6 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
-            role="status"
-            aria-live="polite"
-          >
-            <img
-              src="/assets/app/generic-loader.svg"
-              alt="Loading menu"
-              width={160}
-              height={160}
-              className="h-40 w-40"
-            />
-            {/* <p className="-mt-2 max-w-xs text-center text-sm leading-relaxed text-muted">
+        <div className="relative mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-white shadow-[0_0_40px_rgba(15,23,42,0.06)]">
+          {loading ? (
+            <div
+              className="flex h-full flex-col items-center justify-center px-6 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
+              role="status"
+              aria-live="polite"
+            >
+              <img
+                src="/assets/app/generic-loader.svg"
+                alt="Loading menu"
+                width={160}
+                height={160}
+                className="h-40 w-40"
+              />
+              {/* <p className="-mt-2 max-w-xs text-center text-sm leading-relaxed text-muted">
               {foodFact}
             </p> */}
-          </div>
-        ) : (
-          <>
-        <header className="shrink-0 bg-white/95 pt-[env(safe-area-inset-top)] backdrop-blur">
-          <div className="flex items-start justify-between gap-3 px-4 pb-3 pt-3">
-            <div className="min-w-0">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-600">
-                EasyMenu
-              </p>
-              <h1 className="mt-0.5 font-display text-xl font-bold leading-tight tracking-tight text-ink">
-                {location?.name || errorTitle}
-              </h1>
-              {placeLine ? <p className="mt-0.5 text-xs text-muted">{placeLine}</p> : null}
-            </div>
-            {phone ? (
-              <a
-                href={telHref(phone)}
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700 no-underline"
-                aria-label={isSalon ? 'Call salon' : 'Call restaurant'}
-              >
-                <Phone className="h-4 w-4" />
-              </a>
-            ) : (
-              <Logo showWordmark={false} className="shrink-0 [&_img]:h-8 [&_img]:w-8" />
-            )}
-          </div>
-        </header>
-
-        {hasContent ? (
-          <CategoryPills sections={sections} activeId={activeId} onSelect={jumpTo} />
-        ) : null}
-
-        <main ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-4 pb-24 [overflow-anchor:none]">
-          {error ? (
-            <div className="py-16 text-center">
-              <h2 className="font-display text-xl font-bold text-ink">{errorTitle}</h2>
-              <p className="mt-2 text-sm text-muted">{error}</p>
-            </div>
-          ) : !hasContent ? (
-            <div className="py-16 text-center">
-              {isSalon ? (
-                <Scissors className="mx-auto h-10 w-10 text-amber-500" strokeWidth={1.5} />
-              ) : (
-                <Utensils className="mx-auto h-10 w-10 text-amber-500" strokeWidth={1.5} />
-              )}
-              <h2 className="mt-4 font-display text-xl font-bold text-ink">Menu coming soon</h2>
-              <p className="mt-2 text-sm text-muted">
-                {location?.name} has not published {isSalon ? 'services' : 'dishes'} yet.
-              </p>
             </div>
           ) : (
-            <div className="space-y-8 pt-2">
-              {menu!.specials.length > 0 ? (
-                <section
-                  ref={setSectionRef('specials')}
-                  className="rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 to-white px-3 py-3"
-                >
-                  <div className="mb-2 flex items-center gap-1.5 text-brand-700">
-                    <Star className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden />
-                    <h2 className="text-sm font-semibold">Today's Special</h2>
+            <>
+              <header className="shrink-0 bg-white/95 pt-[env(safe-area-inset-top)] backdrop-blur">
+                <div className="flex items-start justify-between gap-3 px-4 pb-3 pt-3">
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-600">
+                      EasyMenu
+                    </p>
+                    <h1 className="mt-0.5 font-display text-xl font-bold leading-tight tracking-tight text-ink">
+                      {location?.name || errorTitle}
+                    </h1>
+                    {placeLine ? <p className="mt-0.5 text-xs text-muted">{placeLine}</p> : null}
                   </div>
-                  {menu!.specials.map((special) => (
-                    <ItemRow
-                      key={special.id}
-                      item={special.item}
-                      variants={variantsByCategory.get(special.item.categoryId) ?? []}
-                      isSalon={isSalon}
-                      onOpenImage={openPreview}
-                    />
-                  ))}
-                </section>
+                  {phone ? (
+                    <a
+                      href={telHref(phone)}
+                      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700 no-underline"
+                      aria-label={isSalon ? 'Call salon' : 'Call restaurant'}
+                    >
+                      <Phone className="h-4 w-4" />
+                    </a>
+                  ) : (
+                    <Logo showWordmark={false} className="shrink-0 [&_img]:h-8 [&_img]:w-8" />
+                  )}
+                </div>
+              </header>
+
+              {hasContent ? (
+                <CategoryPills sections={sections} activeId={activeId} onSelect={jumpTo} />
               ) : null}
 
-              {menu!.combos.length > 0 ? (
-                <section ref={setSectionRef('combos')} className="space-y-3">
-                  <h2 className="text-sm font-semibold text-ink">Combos</h2>
-                  {menu!.combos.map((combo) => (
-                    <ComboCard key={combo.id} combo={combo} isSalon={isSalon} />
-                  ))}
-                </section>
-              ) : null}
-
-              {menu!.categories
-                .filter((category) => category.items.length > 0)
-                .map((category) => (
-                  <section key={category.id} ref={setSectionRef(category.id)}>
-                    <h2 className="mb-1 font-display text-sm font-semibold italic text-ink">
-                      {category.name}
+              <main
+                ref={scrollRef}
+                className="min-h-0 flex-1 overflow-y-auto px-4 pb-24 [overflow-anchor:none]"
+              >
+                {error ? (
+                  <div className="py-16 text-center">
+                    <h2 className="font-display text-xl font-bold text-ink">{errorTitle}</h2>
+                    <p className="mt-2 text-sm text-muted">{error}</p>
+                  </div>
+                ) : !hasContent ? (
+                  <div className="py-16 text-center">
+                    {isSalon ? (
+                      <Scissors className="mx-auto h-10 w-10 text-amber-500" strokeWidth={1.5} />
+                    ) : (
+                      <Utensils className="mx-auto h-10 w-10 text-amber-500" strokeWidth={1.5} />
+                    )}
+                    <h2 className="mt-4 font-display text-xl font-bold text-ink">
+                      Menu coming soon
                     </h2>
-                    <CategoryItems
-                      category={category}
-                      isSalon={isSalon}
-                      onOpenImage={openPreview}
-                    />
-                  </section>
-                ))}
-            </div>
+                    <p className="mt-2 text-sm text-muted">
+                      {location?.name} has not published {isSalon ? 'services' : 'dishes'} yet.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-8 pt-2">
+                    {menu!.specials.length > 0 ? (
+                      <section
+                        ref={setSectionRef('specials')}
+                        className="rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 to-white px-3 py-3"
+                      >
+                        <div className="mb-2 flex items-center gap-1.5 text-brand-700">
+                          <Star className="h-4 w-4 fill-brand-500 text-brand-500" aria-hidden />
+                          <h2 className="text-sm font-semibold">Today's Special</h2>
+                        </div>
+                        {menu!.specials.map((special) => (
+                          <ItemRow
+                            key={special.id}
+                            item={special.item}
+                            variants={variantsByCategory.get(special.item.categoryId) ?? []}
+                            isSalon={isSalon}
+                            onOpenImage={openPreview}
+                          />
+                        ))}
+                      </section>
+                    ) : null}
+
+                    {menu!.combos.length > 0 ? (
+                      <section ref={setSectionRef('combos')} className="space-y-3">
+                        <h2 className="text-sm font-semibold text-ink">Combos</h2>
+                        {menu!.combos.map((combo) => (
+                          <ComboCard key={combo.id} combo={combo} isSalon={isSalon} />
+                        ))}
+                      </section>
+                    ) : null}
+
+                    {menu!.categories
+                      .filter((category) => category.items.length > 0)
+                      .map((category) => (
+                        <section key={category.id} ref={setSectionRef(category.id)}>
+                          <h2 className="mb-1 font-display text-sm font-semibold italic text-ink">
+                            {category.name}
+                          </h2>
+                          <CategoryItems
+                            category={category}
+                            isSalon={isSalon}
+                            onOpenImage={openPreview}
+                          />
+                        </section>
+                      ))}
+                  </div>
+                )}
+              </main>
+
+              {showCartBar ? (
+                <CartBar
+                  count={cart.count}
+                  total={cart.total}
+                  currency={currency}
+                  onOpen={() => setCartOpen(true)}
+                />
+              ) : null}
+
+              <MenuJumpFab sections={sections} onJump={jumpTo} raised={showCartBar} />
+
+              {preview ? (
+                <ImagePreview item={preview} isSalon={isSalon} onClose={closePreview} />
+              ) : null}
+
+              {optionsFor && orderingOn ? (
+                <ItemOptionsSheet
+                  item={optionsFor.item}
+                  variants={optionsFor.variants}
+                  cart={cart}
+                  currency={currency}
+                  onClose={closeOptions}
+                />
+              ) : null}
+
+              {cartOpen && location && orderingOn ? (
+                <CartSheet
+                  slug={slug}
+                  cart={cart}
+                  currency={currency}
+                  orderTypes={location.menuOrderTypes}
+                  businessCountry={location.country}
+                  onClose={closeCart}
+                />
+              ) : null}
+
+              <footer className="flex shrink-0 items-center justify-center gap-2 border-t border-slate-100 px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
+                <span className="text-[10px] font-semibold tracking-[0.14em] text-slate-400">
+                  POWERED BY
+                </span>
+                <Logo className="opacity-80 [&_img]:h-5 [&_img]:w-5 [&_span]:text-xs" />
+              </footer>
+            </>
           )}
-        </main>
-
-        {showCartBar ? (
-          <CartBar
-            count={cart.count}
-            total={cart.total}
-            currency={currency}
-            onOpen={() => setCartOpen(true)}
-          />
-        ) : null}
-
-        <MenuJumpFab sections={sections} onJump={jumpTo} raised={showCartBar} />
-
-        {preview ? <ImagePreview item={preview} isSalon={isSalon} onClose={closePreview} /> : null}
-
-        {optionsFor && orderingOn ? (
-          <ItemOptionsSheet
-            item={optionsFor.item}
-            variants={optionsFor.variants}
-            cart={cart}
-            currency={currency}
-            onClose={closeOptions}
-          />
-        ) : null}
-
-        {cartOpen && location && orderingOn ? (
-          <CartSheet
-            slug={slug}
-            cart={cart}
-            currency={currency}
-            orderTypes={location.menuOrderTypes}
-            businessCountry={location.country}
-            onClose={closeCart}
-          />
-        ) : null}
-
-        <footer className="flex shrink-0 items-center justify-center gap-2 border-t border-slate-100 px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
-          <span className="text-[10px] font-semibold tracking-[0.14em] text-slate-400">
-            POWERED BY
-          </span>
-          <Logo className="opacity-80 [&_img]:h-5 [&_img]:w-5 [&_span]:text-xs" />
-        </footer>
-          </>
-        )}
-      </div>
+        </div>
       </MenuContext.Provider>
     </div>
   )

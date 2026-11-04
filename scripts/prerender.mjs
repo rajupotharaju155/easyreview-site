@@ -171,35 +171,6 @@ async function prerender() {
           }),
       )
 
-      // react-helmet-async can leave Vite shell tags alongside page tags.
-      await page.evaluate(() => {
-        const titles = [...document.querySelectorAll('head title')]
-        if (titles.length > 1) {
-          // First title is the page-specific Helmet value (matches document.title).
-          titles.slice(1).forEach((el) => el.remove())
-        }
-
-        const keepLastByAttr = (selector, attrName) => {
-          const seen = new Map()
-          for (const el of document.querySelectorAll(selector)) {
-            const key = el.getAttribute(attrName)
-            if (!key) continue
-            const prev = seen.get(key)
-            if (prev) prev.remove()
-            seen.set(key, el)
-          }
-        }
-
-        // Last wins for Helmet-managed meta / canonical.
-        keepLastByAttr('head meta[name]', 'name')
-        keepLastByAttr('head meta[property]', 'property')
-
-        const canons = [...document.querySelectorAll('head link[rel="canonical"]')]
-        if (canons.length > 1) {
-          canons.slice(0, -1).forEach((el) => el.remove())
-        }
-      })
-
       let html = await page.content()
       if (!/^<!doctype/i.test(html)) {
         html = `<!DOCTYPE html>\n${html}`
